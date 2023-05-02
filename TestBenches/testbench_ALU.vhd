@@ -2,10 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity ALU_Test is
-end ALU_Test;
+entity testbench_ALU is
+end testbench_ALU;
 
-architecture Behavioral of ALU_Test is
+architecture Behavioral of testbench_ALU is
 
   -- Component declaration
   component ALU is
