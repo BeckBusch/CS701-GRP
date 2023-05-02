@@ -22,8 +22,19 @@ architecture Behaviour of Data_Mem_Inter is
             outp : out std_logic_vector(15 downto 0));
     end component;
 
-    --signals
+    signal data_a_mux_out : std_logic_vector(15 downto 0);
 
-    --first mux usage
+begin
 
-    --signal assignment
+    MUX4_1_1 : MUX4_1 port map(
+        sel => data_a_mux,
+        a => ir_hold,
+        b => rx,
+        c => dprr,
+        d => "0000000000000000",
+        outp => data_a_mux_out
+    );
+
+    data <=  data_a_mux_out;
+
+end Behaviour;
