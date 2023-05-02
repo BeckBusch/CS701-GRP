@@ -14,7 +14,7 @@ architecture Behavior of testbench_Data_Mem_Inter is
 
             ir_hold : in std_logic_vector(15 downto 0);
             rx : in std_logic_vector(15 downto 0);
-            dprr : in std_logic_vector(15 downto 0);
+            dprr : in std_logic_vector(1 downto 0);
 
             data : out std_logic_vector(15 downto 0));
     end component;
@@ -23,7 +23,7 @@ architecture Behavior of testbench_Data_Mem_Inter is
     signal data_a_mux : std_logic_vector(1 downto 0);
     signal ir_hold : std_logic_vector(15 downto 0);
     signal rx : std_logic_vector(15 downto 0);
-    signal dprr : std_logic_vector(15 downto 0);
+    signal dprr : std_logic_vector(1 downto 0);
 
     -- Output signals
     signal data : std_logic_vector(15 downto 0);
@@ -47,7 +47,7 @@ begin
         data_a_mux <= "00";
         ir_hold <= "1111000011110000";
         rx <= "1010101010101010";
-        dprr <= "1111111111111111";
+        dprr <= "11";
         wait for 10 ns;
         assert data = "1111000011110000"
         report "ir_hold, operation failed" severity error;
@@ -56,7 +56,7 @@ begin
         data_a_mux <= "01";
         ir_hold <= "1111000011110000";
         rx <= "1010101010101010";
-        dprr <= "1111111111111111";
+        dprr <= "11";
         wait for 10 ns;
         assert data = "1010101010101010"
         report "rx, operation failed" severity error;
@@ -65,15 +65,15 @@ begin
         data_a_mux <= "10";
         ir_hold <= "1111000011110000";
         rx <= "1010101010101010";
-        dprr <= "1111111111111111";
+        dprr <= "11";
         wait for 10 ns;
-        assert data = "1111111111111111"
+        assert data = "0000000000000011"
         report "dprr, operation failed" severity error;
 
         -- nothing
         data_a_mux <= "11";
         wait for 10 ns;
-        assert data = "0"
+        assert data = "0000000000000000"
         report "false input, operation failed" severity error;
 
 
