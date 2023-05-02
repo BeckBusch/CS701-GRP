@@ -25,7 +25,7 @@ begin
                 reg_out <= reg_in;
 
             elsif (reset = '1') then
-                reg_out <= "00000000";
+                reg_out <= "0000000000000000";
 
             end if;
         end if;
