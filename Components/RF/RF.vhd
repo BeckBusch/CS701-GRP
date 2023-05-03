@@ -19,17 +19,16 @@ entity RF is
         z_mux_sel : in std_logic_vector(2 downto 0);
         ir_hold_15_0 : in std_logic_vector(15 downto 0);
         m_out : in std_logic_vector(15 downto 0);
-        in_rx : in std_logic_vector(15 downto 0);
         aluout : in std_logic_vector(15 downto 0);
         rz_max : in std_logic_vector(15 downto 0);
         sip_hold : in std_logic_vector(15 downto 0);
-        er_temp : in std_logic_vector(15 downto 0);
+        er_temp : in std_logic;
         mem_hp_low : in std_logic_vector(15 downto 0);
 
         rx : out std_logic_vector(15 downto 0);
         rz : out std_logic_vector(15 downto 0);
-        ccd : out std_logic_vector(15 downto 0);
-        pcd : out std_logic_vector(15 downto 0);
+        ccd : out std_logic_vector(3 downto 0);
+        pcd : out std_logic_vector(3 downto 0);
         flmr : out std_logic_vector(15 downto 0));
 end RF;
 
@@ -60,6 +59,10 @@ architecture behaviour of RF is
 
     signal out_z : std_logic_vector(15 downto 0);
     signal out_sel_x, out_sel_z : std_logic_vector(3 downto 0);
+    signal internal_er : std_logic_vector(15 downto 0);
+    signal internal_rx : std_logic_vector(15 downto 0);
+    signal internal_ccd : std_logic_vector(15 downto 0);
+    signal internal_pcd : std_logic_vector(15 downto 0);
 
 begin
     -- multiplexers
@@ -67,11 +70,11 @@ begin
         sel => z_mux_sel,
         a => ir_hold_15_0,
         b => m_out,
-        c => in_rx,
+        c => internal_rx,
         d => aluout,
         e => rz_max,
         f => sip_hold,
-        g => er_temp,
+        g => internal_er,
         h => mem_hp_low,
         outp => out_z
     );
@@ -97,11 +100,16 @@ begin
         writ => writ,
         clk => clk,
         reset => reset,
-        out_rx => rx,
+        out_rx => internal_rx,
         out_rz => rz,
-        out_ccd => ccd,
-        out_pcd => pcd,
+        out_ccd => internal_ccd,
+        out_pcd => internal_pcd,
         out_flmr => flmr
     );
+
+    internal_er <= "000000000000000" & er_temp;
+    rx <= internal_rx;
+    ccd <= internal_ccd(3 downto 0);
+    pcd <= internal_pcd(3 downto 0);
 
 end behaviour;

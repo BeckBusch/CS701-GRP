@@ -45,7 +45,7 @@ begin
 
             if (reset = '1') then
                 for i in 0 to 15 loop
-                    ram_data(i) <= x"0000000000000000";
+                    ram_data(i) <= "0000000000000000";
                 end loop;
             end if;
 
