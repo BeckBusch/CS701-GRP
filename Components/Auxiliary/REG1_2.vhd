@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 -- when using remember that write is mispelled as writ, since write is reserved
 
-entity REG2_1 is
+entity REG1_2 is
     port (
         reg_in : in std_logic_vector(1 downto 0);
         writ : in std_logic;
@@ -14,9 +14,9 @@ entity REG2_1 is
 
     );
 
-end REG2_1;
+end REG1_2;
 
-architecture behaviour of REG2_1 is
+architecture behaviour of REG1_2 is
 begin
 
     process (clk) is

@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity REG16_1 is
+entity REG1_16 is
     port (
         reg_in : in std_logic_vector(15 downto 0);
         writ : in std_logic;
@@ -12,9 +12,9 @@ entity REG16_1 is
 
     );
 
-end REG16_1;
+end REG1_16;
 
-architecture behaviour of REG16_1 is
+architecture behaviour of REG1_16 is
 begin
 
     process (clk) is
