@@ -38,7 +38,12 @@ entity Datapath is
         rf_x_sel : in std_logic_vector(3 downto 0);
         rf_z_sel : in std_logic_vector(3 downto 0);
         ccd : out std_logic_vector(3 downto 0);
-        pcd : out std_logic_vector(3 downto 0)
+        pcd : out std_logic_vector(3 downto 0);
+
+        -- ir
+        ir_reset : in std_logic;
+        ir_load_msb : in std_logic;
+        ir_load_lsb : in std_logic
     );
 end Datapath;
 
@@ -127,6 +132,22 @@ architecture Behaviour of Datapath is
             pcd : out std_logic_vector(3 downto 0);
             flmr : out std_logic_vector(15 downto 0));
     end component;
+
+    component Instruction_reg is
+        Port (
+            CLK           : in  STD_LOGIC;
+            Reset         : in  STD_LOGIC;
+            load_ir1      : in  STD_LOGIC;                                 --load_msb
+            Load_ir2      : in  STD_LOGIC;                                --load_lsb
+            PM_output     : in  STD_LOGIC_VECTOR (15 downto 0);            --m_out
+         AM            : out STD_LOGIC_VECTOR (1 downto 0);                 --ir_31_to_30  
+            Opcode        : out STD_LOGIC_VECTOR (5 downto 0);                 --ir_29_to_24   
+            Rz_Field      : out STD_LOGIC_VECTOR (3 downto 0);     --ir_23_to_20 
+            Rx_Field      : out STD_LOGIC_VECTOR (3 downto 0);      --ir_19_to_16
+            Operand       : out STD_LOGIC_VECTOR (15 downto 0)                --ir_15_to_0 
+        );
+    end component;
+    
     
     -- Signals
         -- TODO: Organise by where the meetings come from.
@@ -183,16 +204,16 @@ begin
     -- outputs
         -- zout : out std_logic;
     ALU_1 : ALU port map ( 
-            alu_op => alu_op,
-            data_a_mux => alu_data_a_mux_sel,
-            data_b_mux => alu_data_b_mux_sel,
-            rx => rx,
-            rz => rz,
-            ir_hold => ir_hold(15 downto 0),
-            flmr => flmr,
-            carry_in => alu_carry_in,
-            zout => zout,
-            aluout => aluout
+        alu_op => alu_op,
+        data_a_mux => alu_data_a_mux_sel,
+        data_b_mux => alu_data_b_mux_sel,
+        rx => rx,
+        rz => rz,
+        ir_hold => ir_hold(15 downto 0),
+        flmr => flmr,
+        carry_in => alu_carry_in,
+        zout => zout,
+        aluout => aluout
     );
 
     -- control signals
@@ -203,14 +224,14 @@ begin
         -- pc_reg_reset : in std_logic;
         -- clk : in std_logic; -- this is the clock for every reg
     PC_COMPONENT_1 : PC_COMPONENT port map (
-            pc_mux_sel => pc_mux_sel,
-            m_out => data_in,
-            rx => rx,
-            ir_hold => ir_hold(15 downto 0),
-            reg_write => pc_reg_write,
-            reg_reset => pc_reg_reset,
-            reg_clk => clk,
-            pc_hold => pc_hold
+        pc_mux_sel => pc_mux_sel,
+        m_out => data_in,
+        rx => rx,
+        ir_hold => ir_hold(15 downto 0),
+        reg_write => pc_reg_write,
+        reg_reset => pc_reg_reset,
+        reg_clk => clk,
+        pc_hold => pc_hold
     );
 
     -- control signals
@@ -229,30 +250,50 @@ begin
         -- ccd : out std_logic_vector(3 downto 0);
         -- pcd : out std_logic_vector(3 downto 0);
     RF_1 : RF port map (
-            clk => clk,
-            writ => rf_write,
-            reset => rf_reset,
-            z_mux_sel => rf_mux_sel,
-            selx_mux_sel => rf_x_mux_sel,
-            selz_mux_sel => rf_z_mux_sel,
-    
-            ir_hold_19_16 => ir_hold(19 downto 16),
-            cu_selx => rf_x_sel,
-            cu_selz => rf_z_sel,
-            ir_hold_23_20 => ir_hold(23 downto 20),
-    
-            ir_hold_15_0 => ir_hold(15 downto 0),
-            m_out => data_in,
-            aluout => aluout,
-            rz_max => maxout,
-            sip_hold => sip_hold,
-            er_temp => er,
-            mem_hp_low => mem_hp_low, -- I have no idea what this is
-            rx  => rx,
-            rz => rz,
-            ccd => ccd,
-            pcd => pcd,
-            flmr => flmr
-        );
+        clk => clk,
+        writ => rf_write,
+        reset => rf_reset,
+        z_mux_sel => rf_mux_sel,
+        selx_mux_sel => rf_x_mux_sel,
+        selz_mux_sel => rf_z_mux_sel,
+
+        ir_hold_19_16 => ir_hold(19 downto 16),
+        cu_selx => rf_x_sel,
+        cu_selz => rf_z_sel,
+        ir_hold_23_20 => ir_hold(23 downto 20),
+
+        ir_hold_15_0 => ir_hold(15 downto 0),
+        m_out => data_in,
+        aluout => aluout,
+        rz_max => maxout,
+        sip_hold => sip_hold,
+        er_temp => er,
+        mem_hp_low => mem_hp_low, -- I have no idea what this is
+        rx  => rx,
+        rz => rz,
+        ccd => ccd,
+        pcd => pcd,
+        flmr => flmr
+    );
+
+    -- control signals
+    -- input
+        -- ir_reset : in std_logic;
+        -- ir_load_msb : in std_logic;
+        -- ir_load_lsb : in std_logic;
+        -- data_in : in std_logic_vector(15 downto 0);
+    -- output
+    Instruction_reg_1 : Instruction_reg port map (
+        CLK => clk,
+        Reset => ir_reset,
+        load_ir1 => ir_load_msb, --load_msb
+        Load_ir2 => ir_load_lsb, --load_lsb
+        PM_output => data_in, --m_out
+        AM => ir_hold(31 downto 30), --ir_31_to_30  
+        Opcode => ir_hold(29 downto 24), --ir_29_to_24   
+        Rz_Field => ir_hold(23 downto 20), --ir_23_to_20 
+        Rx_Field => ir_hold(19 downto 16),      --ir_19_to_16
+        Operand => ir_hold(15 downto 0) --ir_15_to_0 
+    );
 
 end Behaviour;
