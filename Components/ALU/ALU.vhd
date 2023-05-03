@@ -17,13 +17,13 @@ end ALU;
 
 architecture Behavioral of ALU is
   -- Components
-  component MUX2_1 is
+  component MUX2_16 is
     Port ( sel   : in  std_logic;
            a, b  : in  std_logic_vector(15 downto 0);
            outp  : out std_logic_vector(15 downto 0));
   end component;
   
-  component MUX4_1 is
+  component MUX4_16 is
     Port ( sel   : in  std_logic_vector(1 downto 0);
            a, b, c, d : in  std_logic_vector(15 downto 0);
            outp  : out std_logic_vector(15 downto 0));
@@ -44,7 +44,7 @@ architecture Behavioral of ALU is
 begin
 
   -- Multiplexers
-  MUX4_1_1 : MUX4_1 port map(
+  MUX4_16_1 : MUX4_16 port map(
     sel => data_a_mux,
     a   => rx,
     b   => ir_hold,
@@ -53,7 +53,7 @@ begin
     outp => data_a_mux_out
   );
   
-  MUX2_1_1 : MUX2_1 port map(
+  MUX2_16_1 : MUX2_16 port map(
     sel  => data_b_mux,
     a    => rx,
     b    => rz,

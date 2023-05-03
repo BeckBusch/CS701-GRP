@@ -15,7 +15,7 @@ end Data_Mem_Inter;
 
 architecture Behaviour of Data_Mem_Inter is
 
-    component MUX4_1 is
+    component MUX4_16 is
         port (
             sel : in std_logic_vector(1 downto 0);
             a, b, c, d : in std_logic_vector(15 downto 0);
@@ -28,7 +28,7 @@ begin
 
     dprr_mux_in <= "00000000000000" & dprr;
 
-    MUX4_1_1 : MUX4_1 port map(
+    MUX4_16_1 : MUX4_16 port map(
         sel => data_a_mux,
         a => ir_hold,
         b => rx,

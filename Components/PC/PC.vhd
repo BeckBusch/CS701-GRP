@@ -43,7 +43,7 @@ architecture behaviour of PC_COMPONENT is
 
 begin
 
-    MUX4_1_1 : MUX4_1 port map(
+    MUX4_16_1 : MUX4_16 port map(
         sel => pc_mux_sel,
         a => m_out,
         b => rx,
@@ -52,7 +52,7 @@ begin
         outp => mux_out
     );
 
-    REG16_1_1 : REG16_1 port map(
+    REG1_16_1 : REG1_16 port map(
         reg_in => mux_out,
         writ => reg_write,
         reset => reg_reset,
