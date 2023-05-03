@@ -18,7 +18,7 @@ entity RF_REG is
 
         out_ccd : out std_logic_vector(15 downto 0);
         out_pcd : out std_logic_vector(15 downto 0);
-        out_flmr : out std_logic_vector(15 downto 0);
+        out_flmr : out std_logic_vector(15 downto 0)
     );
 
 end RF_REG;
@@ -35,7 +35,7 @@ architecture Behavioral of RF_REG is
 
 begin
 
-    process (clock)
+    process (clk)
     begin
         if (rising_edge(clk)) then
 
@@ -61,4 +61,3 @@ begin
     out_flmr <= ram_data(11); -- R10
 
 end Behavioral;
-Video
