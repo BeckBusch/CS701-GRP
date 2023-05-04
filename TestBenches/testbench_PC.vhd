@@ -13,7 +13,7 @@ architecture Behavioral of testbench_PC is
             pc_mux_sel : in std_logic_vector(1 downto 0);
             m_out : in std_logic_vector(15 downto 0);
             rx : in std_logic_vector(15 downto 0);
-            ir_hold : std_logic_vector(15 downto 0);
+            ir_hold : in std_logic_vector(15 downto 0);
 
             reg_write : in std_logic;
             reg_reset : in std_logic;
@@ -24,17 +24,17 @@ architecture Behavioral of testbench_PC is
     end component;
 
     -- Input signals
-    signal pc_mux_sel : std_logic_vector(1 downto 0);
-    signal m_out : std_logic_vector(15 downto 0);
-    signal rx : std_logic_vector(15 downto 0);
-    signal ir_hold : std_logic_vector(15 downto 0);
+    signal pc_mux_sel : std_logic_vector(1 downto 0) := (others => '0');
+    signal m_out : std_logic_vector(15 downto 0) := (others => '0');
+    signal rx : std_logic_vector(15 downto 0) := (others => '0');
+    signal ir_hold : std_logic_vector(15 downto 0) := (others => '0');
 
-    signal reg_write : std_logic;
-    signal reg_reset : std_logic;
+    signal reg_write : std_logic := '0';
+    signal reg_reset : std_logic := '0';
     signal reg_clk : std_logic := '0';
 
     -- out
-    signal pc_hold : std_logic_vector(15 downto 0) := x"0000";
+    signal pc_out : std_logic_vector(15 downto 0);
 
     constant half_clk_period: time := 5 ns;
     signal finished : std_logic := '0';
@@ -52,7 +52,7 @@ begin
         reg_reset => reg_reset,
         reg_clk => reg_clk,
 
-        pc_hold => pc_hold
+        pc_hold => pc_out
     );
 
     -- Clock
@@ -74,25 +74,25 @@ begin
         -- Select data in
         pc_mux_sel <= "00";
         wait for 10 ns;
-        assert pc_hold = x"0000"
+        assert pc_out = x"0000"
             report "Data in select" severity error;
 
         -- Select RX
         pc_mux_sel <= "01";
         wait for 10 ns;    
-        assert pc_hold = x"0001"
+        assert pc_out = x"0001"
             report "rx select" severity error;
 
         -- Select operand
         pc_mux_sel <= "10";
         wait for 10 ns;    
-        assert pc_hold = x"0002"
+        assert pc_out = x"0002"
             report "Operand select" severity error;
 
         -- Select PC + 1
         pc_mux_sel <= "11";
         wait for 10 ns;    
-        assert pc_hold = x"0003"
+        assert pc_out = x"0003"
             report "PC + 1 select" severity error;
 
         -- End simulation
