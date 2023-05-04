@@ -21,11 +21,11 @@ begin
     begin
 
         if rising_edge(clk) then
-            if (writ = '1') then
-                reg_out <= reg_in;
-
-            elsif (reset = '1') then
+            if (reset = '1') then
                 reg_out <= "0000000000000000";
+
+            elsif (writ = '1') then
+                reg_out <= reg_in;
 
             end if;
         end if;
