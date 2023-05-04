@@ -23,9 +23,12 @@ architecture Behavioral of testbench_REG1_16 is
     signal reg_in : std_logic_vector(15 downto 0);
     signal writ : std_logic;
     signal reset : std_logic;
-    signal clk : std_logic;
+    signal clk : std_logic := '0';
 
     signal reg_out : std_logic_vector(15 downto 0);
+
+    constant half_clk_period: time := 5 ns;
+    signal finished : std_logic := '0';
 
 begin
 
@@ -39,56 +42,59 @@ begin
         reg_out => reg_out
     );
 
+    -- Clock
+    clk <= not clk after half_clk_period when finished /= '1' else '0';
+
     -- Stimulus Process
     stim_proc : process
     begin
+        finished <= '0';
         
-        reg_in <= "1111000011110000";
+        -- Writing to register
+        reg_in <= x"0001";
         writ <= '1';
         reset <= '0';
-        clk <= '0';
-        wait for 5 ns;
+        wait for 10 ns;
+        assert reg_out = x"0001"
+            report "Write operation error" severity error;
 
-        clk <= '1';
-        wait for 5 ns;
+        -- Checking that register doesn't write when write signal is off
+        reg_in <= x"0000";
+        writ <= '0';
+        reset <= '0';
+        wait for 10 ns;
+        assert reg_out = x"0001"
+            report "Register hold error" severity error;
+
+        -- Writing to register when there is something in it
+        reg_in <= x"0002";
+        writ <= '1';
+        reset <= '0';
+        wait for 10 ns;
+        assert reg_out = x"0002"
+            report "Overwrite operation error" severity error;
+
+        -- Resetting register
+        writ <= '0';
+        reset <= '1';
+        wait for 10 ns;
+        assert reg_out = x"0000"
+            report "Register reset error" severity error;
+
+        -- Testing register write and reset at the same time
+        reg_in <= x"0003";
+        writ <= '1';
+        reset <= '0';
+        wait for 10 ns;
 
         writ <= '1';
         reset <= '1';
-        clk <= '0';
-        wait for 5 ns;
+        wait for 10 ns;
+        assert reg_out = x"0000"
+            report "Reset register error due to write signal" severity error;
 
-        clk <= '1';
-        wait for 5 ns;
-
-        writ <= '1';
-        reset <= '0';
-        clk <= '0';
-        wait for 5 ns;
-
-        clk <= '1';
-        wait for 5 ns;
-
-        reg_in <= "1100110011001100";
-        writ <= '1';
-        reset <= '0';
-        clk <= '0';
-        wait for 5 ns;
-
-        clk <= '1';
-        wait for 5 ns;
-
-        clk <= '0';
-        wait for 5 ns;
-
-        clk <= '1';
-        wait for 5 ns;
-
-        clk <= '0';
-        wait for 5 ns;
-
-        clk <= '1';
-        wait for 5 ns;
         -- End simulation
+        finished <= '1';
         wait;
     end process;
 end Behavioral;
