@@ -63,26 +63,12 @@ begin
 
         reg_clk <= '0';
         pc_mux_sel <= "00";
-
         wait for 5 ns;
 
         reg_clk <= '1';
         wait for 5 ns;
 
         reg_clk <= '0';
-        wait for 5 ns;
-
-        reg_clk <= '1';
-        wait for 5 ns;
-
-        reg_clk <= '0';
-        wait for 5 ns;
-
-        reg_clk <= '1';
-        wait for 5 ns;
-
-        reg_clk <= '0';
-        pc_mux_sel <= "01";
         wait for 5 ns;
 
         reg_clk <= '1';
@@ -96,7 +82,6 @@ begin
         wait for 5 ns;
 
         reg_clk <= '0';
-        pc_mux_sel <= "11";
         wait for 5 ns;
 
         reg_clk <= '1';
