@@ -31,10 +31,13 @@ architecture Behavioral of testbench_PC is
 
     signal reg_write : std_logic;
     signal reg_reset : std_logic;
-    signal reg_clk : std_logic;
+    signal reg_clk : std_logic := '0';
 
     -- out
-    signal pc_hold : std_logic_vector(15 downto 0);
+    signal pc_hold : std_logic_vector(15 downto 0) := x"0000";
+
+    constant half_clk_period: time := 5 ns;
+    signal finished : std_logic := '0';
 
 begin
 
@@ -52,42 +55,48 @@ begin
         pc_hold => pc_hold
     );
 
+    -- Clock
+    reg_clk <= not reg_clk after half_clk_period when finished /= '1' else '0';
+
     -- Stimulus Process
     stim_proc : process
     begin
+        finished <= '0';
+
+        -- Initialising values
         reg_write <= '1';
         reg_reset <= '0';
-        m_out <= "1010101010101010";
-        rx <= "1100110011001100";
-        ir_hold <= "0000000000001111";
 
-        reg_clk <= '0';
+        m_out <= x"0000";
+        rx <= x"0001";
+        ir_hold <= x"0002";
+
+        -- Select data in
         pc_mux_sel <= "00";
-        wait for 5 ns;
+        wait for 10 ns;
+        assert pc_hold = x"0000"
+            report "Data in select" severity error;
 
-        reg_clk <= '1';
-        wait for 5 ns;
+        -- Select RX
+        pc_mux_sel <= "01";
+        wait for 10 ns;    
+        assert pc_hold = x"0001"
+            report "rx select" severity error;
 
-        reg_clk <= '0';
-        wait for 5 ns;
-
-        reg_clk <= '1';
-        wait for 5 ns;
-
-        reg_clk <= '0';
+        -- Select operand
         pc_mux_sel <= "10";
-        wait for 5 ns;
+        wait for 10 ns;    
+        assert pc_hold = x"0002"
+            report "Operand select" severity error;
 
-        reg_clk <= '1';
-        wait for 5 ns;
-
-        reg_clk <= '0';
-        wait for 5 ns;
-
-        reg_clk <= '1';
-        wait for 5 ns;        
+        -- Select PC + 1
+        pc_mux_sel <= "11";
+        wait for 10 ns;    
+        assert pc_hold = x"0003"
+            report "PC + 1 select" severity error;
 
         -- End simulation
+        finished <= '1';
         wait;
     end process;
 end Behavioral;
