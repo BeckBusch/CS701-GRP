@@ -18,14 +18,14 @@ end PC_COMPONENT;
 
 architecture behaviour of PC_COMPONENT is
 
-    component MUX4_1 is
+    component MUX4_16 is
         port (
             sel : in std_logic_vector(1 downto 0);
             a, b, c, d : in std_logic_vector(15 downto 0);
             outp : out std_logic_vector(15 downto 0));
     end component;
 
-    component REG16_1 is
+    component REG1_16 is
         port (
             reg_in : in std_logic_vector(15 downto 0);
             writ : in std_logic;
@@ -60,7 +60,7 @@ begin
         reg_out => pc_out
     );
 
-    pc_increment <= pc_out + 1;
+    pc_increment <= std_logic_vector(unsigned(pc_out) + 1);
 
     pc_hold <= pc_out;
 

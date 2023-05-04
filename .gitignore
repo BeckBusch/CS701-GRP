@@ -32,3 +32,5 @@ cov*/
 transcript*
 sc_dpiheader.h
 vsim.dbg
+WaveformOutput.vcd
+work-obj93.cf

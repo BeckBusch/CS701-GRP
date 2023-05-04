@@ -3,12 +3,12 @@ use IEEE.std_logic_1164.all;
 
 entity REG1_16 is
     port (
-        reg_in : in std_logic_vector(15 downto 0);
-        writ : in std_logic;
-        reset : in std_logic;
-        clk : in std_logic;
+        signal reg_in : in std_logic_vector(15 downto 0);
+        signal writ : in std_logic;
+        signal reset : in std_logic;
+        signal clk : in std_logic;
 
-        reg_out : out std_logic_vector(15 downto 0)
+        signal reg_out : out std_logic_vector(15 downto 0)
 
     );
 
