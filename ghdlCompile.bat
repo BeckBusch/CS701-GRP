@@ -22,9 +22,8 @@ for /r %%f in (*%file_extension%) do (
     set "relative_path=%%f"
     set "relative_path=!relative_path:%search_directory%\=!"
     echo Found: !relative_path!
-    popd
-    ghdl -a ..\!relative_path!
-    pushd "%search_directory%"
+    
+    ghdl -a .\!relative_path!
 )
 popd
 
