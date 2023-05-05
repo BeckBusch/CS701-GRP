@@ -1,0 +1,91 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2018  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+*/
+(header "graphic" (version "1.4"))
+(symbol
+	(rect 192 344 336 424)
+	(text "MUX1" (rect 50 0 90 16)(font "Arial" (font_size 10)))
+	(text "inst3" (rect 8 64 30 81)(font "Intel Clear" ))
+	(port
+		(pt 0 40)
+		(input)
+		(text "data1x[11..0]" (rect 0 0 74 14)(font "Arial" (font_size 8)))
+		(text "data1x[11..0]" (rect 4 24 78 38)(font "Arial" (font_size 8)))
+		(line (pt 0 40)(pt 64 40)(line_width 3))
+	)
+	(port
+		(pt 0 56)
+		(input)
+		(text "data0x[11..0]" (rect 0 0 74 14)(font "Arial" (font_size 8)))
+		(text "data0x[11..0]" (rect 4 40 78 54)(font "Arial" (font_size 8)))
+		(line (pt 0 56)(pt 64 56)(line_width 3))
+	)
+	(port
+		(pt 72 80)
+		(input)
+		(text "sel" (rect 0 0 14 16)(font "Arial" (font_size 8))(vertical))
+		(text "sel" (rect 64 48 78 64)(font "Arial" (font_size 8))(vertical))
+		(line (pt 72 80)(pt 72 68))
+	)
+	(port
+		(pt 144 48)
+		(output)
+		(text "result[11..0]" (rect 0 0 67 14)(font "Arial" (font_size 8)))
+		(text "result[11..0]" (rect 73 32 140 46)(font "Arial" (font_size 8)))
+		(line (pt 144 48)(pt 80 48)(line_width 3))
+	)
+	(drawing
+		(line (pt 64 24)(pt 64 72))
+		(line (pt 64 24)(pt 80 32))
+		(line (pt 64 72)(pt 80 64))
+		(line (pt 80 32)(pt 80 64))
+		(line (pt 0 0)(pt 146 0))
+		(line (pt 146 0)(pt 146 82))
+		(line (pt 0 82)(pt 146 82))
+		(line (pt 0 0)(pt 0 82))
+		(line (pt 0 0)(pt 0 0))
+		(line (pt 0 0)(pt 0 0))
+		(line (pt 0 0)(pt 0 0))
+		(line (pt 0 0)(pt 0 0))
+	)
+)
+(block
+	(rect 488 424 672 592)
+	(text "RAM2" (rect 5 5 34 22)(font "Intel Clear" ))	(text "inst" (rect 5 166 21 183)(font "Intel Clear" ))	(block_io "data[15..0]" (input))
+	(block_io "wren" (input))
+	(block_io "address[11..0]" (input))
+	(block_io "clock" (input))
+	(block_io "q[15..0]" (output))
+)
+(block
+	(rect 484 84 668 252)
+	(text "RAM1" (rect 5 5 34 22)(font "Intel Clear" ))	(text "inst1" (rect 5 166 27 183)(font "Intel Clear" ))	(block_io "data[15..0]" (input))
+	(block_io "wren" (input))
+	(block_io "address[11..0]" (input))
+	(block_io "clock" (input))
+	(block_io "q[15..0]" (output))
+)
+(block
+	(rect 184 96 360 240)
+	(text "MUX1" (rect 5 5 34 22)(font "Intel Clear" ))	(text "inst2" (rect 5 142 27 159)(font "Intel Clear" ))	(block_io "data1x[11..0]" (input))
+	(block_io "data0x[11..0]" (input))
+	(block_io "sel" (input))
+	(block_io "result[11..0]" (output))
+)
