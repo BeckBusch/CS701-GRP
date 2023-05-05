@@ -14,7 +14,7 @@
 
 -- PROGRAM		"Quartus Prime"
 -- VERSION		"Version 18.1.0 Build 625 09/12/2018 SJ Standard Edition"
--- CREATED		"Fri May 05 18:14:07 2023"
+-- CREATED		"Fri May 05 18:30:00 2023"
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all; 
@@ -29,9 +29,6 @@ ENTITY Datapath IS
 		mem_sel :  IN  STD_LOGIC;
 		pc_write :  IN  STD_LOGIC;
 		pc_reset :  IN  STD_LOGIC;
-		er_in :  IN  STD_LOGIC;
-		er_write :  IN  STD_LOGIC;
-		er_reset :  IN  STD_LOGIC;
 		carry_in :  IN  STD_LOGIC;
 		alu_b_mux :  IN  STD_LOGIC;
 		dpcr_write :  IN  STD_LOGIC;
@@ -47,8 +44,6 @@ ENTITY Datapath IS
 		SOP_reset :  IN  STD_LOGIC;
 		SIP_write :  IN  STD_LOGIC;
 		SIP_reset :  IN  STD_LOGIC;
-		SVOP_write :  IN  STD_LOGIC;
-		SVOP_reset :  IN  STD_LOGIC;
 		load_ir1 :  IN  STD_LOGIC;
 		ir_reset :  IN  STD_LOGIC;
 		loard_ir2 :  IN  STD_LOGIC;
@@ -58,9 +53,6 @@ ENTITY Datapath IS
 		rf_sel_z :  IN  STD_LOGIC;
 		sys_clk :  IN  STD_LOGIC;
 		clr_irq_in :  IN  STD_LOGIC;
-		eot_in :  IN  STD_LOGIC;
-		eot_write :  IN  STD_LOGIC;
-		eot_reset :  IN  STD_LOGIC;
 		alu_a_mux :  IN  STD_LOGIC_VECTOR(1 DOWNTO 0);
 		alu_op :  IN  STD_LOGIC_VECTOR(1 DOWNTO 0);
 		dprr_in :  IN  STD_LOGIC_VECTOR(1 DOWNTO 0);
@@ -74,11 +66,9 @@ ENTITY Datapath IS
 		rf_z_input_sel :  IN  STD_LOGIC_VECTOR(2 DOWNTO 0);
 		SIP_in :  IN  STD_LOGIC_VECTOR(15 DOWNTO 0);
 		SOP_in :  IN  STD_LOGIC_VECTOR(15 DOWNTO 0);
-		SVOP_in :  IN  STD_LOGIC_VECTOR(15 DOWNTO 0);
 		dpc :  OUT  STD_LOGIC;
 		z_out :  OUT  STD_LOGIC;
 		clr_irq :  OUT  STD_LOGIC;
-		eot :  OUT  STD_LOGIC;
 		addr :  OUT  STD_LOGIC_VECTOR(16 DOWNTO 0);
 		am :  OUT  STD_LOGIC_VECTOR(1 DOWNTO 0);
 		ccd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -86,8 +76,7 @@ ENTITY Datapath IS
 		dpcr_out :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
 		opcode :  OUT  STD_LOGIC_VECTOR(5 DOWNTO 0);
 		pcd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
-		SOP :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0);
-		SVOP :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0)
+		SOP :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
 END Datapath;
 
@@ -276,22 +265,6 @@ PORT MAP(writ => dprr_write,
 		 reg_out => dprr);
 
 
-b2v_eot_reg : reg1_1
-PORT MAP(reg_in => eot_in,
-		 writ => eot_write,
-		 reset => eot_reset,
-		 clk => clk,
-		 reg_out => eot);
-
-
-b2v_er_reg : reg1_1
-PORT MAP(reg_in => er_in,
-		 writ => er_write,
-		 reset => er_reset,
-		 clk => clk,
-		 reg_out => er);
-
-
 b2v_inst3 : alu
 PORT MAP(data_b_mux => alu_b_mux,
 		 carry_in => carry_in,
@@ -391,14 +364,6 @@ PORT MAP(writ => SOP_write,
 		 clk => clk,
 		 reg_in => SOP_in,
 		 reg_out => SOP);
-
-
-b2v_SVOP_reg : reg1_16
-PORT MAP(writ => SVOP_write,
-		 reset => SVOP_reset,
-		 clk => clk,
-		 reg_in => SVOP_in,
-		 reg_out => SVOP);
 
 
 b2v_z_reg : reg1_1
