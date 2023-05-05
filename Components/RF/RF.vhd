@@ -63,6 +63,7 @@ architecture behaviour of RF is
     signal internal_rx : std_logic_vector(15 downto 0);
     signal internal_ccd : std_logic_vector(15 downto 0);
     signal internal_pcd : std_logic_vector(15 downto 0);
+    signal crop_hp : std_logic_vector(15 downto 0);
 
 begin
     -- multiplexers
@@ -75,7 +76,7 @@ begin
         e => rz_max,
         f => sip_hold,
         g => internal_er,
-        h => mem_hp_low,
+        h => crop_hp,
         outp => out_z
     );
 
@@ -107,6 +108,7 @@ begin
         out_flmr => flmr
     );
 
+    crop_hp <= "000000000" & mem_hp_low(6 downto 0);
     internal_er <= "000000000000000" & er_temp;
     rx <= internal_rx;
     ccd <= internal_ccd(3 downto 0);
