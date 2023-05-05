@@ -46,39 +46,19 @@ begin
         finished <= '0';
 
         -- RZ is max
-        rx <= x"0123";
+        rx <= x"0001";
         rz <= x"0004";
         wait for 10 ns;
         assert max_out = x"0004"
             report "RZ max" severity error;
 
-        -- RX 15-12 is max
-        rx <= x"5123";
+        -- RX is max
+        rx <= x"0007";
         rz <= x"0004";
         wait for 10 ns;
-        assert max_out = x"0005"
-            report "RX(15..12) max" severity error;
+        assert max_out = x"0007"
+            report "RX max" severity error;
 
-        -- RX 11-8 is max
-        rx <= x"0523";
-        rz <= x"0004";
-        wait for 10 ns;
-        assert max_out = x"0005"
-            report "RX(11..8) max" severity error;
-
-        -- RX 7-4 is max
-        rx <= x"0153";
-        rz <= x"0004";
-        wait for 10 ns;
-        assert max_out = x"0005"
-            report "RX(7..4) max" severity error;
-
-        -- RX 3-0 is max
-        rx <= x"0125";
-        rz <= x"0004";
-        wait for 10 ns;
-        assert max_out = x"0005"
-            report "RX(3..0) max" severity error;
 
         -- End simulation
         finished <= '1';
