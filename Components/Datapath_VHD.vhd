@@ -2,30 +2,29 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.all;
 use IEEE.NUMERIC_STD.all;
 
-entity Datapath is
+entity Datapath_VHD is
     port (
-        -- general
+        -- other input signals
         clk : in std_logic;
+        data_in : in std_logic_vector(15 downto 0);
+        dprr_in : in std_logic_vector(1 downto 0);
 
+        -- control signals
         -- memory address interface
         mem_address_mux_sel : in std_logic_vector(1 downto 0);
         mem_sel : in std_logic;
-        address_out : out std_logic_vector(16 downto 0);
 
         -- memory data interface
         mem_data_mux_sel : in std_logic_vector(1 downto 0);
-        data_out : out std_logic_vector(15 downto 0);
 
         -- alu
         alu_op : in std_logic_vector(1  downto 0);
         alu_data_a_mux_sel : in std_logic_vector(1  downto 0);
         alu_data_b_mux_sel : in std_logic;
         alu_carry_in : in std_logic;
-        zout : out std_logic;
 
         -- pc
         pc_mux_sel : in std_logic_vector(1  downto 0);
-        data_in : in std_logic_vector(15 downto 0);
         pc_reg_write : in std_logic;
         pc_reg_reset : in std_logic;
 
@@ -37,18 +36,25 @@ entity Datapath is
         rf_z_mux_sel : in std_logic;
         rf_x_sel : in std_logic_vector(3 downto 0);
         rf_z_sel : in std_logic_vector(3 downto 0);
-        ccd : out std_logic_vector(3 downto 0);
-        pcd : out std_logic_vector(3 downto 0);
 
         -- ir
         ir_reset : in std_logic;
         ir_load_msb : in std_logic;
-        ir_load_lsb : in std_logic
+        ir_load_lsb : in std_logic;
+
+        -- outputs
+        address_out : out std_logic_vector(16 downto 0);
+        data_out : out std_logic_vector(15 downto 0);
+
+        zout : out std_logic;
+
+        ccd : out std_logic_vector(3 downto 0); -- current clock domain
+        pcd : out std_logic_vector(3 downto 0)  -- previous clock domain
     );
-end Datapath;
+end Datapath_VHD;
 
 
-architecture Behaviour of Datapath is
+architecture Behaviour of Datapath_VHD is
     -- Components
     component Addr_Mem_Inter is
         port (
@@ -145,6 +151,17 @@ architecture Behaviour of Datapath is
             Rz_Field      : out STD_LOGIC_VECTOR (3 downto 0);     --ir_23_to_20 
             Rx_Field      : out STD_LOGIC_VECTOR (3 downto 0);      --ir_19_to_16
             Operand       : out STD_LOGIC_VECTOR (15 downto 0)                --ir_15_to_0 
+        );
+    end component;
+
+    component REG1_2 is
+        port (
+            reg_in : in std_logic_vector(1 downto 0);
+            writ : in std_logic;
+            reset : in std_logic;
+            clk : in std_logic;
+    
+            reg_out : out std_logic_vector(1 downto 0)
         );
     end component;
     
@@ -296,4 +313,14 @@ begin
         Operand => ir_hold(15 downto 0) --ir_15_to_0 
     );
 
+    -- external signals
+    -- input
+        -- dprr_in : in std_logic_vector(1 downto 0);
+    DPRR_1 : REG1_2 port map (
+        reg_in => dprr_in,
+        writ => '1',
+        reset => '0',
+        clk => clk,
+        reg_out => dprr
+    );
 end Behaviour;
