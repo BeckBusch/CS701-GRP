@@ -41,7 +41,7 @@ set_global_assignment -name DEVICE 5CSEMA5F31C6
 set_global_assignment -name TOP_LEVEL_ENTITY ReCOP_Quartus
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:26:42  MAY 01, 2023"
-set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Standard Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name BOARD "DE1-SoC Board"
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
@@ -51,7 +51,26 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/REG1_8.vhd
+set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/REG1_1.vhd
+set_global_assignment -name VHDL_FILE ../../Components/ALU/MAX.vhd
+set_global_assignment -name VHDL_FILE ../../Components/ALU/ALU_COMPONENT.vhd
+set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/REG1_16.vhd
+set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/REG1_2.vhd
+set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/MUX8_16.vhd
+set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/MUX4_16.vhd
+set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/MUX2_16.vhd
+set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/MUX2_4.vhd
+set_global_assignment -name VHDL_FILE ../../Components/IR/Instruction_reg.vhd
+set_global_assignment -name VHDL_FILE ../../Components/Mem_Interface/Data_Mem_Inter.vhd
+set_global_assignment -name VHDL_FILE ../../Components/Mem_Interface/Addr_Mem_Inter.vhd
+set_global_assignment -name VHDL_FILE ../../Components/PC/PC_2.vhd
+set_global_assignment -name VHDL_FILE ../../Components/PC/PC.vhd
+set_global_assignment -name VHDL_FILE ../../Components/RF/RF_REG.vhd
+set_global_assignment -name VHDL_FILE ../../Components/ALU/ALU.vhd
+set_global_assignment -name VHDL_FILE ../../Components/RF/RF.vhd
 set_global_assignment -name QIP_FILE RAM2.qip
 set_global_assignment -name QIP_FILE RAM1.qip
 set_global_assignment -name QIP_FILE MUX1.qip
+set_global_assignment -name BDF_FILE Datapath.bdf
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
