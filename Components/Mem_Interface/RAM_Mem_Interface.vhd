@@ -11,7 +11,7 @@ entity RAM_Mem_Inter is
 
         --Memory outputs
         out_mem_clk : out std_logic;
-        out_data_in : out std_logic_vector(16 downto 0);
+        out_data_in : out std_logic_vector(15 downto 0);
 
         addr_dm : out std_logic_vector(11 downto 0);
         w_dm : out std_logic;
@@ -28,6 +28,14 @@ entity RAM_Mem_Inter is
 end RAM_Mem_Inter;
 
 architecture behaviour of RAM_Mem_Inter is
+
+    component MUX2_16 is
+        port (
+            sel : in std_logic;
+            a, b : in std_logic_vector(15 downto 0);
+            outp : out std_logic_vector(15 downto 0)
+        );
+    end component;
 
     component MUX2_12 is
         port (
@@ -48,12 +56,12 @@ begin
     MUX2_12_1 : MUX2_12 port map(
         sel => address(16),
         a => address(11 downto 0),
-        b => X"0000",
+        b => "000000000000",
         outp => addr_dm
     );
     MUX2_12_2 : MUX2_12 port map(
         sel => address(16),
-        a => X"0000",
+        a => "000000000000",
         b => address(11 downto 0),
         outp => addr_pm
     );
@@ -63,7 +71,7 @@ begin
         b => '0',
         outp => w_dm
     );
-    MUX2_12_2 : MUX2_1 port map(
+    MUX2_1_2 : MUX2_1 port map(
         sel => address(16),
         a => '0',
         b => w,

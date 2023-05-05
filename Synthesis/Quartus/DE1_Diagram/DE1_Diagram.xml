@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2023.05.05.16:52:01"
+ outputDirectory="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="Cyclone V"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="5CSEMA5F31C6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_RATE"
+     type="Long"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_RESET_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="button_pio_irq" kind="interrupt" start="0">
+   <property name="associatedAddressablePoint" value="" />
+   <property name="associatedClock" value="clk" />
+   <property name="associatedReset" value="reset" />
+   <property name="bridgedReceiverOffset" value="0" />
+   <property name="bridgesToReceiver" value="" />
+   <property name="irqScheme" value="NONE" />
+   <port name="button_pio_irq_irq" direction="output" role="irq" width="1" />
+  </interface>
+  <interface name="clk" kind="clock" start="0">
+   <property name="clockRate" value="50000000" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="clk_clk" direction="input" role="clk" width="1" />
+  </interface>
+  <interface name="led_pio_external_connection" kind="conduit" start="0">
+   <property name="associatedClock" value="" />
+   <property name="associatedReset" value="" />
+   <port
+       name="led_pio_external_connection_export"
+       direction="output"
+       role="export"
+       width="8" />
+  </interface>
+  <interface name="reset" kind="reset" start="0">
+   <property name="associatedClock" value="" />
+   <property name="synchronousEdges" value="NONE" />
+   <port name="reset_reset_n" direction="input" role="reset_n" width="1" />
+  </interface>
+  <interface name="sev_seg_pio_external_connection" kind="conduit" start="0">
+   <property name="associatedClock" value="" />
+   <property name="associatedReset" value="" />
+   <port
+       name="sev_seg_pio_external_connection_export"
+       direction="output"
+       role="export"
+       width="28" />
+  </interface>
+  <interface name="switch_pio_external_connection" kind="conduit" start="0">
+   <property name="associatedClock" value="" />
+   <property name="associatedReset" value="" />
+   <port
+       name="switch_pio_external_connection_export"
+       direction="input"
+       role="export"
+       width="8" />
+  </interface>
+ </perimeter>
+ <entity
+   path=""
+   parameterizationKey="DE1_Diagram:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=5CSEMA5F31C6,AUTO_DEVICE_FAMILY=Cyclone V,AUTO_DEVICE_SPEEDGRADE=6,AUTO_GENERATION_ID=1683262319,AUTO_UNIQUE_ID=(altera_avalon_pio:18.1:bitClearingEdgeCapReg=false,bitModifyingOutReg=false,captureEdge=true,clockRate=50000000,derived_capture=true,derived_do_test_bench_wiring=false,derived_edge_type=RISING,derived_has_in=true,derived_has_irq=true,derived_has_out=false,derived_has_tri=false,derived_irq_type=EDGE,direction=Input,edgeType=RISING,generateIRQ=true,irqType=EDGE,resetValue=0,simDoTestBenchWiring=false,simDrivenValue=0,width=4)(altera_avalon_pio:18.1:bitClearingEdgeCapReg=false,bitModifyingOutReg=false,captureEdge=false,clockRate=50000000,derived_capture=false,derived_do_test_bench_wiring=false,derived_edge_type=NONE,derived_has_in=false,derived_has_irq=false,derived_has_out=true,derived_has_tri=false,derived_irq_type=NONE,direction=Output,edgeType=RISING,generateIRQ=false,irqType=LEVEL,resetValue=0,simDoTestBenchWiring=false,simDrivenValue=0,width=8)(altera_avalon_pio:18.1:bitClearingEdgeCapReg=false,bitModifyingOutReg=false,captureEdge=false,clockRate=50000000,derived_capture=false,derived_do_test_bench_wiring=false,derived_edge_type=NONE,derived_has_in=false,derived_has_irq=false,derived_has_out=true,derived_has_tri=false,derived_irq_type=NONE,direction=Output,edgeType=RISING,generateIRQ=false,irqType=LEVEL,resetValue=0,simDoTestBenchWiring=false,simDrivenValue=0,width=28)(altera_avalon_pio:18.1:bitClearingEdgeCapReg=false,bitModifyingOutReg=false,captureEdge=false,clockRate=50000000,derived_capture=false,derived_do_test_bench_wiring=false,derived_edge_type=NONE,derived_has_in=true,derived_has_irq=false,derived_has_out=false,derived_has_tri=false,derived_irq_type=NONE,direction=Input,edgeType=RISING,generateIRQ=false,irqType=LEVEL,resetValue=0,simDoTestBenchWiring=false,simDrivenValue=0,width=8)(clock_source:18.1:clockFrequency=50000000,clockFrequencyKnown=true,inputClockFrequency=0,resetSynchronousEdges=NONE)(clock:18.1:)(clock:18.1:)(clock:18.1:)(clock:18.1:)(reset:18.1:)(reset:18.1:)(reset:18.1:)(reset:18.1:)"
+   instancePathKey="DE1_Diagram"
+   kind="DE1_Diagram"
+   version="1.0"
+   name="DE1_Diagram">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="-1" />
+  <parameter name="AUTO_GENERATION_ID" value="1683262319" />
+  <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="-1" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="-1" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <generatedFiles>
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/DE1_Diagram.vhd"
+       type="VHDL" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/DE1_Diagram_Button_PIO.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/DE1_Diagram_LED_PIO.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/DE1_Diagram_Sev_Seg_PIO.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/DE1_Diagram_Switch_PIO.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/altera_reset_controller.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/altera_reset_synchronizer.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/altera_reset_controller.sdc"
+       type="SDC"
+       attributes="" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram.qsys" />
+  </sourceFiles>
+  <childSourceFiles>
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/sopc_builder_ip/altera_avalon_pio/altera_avalon_pio_hw.tcl" />
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/sopc_builder_ip/altera_avalon_pio/altera_avalon_pio_hw.tcl" />
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/sopc_builder_ip/altera_avalon_pio/altera_avalon_pio_hw.tcl" />
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/sopc_builder_ip/altera_avalon_pio/altera_avalon_pio_hw.tcl" />
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/merlin/altera_reset_controller/altera_reset_controller_hw.tcl" />
+  </childSourceFiles>
+  <messages>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 0 starting:DE1_Diagram "DE1_Diagram"</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug">Transform: CustomInstructionTransform</message>
+   <message level="Debug">No custom instruction connections, skipping transform </message>
+   <message level="Debug" culprit="merlin_custom_instruction_transform"><![CDATA[After transform: <b>5</b> modules, <b>8</b> connections]]></message>
+   <message level="Debug">Transform: MMTransform</message>
+   <message level="Debug">Transform: InterruptMapperTransform</message>
+   <message level="Debug">Transform: InterruptSyncTransform</message>
+   <message level="Debug">Transform: InterruptFanoutTransform</message>
+   <message level="Debug">Transform: AvalonStreamingTransform</message>
+   <message level="Debug">Transform: ResetAdaptation</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug" culprit="reset_adaptation_transform"><![CDATA[After transform: <b>6</b> modules, <b>10</b> connections]]></message>
+   <message level="Debug" culprit="DE1_Diagram"><![CDATA["<b>DE1_Diagram</b>" reuses <b>altera_avalon_pio</b> "<b>submodules/DE1_Diagram_Button_PIO</b>"]]></message>
+   <message level="Debug" culprit="DE1_Diagram"><![CDATA["<b>DE1_Diagram</b>" reuses <b>altera_avalon_pio</b> "<b>submodules/DE1_Diagram_LED_PIO</b>"]]></message>
+   <message level="Debug" culprit="DE1_Diagram"><![CDATA["<b>DE1_Diagram</b>" reuses <b>altera_avalon_pio</b> "<b>submodules/DE1_Diagram_Sev_Seg_PIO</b>"]]></message>
+   <message level="Debug" culprit="DE1_Diagram"><![CDATA["<b>DE1_Diagram</b>" reuses <b>altera_avalon_pio</b> "<b>submodules/DE1_Diagram_Switch_PIO</b>"]]></message>
+   <message level="Debug" culprit="DE1_Diagram"><![CDATA["<b>DE1_Diagram</b>" reuses <b>altera_reset_controller</b> "<b>submodules/altera_reset_controller</b>"]]></message>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 4 starting:altera_avalon_pio "submodules/DE1_Diagram_Button_PIO"</message>
+   <message level="Info" culprit="Button_PIO">Starting RTL generation for module 'DE1_Diagram_Button_PIO'</message>
+   <message level="Info" culprit="Button_PIO">  Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=DE1_Diagram_Button_PIO --dir=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0002_Button_PIO_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0002_Button_PIO_gen//DE1_Diagram_Button_PIO_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="Button_PIO">Done RTL generation for module 'DE1_Diagram_Button_PIO'</message>
+   <message level="Info" culprit="Button_PIO"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_avalon_pio</b> "<b>Button_PIO</b>"]]></message>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 3 starting:altera_avalon_pio "submodules/DE1_Diagram_LED_PIO"</message>
+   <message level="Info" culprit="LED_PIO">Starting RTL generation for module 'DE1_Diagram_LED_PIO'</message>
+   <message level="Info" culprit="LED_PIO">  Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=DE1_Diagram_LED_PIO --dir=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0003_LED_PIO_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0003_LED_PIO_gen//DE1_Diagram_LED_PIO_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="LED_PIO">Done RTL generation for module 'DE1_Diagram_LED_PIO'</message>
+   <message level="Info" culprit="LED_PIO"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_avalon_pio</b> "<b>LED_PIO</b>"]]></message>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 2 starting:altera_avalon_pio "submodules/DE1_Diagram_Sev_Seg_PIO"</message>
+   <message level="Info" culprit="Sev_Seg_PIO">Starting RTL generation for module 'DE1_Diagram_Sev_Seg_PIO'</message>
+   <message level="Info" culprit="Sev_Seg_PIO">  Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=DE1_Diagram_Sev_Seg_PIO --dir=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0004_Sev_Seg_PIO_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0004_Sev_Seg_PIO_gen//DE1_Diagram_Sev_Seg_PIO_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="Sev_Seg_PIO">Done RTL generation for module 'DE1_Diagram_Sev_Seg_PIO'</message>
+   <message level="Info" culprit="Sev_Seg_PIO"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_avalon_pio</b> "<b>Sev_Seg_PIO</b>"]]></message>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 1 starting:altera_avalon_pio "submodules/DE1_Diagram_Switch_PIO"</message>
+   <message level="Info" culprit="Switch_PIO">Starting RTL generation for module 'DE1_Diagram_Switch_PIO'</message>
+   <message level="Info" culprit="Switch_PIO">  Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=DE1_Diagram_Switch_PIO --dir=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0005_Switch_PIO_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0005_Switch_PIO_gen//DE1_Diagram_Switch_PIO_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="Switch_PIO">Done RTL generation for module 'DE1_Diagram_Switch_PIO'</message>
+   <message level="Info" culprit="Switch_PIO"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_avalon_pio</b> "<b>Switch_PIO</b>"]]></message>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 0 starting:altera_reset_controller "submodules/altera_reset_controller"</message>
+   <message level="Info" culprit="rst_controller"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_reset_controller</b> "<b>rst_controller</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_avalon_pio:18.1:bitClearingEdgeCapReg=false,bitModifyingOutReg=false,captureEdge=true,clockRate=50000000,derived_capture=true,derived_do_test_bench_wiring=false,derived_edge_type=RISING,derived_has_in=true,derived_has_irq=true,derived_has_out=false,derived_has_tri=false,derived_irq_type=EDGE,direction=Input,edgeType=RISING,generateIRQ=true,irqType=EDGE,resetValue=0,simDoTestBenchWiring=false,simDrivenValue=0,width=4"
+   instancePathKey="DE1_Diagram:.:Button_PIO"
+   kind="altera_avalon_pio"
+   version="18.1"
+   name="DE1_Diagram_Button_PIO">
+  <parameter name="derived_do_test_bench_wiring" value="false" />
+  <parameter name="generateIRQ" value="true" />
+  <parameter name="derived_has_irq" value="true" />
+  <parameter name="captureEdge" value="true" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="derived_has_out" value="false" />
+  <parameter name="derived_has_in" value="true" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="derived_has_tri" value="false" />
+  <parameter name="derived_capture" value="true" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="derived_edge_type" value="RISING" />
+  <parameter name="irqType" value="EDGE" />
+  <parameter name="derived_irq_type" value="EDGE" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="width" value="4" />
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="direction" value="Input" />
+  <generatedFiles>
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/DE1_Diagram_Button_PIO.v"
+       type="VERILOG"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/sopc_builder_ip/altera_avalon_pio/altera_avalon_pio_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="DE1_Diagram" as="Button_PIO" />
+  <messages>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 4 starting:altera_avalon_pio "submodules/DE1_Diagram_Button_PIO"</message>
+   <message level="Info" culprit="Button_PIO">Starting RTL generation for module 'DE1_Diagram_Button_PIO'</message>
+   <message level="Info" culprit="Button_PIO">  Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=DE1_Diagram_Button_PIO --dir=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0002_Button_PIO_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0002_Button_PIO_gen//DE1_Diagram_Button_PIO_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="Button_PIO">Done RTL generation for module 'DE1_Diagram_Button_PIO'</message>
+   <message level="Info" culprit="Button_PIO"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_avalon_pio</b> "<b>Button_PIO</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_avalon_pio:18.1:bitClearingEdgeCapReg=false,bitModifyingOutReg=false,captureEdge=false,clockRate=50000000,derived_capture=false,derived_do_test_bench_wiring=false,derived_edge_type=NONE,derived_has_in=false,derived_has_irq=false,derived_has_out=true,derived_has_tri=false,derived_irq_type=NONE,direction=Output,edgeType=RISING,generateIRQ=false,irqType=LEVEL,resetValue=0,simDoTestBenchWiring=false,simDrivenValue=0,width=8"
+   instancePathKey="DE1_Diagram:.:LED_PIO"
+   kind="altera_avalon_pio"
+   version="18.1"
+   name="DE1_Diagram_LED_PIO">
+  <parameter name="derived_do_test_bench_wiring" value="false" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="derived_has_irq" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="derived_has_out" value="true" />
+  <parameter name="derived_has_in" value="false" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="derived_has_tri" value="false" />
+  <parameter name="derived_capture" value="false" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="derived_edge_type" value="NONE" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="derived_irq_type" value="NONE" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="width" value="8" />
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="direction" value="Output" />
+  <generatedFiles>
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/DE1_Diagram_LED_PIO.v"
+       type="VERILOG"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/sopc_builder_ip/altera_avalon_pio/altera_avalon_pio_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="DE1_Diagram" as="LED_PIO" />
+  <messages>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 3 starting:altera_avalon_pio "submodules/DE1_Diagram_LED_PIO"</message>
+   <message level="Info" culprit="LED_PIO">Starting RTL generation for module 'DE1_Diagram_LED_PIO'</message>
+   <message level="Info" culprit="LED_PIO">  Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=DE1_Diagram_LED_PIO --dir=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0003_LED_PIO_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0003_LED_PIO_gen//DE1_Diagram_LED_PIO_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="LED_PIO">Done RTL generation for module 'DE1_Diagram_LED_PIO'</message>
+   <message level="Info" culprit="LED_PIO"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_avalon_pio</b> "<b>LED_PIO</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_avalon_pio:18.1:bitClearingEdgeCapReg=false,bitModifyingOutReg=false,captureEdge=false,clockRate=50000000,derived_capture=false,derived_do_test_bench_wiring=false,derived_edge_type=NONE,derived_has_in=false,derived_has_irq=false,derived_has_out=true,derived_has_tri=false,derived_irq_type=NONE,direction=Output,edgeType=RISING,generateIRQ=false,irqType=LEVEL,resetValue=0,simDoTestBenchWiring=false,simDrivenValue=0,width=28"
+   instancePathKey="DE1_Diagram:.:Sev_Seg_PIO"
+   kind="altera_avalon_pio"
+   version="18.1"
+   name="DE1_Diagram_Sev_Seg_PIO">
+  <parameter name="derived_do_test_bench_wiring" value="false" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="derived_has_irq" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="derived_has_out" value="true" />
+  <parameter name="derived_has_in" value="false" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="derived_has_tri" value="false" />
+  <parameter name="derived_capture" value="false" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="derived_edge_type" value="NONE" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="derived_irq_type" value="NONE" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="width" value="28" />
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="direction" value="Output" />
+  <generatedFiles>
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/DE1_Diagram_Sev_Seg_PIO.v"
+       type="VERILOG"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/sopc_builder_ip/altera_avalon_pio/altera_avalon_pio_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="DE1_Diagram" as="Sev_Seg_PIO" />
+  <messages>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 2 starting:altera_avalon_pio "submodules/DE1_Diagram_Sev_Seg_PIO"</message>
+   <message level="Info" culprit="Sev_Seg_PIO">Starting RTL generation for module 'DE1_Diagram_Sev_Seg_PIO'</message>
+   <message level="Info" culprit="Sev_Seg_PIO">  Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=DE1_Diagram_Sev_Seg_PIO --dir=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0004_Sev_Seg_PIO_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0004_Sev_Seg_PIO_gen//DE1_Diagram_Sev_Seg_PIO_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="Sev_Seg_PIO">Done RTL generation for module 'DE1_Diagram_Sev_Seg_PIO'</message>
+   <message level="Info" culprit="Sev_Seg_PIO"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_avalon_pio</b> "<b>Sev_Seg_PIO</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_avalon_pio:18.1:bitClearingEdgeCapReg=false,bitModifyingOutReg=false,captureEdge=false,clockRate=50000000,derived_capture=false,derived_do_test_bench_wiring=false,derived_edge_type=NONE,derived_has_in=true,derived_has_irq=false,derived_has_out=false,derived_has_tri=false,derived_irq_type=NONE,direction=Input,edgeType=RISING,generateIRQ=false,irqType=LEVEL,resetValue=0,simDoTestBenchWiring=false,simDrivenValue=0,width=8"
+   instancePathKey="DE1_Diagram:.:Switch_PIO"
+   kind="altera_avalon_pio"
+   version="18.1"
+   name="DE1_Diagram_Switch_PIO">
+  <parameter name="derived_do_test_bench_wiring" value="false" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="derived_has_irq" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="50000000" />
+  <parameter name="derived_has_out" value="false" />
+  <parameter name="derived_has_in" value="true" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="derived_has_tri" value="false" />
+  <parameter name="derived_capture" value="false" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="derived_edge_type" value="NONE" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="derived_irq_type" value="NONE" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="width" value="8" />
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="direction" value="Input" />
+  <generatedFiles>
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/DE1_Diagram_Switch_PIO.v"
+       type="VERILOG"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/sopc_builder_ip/altera_avalon_pio/altera_avalon_pio_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="DE1_Diagram" as="Switch_PIO" />
+  <messages>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 1 starting:altera_avalon_pio "submodules/DE1_Diagram_Switch_PIO"</message>
+   <message level="Info" culprit="Switch_PIO">Starting RTL generation for module 'DE1_Diagram_Switch_PIO'</message>
+   <message level="Info" culprit="Switch_PIO">  Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=DE1_Diagram_Switch_PIO --dir=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0005_Switch_PIO_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/beckb/AppData/Local/Temp/alt9482_7397416467680871989.dir/0005_Switch_PIO_gen//DE1_Diagram_Switch_PIO_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="Switch_PIO">Done RTL generation for module 'DE1_Diagram_Switch_PIO'</message>
+   <message level="Info" culprit="Switch_PIO"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_avalon_pio</b> "<b>Switch_PIO</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_reset_controller:18.1:ADAPT_RESET_REQUEST=0,MIN_RST_ASSERTION_TIME=3,NUM_RESET_INPUTS=1,OUTPUT_RESET_SYNC_EDGES=deassert,RESET_REQUEST_PRESENT=0,RESET_REQ_EARLY_DSRT_TIME=1,RESET_REQ_WAIT_TIME=1,SYNC_DEPTH=2,USE_RESET_REQUEST_IN0=0,USE_RESET_REQUEST_IN1=0,USE_RESET_REQUEST_IN10=0,USE_RESET_REQUEST_IN11=0,USE_RESET_REQUEST_IN12=0,USE_RESET_REQUEST_IN13=0,USE_RESET_REQUEST_IN14=0,USE_RESET_REQUEST_IN15=0,USE_RESET_REQUEST_IN2=0,USE_RESET_REQUEST_IN3=0,USE_RESET_REQUEST_IN4=0,USE_RESET_REQUEST_IN5=0,USE_RESET_REQUEST_IN6=0,USE_RESET_REQUEST_IN7=0,USE_RESET_REQUEST_IN8=0,USE_RESET_REQUEST_IN9=0,USE_RESET_REQUEST_INPUT=0"
+   instancePathKey="DE1_Diagram:.:rst_controller"
+   kind="altera_reset_controller"
+   version="18.1"
+   name="altera_reset_controller">
+  <generatedFiles>
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/altera_reset_controller.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/altera_reset_synchronizer.v"
+       type="VERILOG"
+       attributes="" />
+   <file
+       path="C:/GitHub/CS701-GRP/Synthesis/Quartus/DE1_Diagram/synthesis/submodules/altera_reset_controller.sdc"
+       type="SDC"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/intelfpga_lite/18.1/ip/altera/merlin/altera_reset_controller/altera_reset_controller_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="DE1_Diagram" as="rst_controller" />
+  <messages>
+   <message level="Debug" culprit="DE1_Diagram">queue size: 0 starting:altera_reset_controller "submodules/altera_reset_controller"</message>
+   <message level="Info" culprit="rst_controller"><![CDATA["<b>DE1_Diagram</b>" instantiated <b>altera_reset_controller</b> "<b>rst_controller</b>"]]></message>
+  </messages>
+ </entity>
+</deploy>
