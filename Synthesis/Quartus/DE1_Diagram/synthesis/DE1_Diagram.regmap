@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <device xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" schemaVersion="1.0" xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_0.xsd">
-<name>ReCOP_Quartus</name>
+<name>DE1_Diagram</name>
 <peripherals>
 <peripheral>
-      <name>ReCOP_Quartus_Switch_PIO_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
+      <name>DE1_Diagram_Switch_PIO_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -121,7 +121,7 @@
     </registers>
    </peripheral>
   <peripheral>
-      <name>ReCOP_Quartus_Sev_Seg_PIO_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
+      <name>DE1_Diagram_Sev_Seg_PIO_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -239,7 +239,7 @@
     </registers>
    </peripheral>
   <peripheral>
-      <name>ReCOP_Quartus_LED_PIO_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
+      <name>DE1_Diagram_LED_PIO_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>
@@ -357,7 +357,7 @@
     </registers>
    </peripheral>
   <peripheral>
-      <name>ReCOP_Quartus_Button_PIO_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
+      <name>DE1_Diagram_Button_PIO_s1_altera_avalon_pio</name><baseAddress>0x00000000</baseAddress> 
       <addressBlock>
         <offset>0x0</offset>
         <size>32</size>

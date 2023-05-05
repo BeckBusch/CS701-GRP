@@ -18,16 +18,16 @@
 // altera message_level Level1 
 // altera message_off 10034 10035 10036 10037 10230 10240 10030 
 
-module ReCOP_Quartus_Switch_PIO (
-                                  // inputs:
-                                   address,
-                                   clk,
-                                   in_port,
-                                   reset_n,
+module DE1_Diagram_Switch_PIO (
+                                // inputs:
+                                 address,
+                                 clk,
+                                 in_port,
+                                 reset_n,
 
-                                  // outputs:
-                                   readdata
-                                )
+                                // outputs:
+                                 readdata
+                              )
 ;
 
   output  [ 31: 0] readdata;

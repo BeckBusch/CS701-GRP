@@ -18,20 +18,20 @@
 // altera message_level Level1 
 // altera message_off 10034 10035 10036 10037 10230 10240 10030 
 
-module ReCOP_Quartus_Button_PIO (
-                                  // inputs:
-                                   address,
-                                   chipselect,
-                                   clk,
-                                   in_port,
-                                   reset_n,
-                                   write_n,
-                                   writedata,
+module DE1_Diagram_Button_PIO (
+                                // inputs:
+                                 address,
+                                 chipselect,
+                                 clk,
+                                 in_port,
+                                 reset_n,
+                                 write_n,
+                                 writedata,
 
-                                  // outputs:
-                                   irq,
-                                   readdata
-                                )
+                                // outputs:
+                                 irq,
+                                 readdata
+                              )
 ;
 
   output           irq;
