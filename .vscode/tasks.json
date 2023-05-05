@@ -26,6 +26,30 @@
                 "showReuseMessage": false,
                 "clear": true
             }
+        },
+        {
+            "label": "Analysis",
+            "type": "shell",
+            "command": "ghdl -s -g ${file}",
+            "problemMatcher": {
+                "owner": "vhdl",
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d*):(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "message": 4
+                }
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "never",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": true
+            }
         }
     ],
     "inputs": [
