@@ -3,6 +3,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 use work.opcodes.all;
+use work.mux_values.all;
 
 entity Control_Unit is
     Port (
@@ -11,6 +12,7 @@ entity Control_Unit is
         Debug_Mode          : in  STD_LOGIC;
 	nios_control        : in  STD_LOGIC;
 	init_up		    : out std_logic; -- uP initialisation
+	we: out bit_1;
 
 	-- IR
         Opcode              : in  STD_LOGIC_VECTOR (5 downto 0); 
@@ -41,7 +43,7 @@ entity Control_Unit is
         rf_value_sel_z : in std_logic_vector(3 downto 0);
 
 	-- memory address and data interface
-        write_m_address         : out std_logic;
+        mem_sel         : out std_logic;
         m_address_mux_sel       : out std_logic_vector(1 downto 0);
 	mem_data_mux_sel 	: out std_logic_vector(1 downto 0);
 
@@ -58,10 +60,6 @@ architecture Behavioral of Control_Unit is
     -- states for the Pulse Distributor state machine
     type State_Type is (Ini, Test, Test2, E0, E1, E1bis, E2, T0, T1, T2, T3);
     signal State, Next_State : State_Type;
-	 
-	 -- Placed here so I can compile this crap
-	 signal pc_in_sel : std_logic_vector(1 downto 0);
-	 signal DP_Memory_Signal : std_logic;
 
 begin
     -- Pulse Distributor (State Machine)
@@ -100,38 +98,186 @@ begin
                 -- Add state logic
             when E2 =>
                 -- Add state logic
+
             when T0 =>                   --fetch  instruction from program memory
 
-		next_state <= T1;
-		-- ir <- pm 
-		write_ir <= '1';
-		-- pc <- pc + 1
-		pc_in_sel <= "00";   --sel inc
-		write_pc <= '1';
-
+				next_state <= T1;
+				-- ir <- pm 
+				write_ir <= '1';
+				-- pc <- pc + 1
+				pc_in_sel <= pc_const;   
+				write_pc <= '1';
 		
-		
-		when T1 =>                     -- T1: decoding instruction
-			next_state <= T2;
-			-- detect addressing mode and prepare for execution
-			case Addressing_mode is
-				
-				when indirect => 		-- register indirect addressing
-					-- ar <- Ry
-					m_address_mux_sel   <= "11";
-					write_m_address <= '1';
-				when direct => 			-- direct addressing
-					-- ar <- ir[24..9]
-					m_address_mux_sel<= "00";
-					write_m_address  <= '1';
-				when others =>			 -- inherent and immediate
-					-- do nothing
-			end case;
+	     	when T1 =>                     -- T1: decoding instruction
+				next_state <= T2;
+				-- detect addressing mode and prepare for execution
+				case Addressing_mode is
+					
+					when immediate => 		-- register immediate
+						-- ar <- ir[15..0]
+						--m_address_mux_sel   <= m_address_ir;
+						--mem_sel <= mem_pm;
+						-- pc <- pc + 1
+						--pc_in_sel <= pc_const;   --sel inc
+						--write_pc <= '1';
 
-            when T1 =>                           --decode 
-                -- Add state logic
+					when direct => 			-- direct addressing
+						-- ar <- ir[15..0]
+						--m_address_mux_sel<= m_address_ir;
+						--mem_sel <= '1';
+					when others =>			 -- inherent and inderct
+						-- do nothing
+				end case;
+
+            
             when T2 =>                          --execute
-                -- Add state logic
+                next_state <= T0;
+				if Addressing_mode = inherent then      -- inherent AM
+					case opcode is
+						
+						when clfz =>
+							pc_in_sel <= selry2pc;
+							ld_pc <= '1';
+						when noop =>
+							-- do nothing
+						when others =>
+							-- should be invalid instruction code
+					end case;
+
+				elsif Addressing_mode = direct then
+					case opcode is
+						when ldr =>
+							rf_mux_sel <= rf_ir;
+							write_rf <= '1';
+						when str =>
+							mem_data_mux_sel  <= mem_data_ir;
+							we <= '1';
+						when others =>
+							-- should be invalid instruction code
+					end case;
+					
+				elsif Addressing_mode = indirect then
+					case opcode is
+
+						when add =>
+							alu_op <= alu_add;
+							alu_mux_a <= alu_rx_a;
+							alu_mux_b <= alu_rz;
+							rf_mux_sel <= rf_ir;
+							write_rf <= '1';
+							--ld_c <= '1';
+							--ld_z <= '1';
+							--ld_v <= '1';
+							--ld_n <= '1';
+
+						when andd =>
+							alu_op <= andd;
+							alu_mux_a <= alu_ir;
+							alu_mux_b <= alu_rx_b;
+							rf_mux_sel <= rf_alu;
+							write_rf <= '1';
+							--ld_z <= '1';
+						
+						when orr =>
+							alu_op <= orrr;
+							alu_mux_a <= alu_ir;
+							alu_mux_b <= alu_rx_b;
+							rf_mux_sel <= rf_alu;
+							write_rf <= '1';
+							--ld_z <= '1';
+
+						when ldr =>
+							rf_mux_sel <= rf_ir;
+							write_rf <= '1';
+
+						when str =>
+							mem_data_mux_sel <= mem_data_rx;
+							we <= '1';
+
+						when jmp =>
+							pc_mux_sel <= pc_ir;
+							write_pc <= '1';
+
+						when others =>
+							-- should be invalid instruction code
+					end case;
+
+				elsif Addressing_mode = immediate then             -- immediate AM
+					
+					case opcode is	
+						when add =>
+							alu_op <= alu_add;
+							alu_mux_a <= alu_ir;
+							alu_mux_b <= alu_rx_b;
+							rf_mux_sel <= rf_ir;
+							write_rf <= '1';
+							--ld_c <= '1';
+							--ld_z <= '1';
+							--ld_v <= '1';
+							--ld_n <= '1';
+						when sub=>
+							alu_op <= alu_sub;
+							alu_mux_a <= alu_ir;
+							alu_mux_b <= alu_rz;
+							rf_mux_sel <= rf_ir;
+							--write_rf <= '1';
+							--ld_c <= '1';
+							--ld_z <= '1';
+							--ld_v <= '1';
+							--ld_n <= '1';
+						when subv =>
+							alu_op <= subb;
+							alu_mux_a <= alu_ir;
+							alu_mux_b <= alu_rx_b;
+							rf_mux_sel <= rf_alu;
+							write_rf <= '1';
+							--ld_c <= '1';
+							--ld_z <= '1';
+							--ld_v <= '1';
+							--ld_n <= '1';
+						when andd =>
+							alu_op <= andd;
+							alu_mux_a <= alu_ir;
+							alu_mux_b <= alu_rx_b;
+							rf_mux_sel <= rf_alu;
+							write_rf <= '1';
+							--ld_z <= '1';
+						
+						when orr =>
+							alu_op <= orrr;
+							alu_mux_a <= alu_ir;
+							alu_mux_b <= alu_rx_b;
+							rf_mux_sel <= rf_alu;
+							write_rf <= '1';
+							--ld_z <= '1';
+
+						when ldr =>
+							rf_mux_sel <= rf_ir;
+							write_rf <= '1';
+
+						when str =>
+							mem_data_mux_sel <= mem_data_rx;
+							we <= '1';
+
+						when jmp =>
+							pc_mux_sel <= pc_ir;
+							write_pc <= '1';
+
+						when sz=>1
+							if z=1 then
+								pc_mux_sel <= pc_ir;
+								write_pc=1;
+							else
+								pc_mux_sel,=pc_const;
+								write_pc=1;
+
+						when others =>
+							-- should be invalid instruction code
+					end case;
+				end if;
+		end case;
+		
+		
             when T3 =>
                 -- Add state logic
             when others =>
