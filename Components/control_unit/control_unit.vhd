@@ -13,8 +13,8 @@ entity Control_Unit is
 	init_up		    : out std_logic; -- uP initialisation
 
 	-- IR
-        Opcode              : in  STD_LOGIC_VECTOR (5 downto 0); -- Define appropriate bit range for Opcode
-        Addressing_Mode     : in  STD_LOGIC_VECTOR (1 downto 0); -- Define appropriate bit range for Addressing Mode
+        Opcode              : in  STD_LOGIC_VECTOR (5 downto 0); 
+        Addressing_Mode     : in  STD_LOGIC_VECTOR (1 downto 0); 
 	Rz       	    : in std_logic_vector(3 downto 0);
        	Rx       	    : in std_logic_vector(3 downto 0);
         Operand             : in std_logic_vector(15 downto 0);
@@ -96,46 +96,31 @@ begin
                 -- Add state logic
             when E2 =>
                 -- Add state logic
-            when T0 =>                   --fetch
+            when T0 =>                   --fetch  instruction from program memory
 
 		next_state <= T1;
 		-- ir <- pm 
 		write_ir <= '1';
 		-- pc <- pc + 1
-		pc_in_sel <= "00";
+		pc_in_sel <= "00";   --sel inc
 		write_pc <= '1';
 
 		
-		-- T1: decoding instruction
-		when T1 =>
+		
+		when T1 =>                     -- T1: decoding instruction
 			next_state <= T2;
 			-- detect addressing mode and prepare for execution
-			case opcode(10 downto 9) is
-				when stack => -- stack addressing
-					if opcode(7) = '0' then
-						-- push type operation
-						dm_adr_sel <= selsp2adr;
-						sp_in_sel <= selspop2sp;
-						sp_op_sel <= dec_sp;
-						ld_sp <= '1';
-					else
-						-- pull type operation
-						dm_adr_sel <= selspop2adr;
-						sp_in_sel <= selspop2sp;
-						sp_op_sel <= inc_sp;
-						ld_sp <= '1';
-					end if;
-					-- push: ar <- sp, pull: ar <- sp + 1
-					ld_ar <= '1';
-				when indirect => -- register indirect addressing
+			case Addressing_mode is
+				
+				when indirect => 		-- register indirect addressing
 					-- ar <- Ry
-					dm_adr_sel <= selry2adr;
-					ld_ar <= '1';
-				when direct => -- direct addressing
+					m_address_mux_sel   <= "11";
+					write_m_address <= '1';
+				when direct => 			-- direct addressing
 					-- ar <- ir[24..9]
-					dm_adr_sel <= selir2adr;
-					ld_ar <= '1';
-				when others => -- inherent and immediate
+					m_address_mux_sel<= "00";
+					write_m_address  <= '1';
+				when others =>			 -- inherent and immediate
 					-- do nothing
 			end case;
 
