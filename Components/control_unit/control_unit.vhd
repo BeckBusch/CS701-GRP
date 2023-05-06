@@ -58,6 +58,10 @@ architecture Behavioral of Control_Unit is
     -- states for the Pulse Distributor state machine
     type State_Type is (Ini, Test, Test2, E0, E1, E1bis, E2, T0, T1, T2, T3);
     signal State, Next_State : State_Type;
+	 
+	 -- Placed here so I can compile this crap
+	 signal pc_in_sel : std_logic_vector(1 downto 0);
+	 signal DP_Memory_Signal : std_logic;
 
 begin
     -- Pulse Distributor (State Machine)
