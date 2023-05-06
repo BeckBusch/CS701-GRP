@@ -37,7 +37,7 @@ package mux_values is
 	
 -- ALU b input selection alu_mux_b
 	constant alu_rx_b: std_logic := '0';
-	constant alu_ry: std_logic := '1';
+	constant alu_rz: std_logic := '1';
 
 -- internal or external program memory selection mem_sel
 	constant mem_pm: std_logic := '1';
@@ -46,9 +46,9 @@ package mux_values is
 
 	
 -- ALU operation selection alu_op
-	constant add: std_logic_vector(1 downto 0) := "00";
-	constant sub: std_logic_vector(1 downto 0) := "01";
-	constant andd: std_logic_vector(1 downto 0)  := "10";
-	constant orr: std_logic_vector(1 downto 0) := "11";
+	constant alu_add: std_logic_vector(1 downto 0) := "00";
+	constant alu_sub: std_logic_vector(1 downto 0) := "01";
+	constant alu_andd: std_logic_vector(1 downto 0)  := "10";
+	constant alu_orr: std_logic_vector(1 downto 0) := "11";
 	
 end mux_values;	
