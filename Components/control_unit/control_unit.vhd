@@ -34,8 +34,8 @@ entity Control_Unit is
 
 	
 	-- RF Block:
-  	write_rf                : out std_logic;
-	rf_mux_sel 		: out std_logic_vector(2 downto 0);
+  		write_rf                : out std_logic;
+		rf_mux_sel 		: out std_logic_vector(2 downto 0);
         rf_mux_sel_x 		: out std_logic;
         rf_mux_sel_z 		: out std_logic;
         reset_rf : in std_logic;
@@ -50,9 +50,9 @@ entity Control_Unit is
 	--AlU
 	alu_mux_A		: out std_logic_vector(1 downto 0);
 	alu_mux_B		: out std_logic;
-	alu_op			: out std_logic_vector(1 downto 0)
-
-	
+	alu_op			: out std_logic_vector(1 downto 0);
+    z               : in std_logic;
+	clr_z           : out std_logic
     );
 end Control_Unit;
 
@@ -140,14 +140,14 @@ begin
 				elsif Addressing_mode = direct then
 					case opcode is
 						when ldr =>
-							rf_mux_sel <= rf_ir;
+							rf_mux_sel <= rf_dm;
 							write_rf <= '1';
 						when str =>
-							mem_data_mux_sel  <= mem_data_ir;
-							we <= '1';
+							mem_data_mux_sel  <= mem_data_rx;
+							mem_sel <= mem_dm;
 						when strpc =>          --add func
-							rf_mux_sel <= rf_ir;
-							write_rf <= '1';
+							mem_data_mux_sel  <= mem_data_ir;
+							mem_sel <= mem_dm;
 						when others =>
 							-- should be invalid instruction code
 					end case;
