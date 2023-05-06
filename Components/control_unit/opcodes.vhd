@@ -35,11 +35,7 @@ package opcodes is
 	constant dcallnb	: std_logic_vector(5 downto 0) := "101001";
 	constant sz		: std_logic_vector(5 downto 0) := "010100";
 	constant clfz	: std_logic_vector(5 downto 0) := "010000";
-	constant cer	: std_logic_vector(5 downto 0) := "111100";
-	constant ceot	: std_logic_vector(5 downto 0) := "111110";
-	constant seot	: std_logic_vector(5 downto 0) := "111111";
-	constant ler	: std_logic_vector(5 downto 0) := "110110";
-	constant ssvop	: std_logic_vector(5 downto 0) := "111011";
+
 	constant lsip	: std_logic_vector(5 downto 0) := "110111";
 	constant ssop	: std_logic_vector(5 downto 0) := "111010";
       constant noop	: std_logic_vector(5 downto 0) := "110100";
