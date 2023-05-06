@@ -10,26 +10,26 @@ entity Control_Unit is
         CLK                 : in  STD_LOGIC;
         Reset               : in  STD_LOGIC;
         Debug_Mode          : in  STD_LOGIC;
-	nios_control        : in  STD_LOGIC;
-	init_up		    : out std_logic; -- uP initialisation
-	we: out bit_1;
+		nios_control        : in  STD_LOGIC;
+		init_up		    	: out std_logic; -- uP initialisation
+		we: out std_logic;
 
 	-- IR
         Opcode              : in  STD_LOGIC_VECTOR (5 downto 0); 
         Addressing_Mode     : in  STD_LOGIC_VECTOR (1 downto 0); 
-	Rz       	    : in std_logic_vector(3 downto 0);
+		Rz       	    : in std_logic_vector(3 downto 0);
        	Rx       	    : in std_logic_vector(3 downto 0);
         Operand             : in std_logic_vector(15 downto 0);
         write_ir            : out std_logic;
         load_ir	            : out std_logic;
-	ir_reset 	    : in std_logic;
+		ir_reset 	    : in std_logic;
         ir_load_msb         : out std_logic;
         ir_load_lsb 	    : out std_logic;
 
         
 	-- Pc:
-  	write_pc               : out std_logic;
-	pc_mux_sel 	       : out std_logic_vector(1  downto 0);
+  		write_pc               : out std_logic;
+		pc_mux_sel 	       : out std_logic_vector(1  downto 0);
         reset_pc	       : in std_logic;
 
 	
@@ -48,11 +48,11 @@ entity Control_Unit is
 	mem_data_mux_sel 	: out std_logic_vector(1 downto 0);
 
 	--AlU
-	alu_mux_A		: out std_logic_vector(1 downto 0);
-	alu_mux_B		: out std_logic;
-	alu_op			: out std_logic_vector(1 downto 0);
-    z               : in std_logic;
-	clr_z           : out std_logic
+		alu_mux_A		: out std_logic_vector(1 downto 0);
+		alu_mux_B		: out std_logic;
+		alu_op			: out std_logic_vector(1 downto 0);
+    	z               : in std_logic;
+		clr_z           : out std_logic
     );
 end Control_Unit;
 
@@ -96,7 +96,7 @@ begin
 				-- ir <- pm 
 				write_ir <= '1';
 				-- pc <- pc + 1
-				pc_in_sel <= pc_const;   
+				pc_mux_sel <= pc_const;   
 				write_pc <= '1';
 		
 	     	when T1 =>                     -- T1: decoding instruction
@@ -110,7 +110,7 @@ begin
 						--mem_sel <= mem_pm;
 						-- pc <- pc + 1
 						--pc_in_sel <= pc_const;   --sel inc
-						--write_pc <= '1';
+						--write_pc <= '1'; 
 
 					when direct => 			-- direct addressing
 						-- ar <- ir[15..0]
@@ -155,7 +155,7 @@ begin
 				elsif Addressing_mode = indirect then    --add func 
 					case opcode is
 
-						when add =>                         --add func 
+						when add =>                         --check func 
 							alu_op <= alu_add;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
@@ -167,7 +167,7 @@ begin
 							--ld_v <= '1';
 							--ld_n <= '1';
 
-						when andd =>                             --add func 
+						when andd =>                             --check func 
 							alu_op <= andd;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
@@ -176,7 +176,7 @@ begin
 							write_rf <= '1';
 							--ld_z <= '1';
 						
-						when orr =>                                 --add func 
+						when orr =>                                 --check func 
 							alu_op <= orrr;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
@@ -185,19 +185,22 @@ begin
 							write_rf <= '1';
 							--ld_z <= '1';
 
-						when ldr =>                                --add func 
+						when ldr =>                                --check func 
 							rf_mux_sel <= rf_ir;
+							rf_mux_sel_z <= '1';
 							write_rf <= '1';
 
-						when str =>                               --add func 
+						when str =>                               --add func (unsure) 
 							mem_data_mux_sel <= mem_data_rx;
 							we <= '1';
 
-						when jmp =>                                --add func 
-							pc_mux_sel <= pc_ir;
+						when jmp =>                                --add func(unsure) 
+							pc_mux_sel <= pc_rx;
 							write_pc <= '1';
 
-						when dcallbl =>                             --add func 
+						when datacall =>                             --add func 
+							mem_data_mux_sel <= mem_data_rx;
+							mem_data_mux_sel <= mem_data_rx;
 							pc_mux_sel <= pc_ir;
 							write_pc <= '1';
 
@@ -237,7 +240,7 @@ begin
 							--ld_v <= '1';
 							--ld_n <= '1';
 						when subv =>                  --check func
-							alu_op <= subb;
+							alu_op <= subv;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
@@ -255,7 +258,7 @@ begin
 							--ld_z <= '1';
 						
 						when orr =>                       --check func
-							alu_op <= orrr;
+							alu_op <= orr;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
@@ -275,20 +278,19 @@ begin
 							write_pc <= '1';
 
 						when sz=>                                    --check func
-							if z=1 then
+							if z='1' then
 								pc_mux_sel <= pc_ir;
-								write_pc=1;
+								write_pc<='1';
 							else
-								pc_mux_sel,=pc_const;
-								write_pc=1;
+								pc_mux_sel<=pc_const;
+								write_pc<='1';
+							end if ;
+
 
 						when others =>
 							-- should be invalid instruction code
 					end case;
-				end if;
-		end case;
-		
-		
+				end if;	
             when T3 =>
                 -- Add state logic
             when others =>
