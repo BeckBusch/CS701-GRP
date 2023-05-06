@@ -159,7 +159,8 @@ begin
 							alu_op <= alu_add;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
-							rf_mux_sel <= rf_ir;
+							rf_mux_sel <= rf_alu;
+							rf_mux_sel_z <= '1';
 							write_rf <= '1';
 							--ld_c <= '1';
 							--ld_z <= '1';
@@ -168,17 +169,19 @@ begin
 
 						when andd =>                             --add func 
 							alu_op <= andd;
-							alu_mux_a <= alu_ir;
-							alu_mux_b <= alu_rx_b;
+							alu_mux_a <= alu_rx_a;
+							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_alu;
+							rf_mux_sel_z <= '1';
 							write_rf <= '1';
 							--ld_z <= '1';
 						
 						when orr =>                                 --add func 
 							alu_op <= orrr;
-							alu_mux_a <= alu_ir;
-							alu_mux_b <= alu_rx_b;
+							alu_mux_a <= alu_rx_a;
+							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_alu;
+							rf_mux_sel_z <= '1';
 							write_rf <= '1';
 							--ld_z <= '1';
 

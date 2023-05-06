@@ -6,7 +6,7 @@ package opcodes is
 
 -- instruction format
 -- --------------------------------------------------
--- |AM(2)|OP(6)|Rz(3)|Ry(3)|ADDR/VAL/OTHERs(16)|
+-- |AM(2)|OP(6)|Rz(3)|Ry(3)|OTHERs(16)|
 -- --------------------------------------------------
 
 
@@ -31,8 +31,8 @@ package opcodes is
 	constant sub	: std_logic_vector(5 downto 0) := "000100";
 	constant jmp	: std_logic_vector(5 downto 0) := "011000";
 	constant present	: std_logic_vector(5 downto 0) := "011100";
-	constant dcallbl	: std_logic_vector(5 downto 0) := "101000";
-	constant dcallnb	: std_logic_vector(5 downto 0) := "101001";
+	constant datacall	: std_logic_vector(5 downto 0) := "101000";
+
 	constant sz		: std_logic_vector(5 downto 0) := "010100";
 	constant clfz	: std_logic_vector(5 downto 0) := "010000";
 
