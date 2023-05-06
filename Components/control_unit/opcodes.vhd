@@ -6,7 +6,7 @@ package opcodes is
 
 -- instruction format
 -- --------------------------------------------------
--- |AM(2)|OP(6)|ADDR/VAL/OTHERs(16)|Rz(3)|Ry(3)Rx(3)|
+-- |AM(2)|OP(6)|Rz(3)|Ry(3)|ADDR/VAL/OTHERs(16)|
 -- --------------------------------------------------
 
 
