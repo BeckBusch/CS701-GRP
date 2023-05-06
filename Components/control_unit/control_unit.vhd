@@ -89,15 +89,6 @@ begin
             when Test =>
                 -- Add state logic
             when Test2 =>
-                -- Add state logic
-            when E0 =>
-                -- Add state logic
-            when E1 =>
-                -- Add state logic
-            when E1bis =>
-                -- Add state logic
-            when E2 =>
-                -- Add state logic
 
             when T0 =>                   --fetch  instruction from program memory
 
@@ -132,12 +123,14 @@ begin
             
             when T2 =>                          --execute
                 next_state <= T0;
+
 				if Addressing_mode = inherent then      -- inherent AM
 					case opcode is
 						
-						when clfz =>
-							pc_in_sel <= selry2pc;
-							ld_pc <= '1';
+						when clfz =>   --add func          --check func 
+							if z = '1' then
+								clr_z <= '1';
+							end if;
 						when noop =>
 							-- do nothing
 						when others =>
@@ -152,14 +145,17 @@ begin
 						when str =>
 							mem_data_mux_sel  <= mem_data_ir;
 							we <= '1';
+						when strpc =>          --add func
+							rf_mux_sel <= rf_ir;
+							write_rf <= '1';
 						when others =>
 							-- should be invalid instruction code
 					end case;
 					
-				elsif Addressing_mode = indirect then
+				elsif Addressing_mode = indirect then    --add func 
 					case opcode is
 
-						when add =>
+						when add =>                         --add func 
 							alu_op <= alu_add;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
@@ -170,7 +166,7 @@ begin
 							--ld_v <= '1';
 							--ld_n <= '1';
 
-						when andd =>
+						when andd =>                             --add func 
 							alu_op <= andd;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
@@ -178,7 +174,7 @@ begin
 							write_rf <= '1';
 							--ld_z <= '1';
 						
-						when orr =>
+						when orr =>                                 --add func 
 							alu_op <= orrr;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
@@ -186,15 +182,27 @@ begin
 							write_rf <= '1';
 							--ld_z <= '1';
 
-						when ldr =>
+						when ldr =>                                --add func 
 							rf_mux_sel <= rf_ir;
 							write_rf <= '1';
 
-						when str =>
+						when str =>                               --add func 
 							mem_data_mux_sel <= mem_data_rx;
 							we <= '1';
 
-						when jmp =>
+						when jmp =>                                --add func 
+							pc_mux_sel <= pc_ir;
+							write_pc <= '1';
+
+						when dcallbl =>                             --add func 
+							pc_mux_sel <= pc_ir;
+							write_pc <= '1';
+
+						when lsip =>                               --add func 
+							pc_mux_sel <= pc_ir;
+							write_pc <= '1';
+
+						when ssop =>                                  --add func 
 							pc_mux_sel <= pc_ir;
 							write_pc <= '1';
 
@@ -204,8 +212,8 @@ begin
 
 				elsif Addressing_mode = immediate then             -- immediate AM
 					
-					case opcode is	
-						when add =>
+					case opcode is	 
+						when add =>            --check func
 							alu_op <= alu_add;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
@@ -215,7 +223,7 @@ begin
 							--ld_z <= '1';
 							--ld_v <= '1';
 							--ld_n <= '1';
-						when sub=>
+						when sub=>                   --check func
 							alu_op <= alu_sub;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rz;
@@ -225,7 +233,7 @@ begin
 							--ld_z <= '1';
 							--ld_v <= '1';
 							--ld_n <= '1';
-						when subv =>
+						when subv =>                  --check func
 							alu_op <= subb;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
@@ -235,7 +243,7 @@ begin
 							--ld_z <= '1';
 							--ld_v <= '1';
 							--ld_n <= '1';
-						when andd =>
+						when andd =>                    --check func
 							alu_op <= andd;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
@@ -243,7 +251,7 @@ begin
 							write_rf <= '1';
 							--ld_z <= '1';
 						
-						when orr =>
+						when orr =>                       --check func
 							alu_op <= orrr;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
@@ -251,19 +259,19 @@ begin
 							write_rf <= '1';
 							--ld_z <= '1';
 
-						when ldr =>
+						when ldr =>                     --check func
 							rf_mux_sel <= rf_ir;
 							write_rf <= '1';
 
-						when str =>
+						when str =>                              --check func
 							mem_data_mux_sel <= mem_data_rx;
 							we <= '1';
 
-						when jmp =>
+						when jmp =>                          --check func
 							pc_mux_sel <= pc_ir;
 							write_pc <= '1';
 
-						when sz=>1
+						when sz=>                                    --check func
 							if z=1 then
 								pc_mux_sel <= pc_ir;
 								write_pc=1;
@@ -281,7 +289,7 @@ begin
             when T3 =>
                 -- Add state logic
             when others =>
-                -- Add default state logic
+                --  should be invalid instruction code
         end case;
     end process;
 
