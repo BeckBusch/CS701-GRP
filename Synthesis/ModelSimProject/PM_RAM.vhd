@@ -62,7 +62,7 @@ BEGIN
 	GENERIC MAP (
 		clock_enable_input_a => "BYPASS",
 		clock_enable_output_a => "BYPASS",
-		init_file => "../../MemoryFiles/program_memory.mif",
+		init_file => "../../MemoryFiles/program_memory.hex",
 		intended_device_family => "Cyclone V",
 		lpm_hint => "ENABLE_RUNTIME_MOD=NO",
 		lpm_type => "altsyncram",

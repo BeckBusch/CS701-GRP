@@ -101,6 +101,10 @@ begin
     stim_proc : process
     begin
         finished <= '0';
+
+        Reset <= '1';
+        wait for 20 ns;
+        Reset <= '0';
         
         wait for 400 ns;
 
