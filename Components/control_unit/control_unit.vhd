@@ -42,7 +42,7 @@ entity Control_Unit is
 	-- memory address and data interface
         mem_sel         		: out std_logic;
         m_address_mux_sel       : out std_logic_vector(1 downto 0);
-	mem_data_mux_sel 			: out std_logic_vector(1 downto 0);
+		mem_data_mux_sel 			: out std_logic_vector(1 downto 0);
 
 	--AlU
 		alu_mux_A		: out std_logic_vector(1 downto 0);
@@ -95,7 +95,8 @@ begin
 				write_rf<='0';
 				write_sip<='0';
 				write_sop<='0';
-
+                write_dpcr<='0';
+				reset_dpcr<='1';
             when T0 =>                   --fetch  instruction from program memory
 
 				next_state <= T1;
@@ -145,8 +146,10 @@ begin
 
 				elsif Addressing_mode = direct then                       --direct Am
 					case opcode is
-						when ldr =>                        --wrong
+						when ldr =>                        --check func
+						    m_address_mux_sel<=m_address_ir;
 							rf_mux_sel <= rf_dm;
+							rf_mux_sel_x<='0';
 							write_rf <= '1';
 
 						when str =>                   --check func
@@ -199,8 +202,9 @@ begin
 							write_rf <= '1';
 							--ld_z <= '1';
 
-						when ldr =>                                --wrong func 
-							rf_mux_sel <= rf_ir;
+						when ldr =>                                --check func not sure  
+						    m_address_mux_sel<=m_address_rx;
+							rf_mux_sel <= rf_dm;
 							rf_mux_sel_z <= '0';
 							write_rf <= '1';
 
@@ -283,6 +287,7 @@ begin
 
 						when ldr =>                     --check func
 							rf_mux_sel <= rf_ir;
+							rf_mux_sel_x<='0';
 							write_rf <= '1';
 
 						when str =>                              --check func  store operand on rz
