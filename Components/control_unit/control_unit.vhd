@@ -20,7 +20,6 @@ entity Control_Unit is
        	Rx       	    : in std_logic_vector(3 downto 0);
         Operand             : in std_logic_vector(15 downto 0);
         write_ir            : out std_logic;
-        load_ir	            : out std_logic;
 		ir_reset 	    : in std_logic;
    
 
@@ -85,14 +84,13 @@ begin
         case State is
      
             when Ini =>
+			    state<=T0;
                 -- Add state logic
-
-		
-		
-		
-            when Test =>
-                -- Add state logic
-            when Test2 =>
+				write_ir<=0;
+				write_pc<=0;
+				write_rf<=0;
+				write_sip<=0;
+				write_sop<=0;
 
             when T0 =>                   --fetch  instruction from program memory
 
