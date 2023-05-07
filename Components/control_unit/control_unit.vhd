@@ -12,7 +12,7 @@ entity Control_Unit is
         Debug_Mode          : in  STD_LOGIC;
 		nios_control        : in  STD_LOGIC;
 		init_up		    	: out std_logic; -- uP initialisation
-
+        we                  : out std_logic;
 	-- IR
         Opcode              : in  STD_LOGIC_VECTOR (5 downto 0); 
         Addressing_Mode     : in  STD_LOGIC_VECTOR (1 downto 0); 
@@ -147,7 +147,7 @@ begin
 
 						when str =>              
 							mem_data_mux_sel  <= mem_data_rx;
-							m_address_mux_sel<=m_address_rx;
+							m_address_mux_sel<=m_address_ir;
 							mem_sel <= mem_dm;
 
 						when strpc =>                           --check func(not sure)
@@ -167,7 +167,7 @@ begin
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_alu;
-							rf_mux_sel_z <= '1';
+							rf_mux_sel_z <= '0';
 							write_rf <= '1';
 							--ld_c <= '1';
 							--ld_z <= '1';
@@ -179,7 +179,7 @@ begin
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_alu;
-							rf_mux_sel_z <= '1';
+							rf_mux_sel_z <= '0';
 							write_rf <= '1';
 							--ld_z <= '1';
 						
@@ -188,13 +188,13 @@ begin
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_alu;
-							rf_mux_sel_z <= '1';
+							rf_mux_sel_z <= '0';
 							write_rf <= '1';
 							--ld_z <= '1';
 
 						when ldr =>                                --check func 
 							rf_mux_sel <= rf_ir;
-							rf_mux_sel_z <= '1';
+							rf_mux_sel_z <= '0';
 							write_rf <= '1';
 
 						when str =>                               --chek func (unsure) 
@@ -213,7 +213,7 @@ begin
 
 						when lsip =>                               --highly unsure
 						    rf_mux_sel<=rf_sip;
-							rf_mux_sel_z<='1';
+							rf_mux_sel_z<='0';
 
 						when ssop =>                                  --check func (unsure)  
 							rf_mux_sel_x <= '1';
