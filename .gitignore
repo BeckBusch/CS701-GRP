@@ -3,6 +3,8 @@
 /output_files/
 /simulation/
 
+/FOLDER_FOR_EVERYTHING/
+
 *.bak
 *.qws
 *.rpt

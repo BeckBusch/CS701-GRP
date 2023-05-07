@@ -3,7 +3,7 @@
 import struct
 
 # How to write instructions. Registers are not optional, even if they will not be used.
-# OPERATION, #, #, [#/$]#
+# OPERATION, #, #, [#/$][b/d/h]#
 
 address_modes = {
     "in": "00",
@@ -159,8 +159,22 @@ def main():
                 
                 fields[3] = fields[3][1:]
                 
+                radix = fields[3][0].lower()
+                base = 10
+                
+                if radix == 'b':
+                    base = 2
+                elif radix == 'd':
+                    base = 10
+                elif radix == 'x':
+                    base = 16
+                else:
+                    raise ValueError("Operand has invalid or no radix. LINE {iterator}: {line}")
+                
+                fields[3] = fields[3][1:]
+                
                 try:
-                    fields[3] = int(fields[3])
+                    fields[3] = int(fields[3], base = base)
                 except ValueError as e:
                     raise TypeError(f"{field_names[3]} field should be a number. LINE {iterator}: {line}")
                 
