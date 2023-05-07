@@ -16,18 +16,18 @@ architecture Behavioral of ALU_COMPONENT is
 	signal tmp : std_logic_vector(15 downto 0);
 begin
 
-		   -- Addition
-	tmp <= std_logic_vector(unsigned(a) + unsigned(b) + unsigned(carry_in + "0000000000000000")) when op = "00" else
-	       -- Subtraction
-		   std_logic_vector(unsigned(a) - unsigned(b)) when op = "01" else
-	       -- OR
-		   a or b when op = "10" else
-	       -- AND
-		   a and b when op = "11" else
-		   "XXXXXXXXXXXXXXXX";
+			-- Addition
+	tmp <= 	std_logic_vector(unsigned(a) + unsigned(b) + unsigned(carry_in + "0000000000000000")) when op = "00" else
+			-- Subtraction
+			std_logic_vector(unsigned(a) - unsigned(b)) when op = "01" else
+			-- OR
+			a or b when op = "10" else
+			-- AND
+			a and b when op = "11" else
+			"XXXXXXXXXXXXXXXX";
 	
 	aluout <= tmp;
-    zout <= '1' when (tmp = "0000000000000000") else '0';
+    zout <= '1' when (tmp = x"0000") else '0';
 	
 	
 end Behavioral;

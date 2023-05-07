@@ -9,6 +9,7 @@ entity Data_Mem_Inter is
         ir_hold : in std_logic_vector(15 downto 0);
         rx : in std_logic_vector(15 downto 0);
         dprr : in std_logic_vector(1 downto 0);
+        pc_hold : in std_logic_vector(15 downto 0);
 
         data : out std_logic_vector(15 downto 0));
 end Data_Mem_Inter;
@@ -33,7 +34,7 @@ begin
         a => ir_hold,
         b => rx,
         c => dprr_mux_in,
-        d => "0000000000000000",
+        d => pc_hold,
         outp => data_a_mux_out
     );
 

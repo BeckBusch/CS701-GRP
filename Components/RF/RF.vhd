@@ -22,7 +22,7 @@ entity RF is
         aluout : in std_logic_vector(15 downto 0);
         rz_max : in std_logic_vector(15 downto 0);
         sip_hold : in std_logic_vector(15 downto 0);
-        er_temp : in std_logic;
+        pc_hold : in std_logic_vector(15 downto 0);
         mem_hp_low : in std_logic_vector(15 downto 0);
 
         rx : out std_logic_vector(15 downto 0);
@@ -59,7 +59,6 @@ architecture behaviour of RF is
 
     signal out_z : std_logic_vector(15 downto 0);
     signal out_sel_x, out_sel_z : std_logic_vector(3 downto 0);
-    signal internal_er : std_logic_vector(15 downto 0);
     signal internal_rx : std_logic_vector(15 downto 0);
     signal internal_ccd : std_logic_vector(15 downto 0);
     signal internal_pcd : std_logic_vector(15 downto 0);
@@ -75,7 +74,7 @@ begin
         d => aluout,
         e => rz_max,
         f => sip_hold,
-        g => internal_er,
+        g => pc_hold,
         h => crop_hp,
         outp => out_z
     );
@@ -89,8 +88,8 @@ begin
 
     MUX2_4_2 : MUX2_4 port map(
         sel => selx_mux_sel,
-        a => cu_selz,
-        b => ir_hold_23_20,
+        a => ir_hold_23_20,
+        b => cu_selz,
         outp => out_sel_z
     );
 
@@ -109,7 +108,6 @@ begin
     );
 
     crop_hp <= "000000000" & mem_hp_low(6 downto 0);
-    internal_er <= "000000000000000" & er_temp;
     rx <= internal_rx;
     ccd <= internal_ccd(3 downto 0);
     pcd <= internal_pcd(3 downto 0);

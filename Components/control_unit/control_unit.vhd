@@ -86,11 +86,11 @@ begin
             when Ini =>
 			    state<=T0;
                 -- Add state logic
-				write_ir<=0;
-				write_pc<=0;
-				write_rf<=0;
-				write_sip<=0;
-				write_sop<=0;
+				write_ir<='0';
+				write_pc<='0';
+				write_rf<='0';
+				write_sip<='0';
+				write_sop<='0';
 
             when T0 =>                   --fetch  instruction from program memory
 
