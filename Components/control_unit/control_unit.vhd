@@ -141,17 +141,18 @@ begin
 
 				elsif Addressing_mode = direct then
 					case opcode is
-						when ldr =>
+						when ldr =>                        --wrong
 							rf_mux_sel <= rf_dm;
 							write_rf <= '1';
 
-						when str =>              
+						when str =>                   --check func
+
 							mem_data_mux_sel  <= mem_data_rx;
 							m_address_mux_sel<=m_address_ir;
 							mem_sel <= mem_dm;
 
 						when strpc =>                           --check func(not sure)
-							mem_data_mux_sel  <= mem_data_dprr;
+							mem_data_mux_sel  <= mem_data_pc;
 							 m_address_mux_sel<= m_address_ir;
 							mem_sel <= mem_dm;
 
@@ -179,7 +180,7 @@ begin
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_alu;
-							rf_mux_sel_z <= '0';
+							rf_mux_sel_z <= '0';      --selecting to rz
 							write_rf <= '1';
 							--ld_z <= '1';
 						
@@ -192,16 +193,17 @@ begin
 							write_rf <= '1';
 							--ld_z <= '1';
 
-						when ldr =>                                --check func 
+						when ldr =>                                --wrong func 
 							rf_mux_sel <= rf_ir;
 							rf_mux_sel_z <= '0';
 							write_rf <= '1';
 
-						when str =>                               --chek func (unsure) 
+						when str =>                               --check func  store rx  on rz
 							mem_data_mux_sel <= mem_data_rx;
+							m_address_mux_sel<=m_address_rz;
 							mem_sel <= mem_dm;
 
-						when jmp =>                                --check func(unsure) 
+						when jmp =>                                --check func  juming pc to rx
 							pc_mux_sel <= pc_rx;
 							write_pc <= '1';
 
@@ -211,12 +213,12 @@ begin
 							pc_mux_sel <= pc_ir;
 							write_pc <= '1';
 
-						when lsip =>                               --highly unsure
+						when lsip =>                   --check func  load sip on rz                       
 						    rf_mux_sel<=rf_sip;
 							rf_mux_sel_z<='0';
 
-						when ssop =>                                  --check func (unsure)  
-							rf_mux_sel_x <= '1';
+						when ssop =>                 --check func  whaterver is on rx will be loaded to sop
+							  
 							write_sop <= '1';
 
 						when others =>
@@ -276,8 +278,9 @@ begin
 							rf_mux_sel <= rf_ir;
 							write_rf <= '1';
 
-						when str =>                              --check func
-							mem_data_mux_sel <= mem_data_rx;
+						when str =>                              --check func  store operand on rz
+							mem_data_mux_sel <= mem_data_ir;
+							m_address_mux_sel<=m_address_rz;
 							mem_sel <= mem_dm;
 
 						when jmp =>                          --check func
