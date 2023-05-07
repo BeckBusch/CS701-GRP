@@ -93,7 +93,7 @@ begin
         outp => out_sel_z
     );
 
-    RF_REG_1 : RF_REG port map(
+    RF_REG_1 : RF_REG_ALT port map(
         sel_x => out_sel_x,
         sel_z => out_sel_z,
         z => out_z,

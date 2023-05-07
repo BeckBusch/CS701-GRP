@@ -37,7 +37,7 @@ begin
 
     process (clk)
     begin
-        if (rising_edge(clk)) then
+        if (falling_edge(clk)) then
 
             if (writ = '1') then
                 ram_data(to_integer(unsigned(sel_z))) <= z;
