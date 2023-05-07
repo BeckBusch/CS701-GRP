@@ -83,6 +83,7 @@
    internal="Button_PIO.irq"
    type="interrupt"
    dir="end" />
+ <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
  <interface name="clk_1_clk" internal="clk_1.clk" type="clock" dir="start" />
  <interface
    name="clk_1_clk_reset"
@@ -173,7 +174,7 @@
  <module name="clk_0" kind="clock_source" version="18.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
-  <parameter name="inputClockFrequency" value="50000000" />
+  <parameter name="inputClockFrequency" value="0" />
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
  <module name="clk_1" kind="clock_source" version="18.1" enabled="1">
@@ -187,7 +188,6 @@
  <connection kind="clock" version="18.1" start="clk_0.clk" end="Switch_PIO.clk" />
  <connection kind="clock" version="18.1" start="clk_0.clk" end="Sev_Seg_PIO.clk" />
  <connection kind="clock" version="18.1" start="clk_0.clk" end="clk_1.clk_in" />
- <connection kind="clock" version="18.1" start="clk_0.clk" end="clk_0.clk_in" />
  <connection
    kind="reset"
    version="18.1"
