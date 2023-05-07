@@ -31,6 +31,7 @@ architecture Behavioral of RF_REG_ALT is
     signal mux_signals : mux_p.slv_array_t(0 to 15);
     signal sel_x_internal : integer;
     signal sel_z_internal : integer;
+    signal write_z : std_logic_vector(0 to 15);
 
 begin
 
@@ -42,35 +43,21 @@ begin
         )
         port map(
             reg_in => z, 
-            writ => writ,
+            writ => write_z(i),
             reset => reset,
             clk => clk,
             reg_out => mux_signals(i)
         );
     end generate REG_FILE;
 
-    RX_MUX : entity work.MUXGEN_16
-    generic map(
-        NUM => 16
-    )
-    port map(
-        v_i => mux_signals,
-        sel_i => sel_x_internal,
-        z_o => out_rx
-    );
-    
-    RZ_MUX : entity work.MUXGEN_16
-    generic map(
-        NUM => 16
-    )
-    port map(
-        v_i => mux_signals,
-        sel_i => sel_z_internal,
-        z_o => out_rz
-    );
+    process(sel_z, writ)
+    begin
+        write_z <= (others => '0');
+        write_z(to_integer(unsigned(sel_z))) <= writ;
+    end process;
 
-    sel_x_internal <= to_integer(unsigned(sel_x));
-    sel_z_internal <= to_integer(unsigned(sel_z));
+    out_rx <= mux_signals(to_integer(unsigned(sel_x)));
+    out_rz <= mux_signals(to_integer(unsigned(sel_z)));
 
     out_ccd <= mux_signals(8); -- R7
     out_pcd <= mux_signals(9); -- R8
