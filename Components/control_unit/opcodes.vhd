@@ -25,10 +25,10 @@ package opcodes is
 	constant ldr	: std_logic_vector(5 downto 0) := "000000";
 	constant str	: std_logic_vector(5 downto 0) := "000010";
 	constant andd	: std_logic_vector(5 downto 0) := "001000";
-	constant  orr	: std_logic_vector(5 downto 0) := "011000";
+	constant  orr	: std_logic_vector(5 downto 0) := "001100";
 	constant add	: std_logic_vector(5 downto 0) := "111000";
 	constant subv	: std_logic_vector(5 downto 0) := "000011";
-	constant sub	: std_logic_vector(5 downto 0) := "000100";
+	constant subi	: std_logic_vector(5 downto 0) := "000100";
 	constant jmp	: std_logic_vector(5 downto 0) := "011000";
 	constant present	: std_logic_vector(5 downto 0) := "011100";
 	constant datacall	: std_logic_vector(5 downto 0) := "101000";

@@ -12,7 +12,6 @@ entity Control_Unit is
         Debug_Mode          : in  STD_LOGIC;
 		nios_control        : in  STD_LOGIC;
 		init_up		    	: out std_logic; -- uP initialisation
-		we: out std_logic;
 
 	-- IR
         Opcode              : in  STD_LOGIC_VECTOR (5 downto 0); 
@@ -23,8 +22,7 @@ entity Control_Unit is
         write_ir            : out std_logic;
         load_ir	            : out std_logic;
 		ir_reset 	    : in std_logic;
-        ir_load_msb         : out std_logic;
-        ir_load_lsb 	    : out std_logic;
+   
 
         
 	-- Pc:
@@ -52,7 +50,13 @@ entity Control_Unit is
 		alu_mux_B		: out std_logic;
 		alu_op			: out std_logic_vector(1 downto 0);
     	z               : in std_logic;
-		clr_z           : out std_logic
+		clr_z           : out std_logic;
+
+	--SIP
+	   write_sip : out std_logic;
+
+	-- Ssop
+	  write_sop : out std_logic
     );
 end Control_Unit;
 
@@ -73,7 +77,7 @@ begin
     end process;
 
     -- Operation Decoder
-    process (State, Debug_Mode, DP_Memory_Signal, Opcode, Addressing_Mode) -- Include other necessary input signals
+    process (State, Debug_Mode, Opcode, Addressing_Mode) -- Include other necessary input signals
     begin
         -- Implement combinational logic for generating control signals based on the input signals and the current state
         -- Generate Next_State signal based on the current state, Debug_Mode, and DP_Memory_Signal
@@ -142,17 +146,19 @@ begin
 						when ldr =>
 							rf_mux_sel <= rf_dm;
 							write_rf <= '1';
-						when str =>
+						when str =>              
 							mem_data_mux_sel  <= mem_data_rx;
+							m_address_mux_sel<=m_address_rx;
 							mem_sel <= mem_dm;
-						when strpc =>          --add func
-							mem_data_mux_sel  <= mem_data_ir;
+						when strpc =>          --check func(not sure)
+							mem_data_mux_sel  <= mem_data_dprr;
+							 m_address_mux_sel<= m_address_ir;
 							mem_sel <= mem_dm;
 						when others =>
 							-- should be invalid instruction code
 					end case;
 					
-				elsif Addressing_mode = indirect then    --add func 
+				elsif Addressing_mode = indirect then    
 					case opcode is
 
 						when add =>                         --check func 
@@ -177,7 +183,7 @@ begin
 							--ld_z <= '1';
 						
 						when orr =>                                 --check func 
-							alu_op <= orrr;
+							alu_op <= orr;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_alu;
@@ -190,11 +196,11 @@ begin
 							rf_mux_sel_z <= '1';
 							write_rf <= '1';
 
-						when str =>                               --add func (unsure) 
+						when str =>                               --chek func (unsure) 
 							mem_data_mux_sel <= mem_data_rx;
-							we <= '1';
+							mem_sel <= mem_dm;
 
-						when jmp =>                                --add func(unsure) 
+						when jmp =>                                --check func(unsure) 
 							pc_mux_sel <= pc_rx;
 							write_pc <= '1';
 
@@ -204,13 +210,13 @@ begin
 							pc_mux_sel <= pc_ir;
 							write_pc <= '1';
 
-						when lsip =>                               --add func 
-							pc_mux_sel <= pc_ir;
-							write_pc <= '1';
+						when lsip =>                               --highly unsure
+						    rf_mux_sel<=rf_sip;
+							rf_mux_sel_z<='1';
 
 						when ssop =>                                  --add func 
-							pc_mux_sel <= pc_ir;
-							write_pc <= '1';
+							rf_mux_sel <= rf_rx;
+							write_sop <= '1';
 
 						when others =>
 							-- should be invalid instruction code
@@ -229,12 +235,12 @@ begin
 							--ld_z <= '1';
 							--ld_v <= '1';
 							--ld_n <= '1';
-						when sub=>                   --check func
+						when subi=>                   --check func
 							alu_op <= alu_sub;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_ir;
-							--write_rf <= '1';
+							write_rf <= '1';
 							--ld_c <= '1';
 							--ld_z <= '1';
 							--ld_v <= '1';
@@ -271,7 +277,7 @@ begin
 
 						when str =>                              --check func
 							mem_data_mux_sel <= mem_data_rx;
-							we <= '1';
+							mem_sel <= mem_dm;
 
 						when jmp =>                          --check func
 							pc_mux_sel <= pc_ir;
