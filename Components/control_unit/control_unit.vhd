@@ -51,6 +51,7 @@ entity Control_Unit is
     	carry              : out std_logic;
 		 z           :       in std_logic;
 		clr_z           : out std_logic;
+		write_z         : out std_logic;
 
 	--SIP
 	   write_sip : out std_logic;

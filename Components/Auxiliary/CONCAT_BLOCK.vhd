@@ -9,12 +9,12 @@ entity CONCAT_BLOCK is
     port (
         signal a : in std_logic_vector(LEN_A - 1 downto 0);
         signal b : in std_logic_vector(LEN_B - 1 downto 0);
-        signal out : in std_logic_vector(LEN_A + LEN_B - 1 downto 0)
+        signal output : out std_logic_vector(LEN_A + LEN_B - 1 downto 0)
     );
 
 end CONCAT_BLOCK;
 
 architecture behaviour of CONCAT_BLOCK is
 begin
-    out <= a & b;
+    output <= a & b;
 end behaviour;
