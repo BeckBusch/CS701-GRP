@@ -220,10 +220,11 @@ begin
 						when datacall =>                             --check func  (not sure)
 							alu_op <= andd;
 							alu_mux_a <= alu_rx_a;
-							alu_mux_b <= alu_rx_b;		
+							alu_mux_b <= alu_rz;		
 							rf_mux_sel_z <= '1';               --selecting to hardcode reg
 							rf_value_sel_z <= x"7";
                             write_dpcr<='1';
+
 						when lsip =>                   --check func  load sip on rz                       
 						    rf_mux_sel<=rf_sip;
 							rf_mux_sel_z<='0';
@@ -298,6 +299,12 @@ begin
 						when jmp =>                          --check func
 							pc_mux_sel <= pc_ir;
 							write_pc <= '1';
+
+						when datacall =>                             --check func  
+							alu_op <= andd;
+							alu_mux_a <= alu_ir;
+							alu_mux_b <= alu_rx_b;		
+                            write_dpcr<='1';
 
 						when sz=>                                    --check func
 							if z='1' then
