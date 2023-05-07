@@ -9,10 +9,11 @@ entity Control_Unit is
     Port (
         CLK                 : in  STD_LOGIC;
         Reset               : in  STD_LOGIC;
-        Debug_Mode          : in  STD_LOGIC;
-		nios_control        : in  STD_LOGIC;
-		init_up		    	: out std_logic;         -- uP initialisation
+       -- Debug_Mode          : in  STD_LOGIC;
+		--nios_control        : in  STD_LOGIC;
+		--init_up		    	: out std_logic;         -- uP initialisation
         we                  : out std_logic;        -- write ram
+
 	-- IR
         Opcode              : in  STD_LOGIC_VECTOR (5 downto 0); 
         Addressing_Mode     : in  STD_LOGIC_VECTOR (1 downto 0); 
@@ -48,7 +49,8 @@ entity Control_Unit is
 		alu_mux_A		: out std_logic_vector(1 downto 0);
 		alu_mux_B		: out std_logic;
 		alu_op			: out std_logic_vector(1 downto 0);
-    	z               : in std_logic;
+    	carry              : in std_logic;
+		 z           :       in std_logic;
 		clr_z           : out std_logic;
 
 	--SIP
@@ -136,7 +138,7 @@ begin
 						
 						when clfz =>   --add func          --check func 
 							if z = '1' then
-								clr_z <= '1';
+								clr_z <= '0';
 							end if;
 						when noop =>
 							-- do nothing
@@ -300,6 +302,12 @@ begin
 							pc_mux_sel <= pc_ir;
 							write_pc <= '1';
 
+						when present =>                             --check func  
+							alu_op <= orr;
+							alu_mux_a <= alu_rx_a;
+							alu_mux_b <= alu_rz;		
+                            
+
 						when datacall =>                             --check func  
 							alu_op <= andd;
 							alu_mux_a <= alu_ir;
@@ -320,8 +328,6 @@ begin
 							-- should be invalid instruction code
 					end case;
 				end if;	
-            when T3 =>
-                -- Add state logic
             when others =>
                 --  should be invalid instruction code
         end case;
