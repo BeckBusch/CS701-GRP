@@ -11,38 +11,38 @@ entity Control_Unit is
         Reset               : in  STD_LOGIC;
         Debug_Mode          : in  STD_LOGIC;
 		nios_control        : in  STD_LOGIC;
-		init_up		    	: out std_logic; -- uP initialisation
+		init_up		    	: out std_logic;         -- uP initialisation
         we                  : out std_logic;        -- write ram
 	-- IR
         Opcode              : in  STD_LOGIC_VECTOR (5 downto 0); 
         Addressing_Mode     : in  STD_LOGIC_VECTOR (1 downto 0); 
-		Rz       	    : in std_logic_vector(3 downto 0);
-       	Rx       	    : in std_logic_vector(3 downto 0);
+		Rz       	    	: in std_logic_vector(3 downto 0);
+       	Rx       	    	: in std_logic_vector(3 downto 0);
         Operand             : in std_logic_vector(15 downto 0);
         write_ir            : out std_logic;
-		ir_reset 	    : in std_logic;
+		ir_reset 	    	: in std_logic;
    
 
         
 	-- Pc:
-  		write_pc               : out std_logic;
+  		write_pc           : out std_logic;
 		pc_mux_sel 	       : out std_logic_vector(1  downto 0);
         reset_pc	       : in std_logic;
 
 	
 	-- RF Block:
-  		write_rf                : out std_logic;
-		rf_mux_sel 		: out std_logic_vector(2 downto 0);
+  		write_rf            : out std_logic;
+		rf_mux_sel 		    : out std_logic_vector(2 downto 0);
         rf_mux_sel_x 		: out std_logic;
         rf_mux_sel_z 		: out std_logic;
-        reset_rf : out std_logic;
-        rf_value_sel_x : out std_logic_vector(3 downto 0);
-        rf_value_sel_z : out std_logic_vector(3 downto 0);
+        reset_rf            : out std_logic;
+        rf_value_sel_x      : out std_logic_vector(3 downto 0);
+        rf_value_sel_z      : out std_logic_vector(3 downto 0);
 
 	-- memory address and data interface
-        mem_sel         : out std_logic;
+        mem_sel         		: out std_logic;
         m_address_mux_sel       : out std_logic_vector(1 downto 0);
-	mem_data_mux_sel 	: out std_logic_vector(1 downto 0);
+	mem_data_mux_sel 			: out std_logic_vector(1 downto 0);
 
 	--AlU
 		alu_mux_A		: out std_logic_vector(1 downto 0);
@@ -88,7 +88,7 @@ begin
         case State is
      
             when Ini =>
-			    state<=T0;
+			    next_state<=T0;
                 -- Add state logic
 				write_ir<='0';
 				write_pc<='0';
