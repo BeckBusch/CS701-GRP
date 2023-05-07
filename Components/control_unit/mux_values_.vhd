@@ -28,7 +28,7 @@ package mux_values is
 	constant mem_data_ir: std_logic_vector(1 downto 0) := "00";
 	constant mem_data_rx: std_logic_vector(1 downto 0) := "01";
 	constant mem_data_dprr: std_logic_vector(1 downto 0) := "10";
-	
+	constant mem_data_pc: std_logic_vector(1 downto 0 ):= "11";
 -- ALU a input selection alu_mux_a
 	constant alu_rx_a: std_logic_vector(1 downto 0) := "00";
 	constant alu_ir: std_logic_vector(1 downto 0) := "01";
