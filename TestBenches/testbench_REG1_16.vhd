@@ -23,7 +23,7 @@ architecture Behavioral of testbench_REG1_16 is
     signal reg_in : std_logic_vector(15 downto 0);
     signal writ : std_logic;
     signal reset : std_logic;
-    signal clk : std_logic := '0';
+    signal clk : std_logic := '1';
 
     signal reg_out : std_logic_vector(15 downto 0);
 
@@ -33,7 +33,11 @@ architecture Behavioral of testbench_REG1_16 is
 begin
 
     -- Instantiate the ALU
-    PC_1 : REG1_16 port map(
+    PC_1 : entity work.REG1_GENERIC
+    generic map(
+        LEN => 16
+    )
+    port map(
         reg_in => reg_in,
         writ => writ,
         reset => reset,
