@@ -9,10 +9,13 @@ use IEEE.numeric_std.all;
 entity DE1_Diagram is
 	port (
 		button_pio_irq_irq                     : out std_logic;                                        --                  button_pio_irq.irq
-		clk_clk                                : in  std_logic                     := '0';             --                             clk.clk
+		clk_1_clk_clk                          : out std_logic;                                        --                       clk_1_clk.clk
+		clk_1_clk_reset_reset_n                : out std_logic;                                        --                 clk_1_clk_reset.reset_n
 		led_pio_external_connection_export     : out std_logic_vector(7 downto 0);                     --     led_pio_external_connection.export
 		reset_reset_n                          : in  std_logic                     := '0';             --                           reset.reset_n
 		sev_seg_pio_external_connection_export : out std_logic_vector(27 downto 0);                    -- sev_seg_pio_external_connection.export
+		sev_seg_pio_s1_address                 : in  std_logic_vector(1 downto 0)  := (others => '0'); --                  sev_seg_pio_s1.address
+		sev_seg_pio_s1_readdata                : out std_logic_vector(31 downto 0);                    --                                .readdata
 		switch_pio_external_connection_export  : in  std_logic_vector(7 downto 0)  := (others => '0')  --  switch_pio_external_connection.export
 	);
 end entity DE1_Diagram;
@@ -134,6 +137,7 @@ architecture rtl of DE1_Diagram is
 		);
 	end component altera_reset_controller;
 
+	signal clk_1_clk_clk_internal                   : std_logic; -- [] -> [clk_1_clk_clk, Button_PIO:clk, LED_PIO:clk, Sev_Seg_PIO:clk, Switch_PIO:clk, rst_controller:clk]
 	signal rst_controller_reset_out_reset           : std_logic; -- rst_controller:reset_out -> rst_controller_reset_out_reset:in
 	signal reset_reset_n_ports_inv                  : std_logic; -- reset_reset_n:inv -> rst_controller:reset_in0
 	signal rst_controller_reset_out_reset_ports_inv : std_logic; -- rst_controller_reset_out_reset:inv -> [Button_PIO:reset_n, LED_PIO:reset_n, Sev_Seg_PIO:reset_n, Switch_PIO:reset_n]
@@ -142,7 +146,7 @@ begin
 
 	button_pio : component DE1_Diagram_Button_PIO
 		port map (
-			clk        => clk_clk,                                  --                 clk.clk
+			clk        => clk_1_clk_clk_internal,                   --                 clk.clk
 			reset_n    => rst_controller_reset_out_reset_ports_inv, --               reset.reset_n
 			address    => open,                                     --                  s1.address
 			write_n    => open,                                     --                    .write_n
@@ -155,7 +159,7 @@ begin
 
 	led_pio : component DE1_Diagram_LED_PIO
 		port map (
-			clk        => clk_clk,                                  --                 clk.clk
+			clk        => clk_1_clk_clk_internal,                   --                 clk.clk
 			reset_n    => rst_controller_reset_out_reset_ports_inv, --               reset.reset_n
 			address    => open,                                     --                  s1.address
 			write_n    => open,                                     --                    .write_n
@@ -167,7 +171,7 @@ begin
 
 	sev_seg_pio : component DE1_Diagram_Sev_Seg_PIO
 		port map (
-			clk        => clk_clk,                                  --                 clk.clk
+			clk        => clk_1_clk_clk_internal,                   --                 clk.clk
 			reset_n    => rst_controller_reset_out_reset_ports_inv, --               reset.reset_n
 			address    => open,                                     --                  s1.address
 			write_n    => open,                                     --                    .write_n
@@ -179,10 +183,10 @@ begin
 
 	switch_pio : component DE1_Diagram_Switch_PIO
 		port map (
-			clk      => clk_clk,                                  --                 clk.clk
+			clk      => clk_1_clk_clk_internal,                   --                 clk.clk
 			reset_n  => rst_controller_reset_out_reset_ports_inv, --               reset.reset_n
-			address  => open,                                     --                  s1.address
-			readdata => open,                                     --                    .readdata
+			address  => sev_seg_pio_s1_address,                   --                  s1.address
+			readdata => sev_seg_pio_s1_readdata,                  --                    .readdata
 			in_port  => switch_pio_external_connection_export     -- external_connection.export
 		);
 
@@ -215,7 +219,7 @@ begin
 		)
 		port map (
 			reset_in0      => reset_reset_n_ports_inv,        -- reset_in0.reset
-			clk            => clk_clk,                        --       clk.clk
+			clk            => clk_1_clk_clk_internal,         --       clk.clk
 			reset_out      => rst_controller_reset_out_reset, -- reset_out.reset
 			reset_req      => open,                           -- (terminated)
 			reset_req_in0  => '0',                            -- (terminated)
@@ -254,5 +258,9 @@ begin
 	reset_reset_n_ports_inv <= not reset_reset_n;
 
 	rst_controller_reset_out_reset_ports_inv <= not rst_controller_reset_out_reset;
+
+	clk_1_clk_reset_reset_n <= reset_reset_n;
+
+	clk_1_clk_clk <= clk_1_clk_clk_internal;
 
 end architecture rtl; -- of DE1_Diagram

@@ -1,16 +1,19 @@
 # # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
 # 
-preplace inst ReCOP_Quartus.Prog_Mem -pg 1 -lvl 2 -y 330
-preplace inst ReCOP_Quartus.Switch_PIO -pg 1 -lvl 2 -y 510
-preplace inst ReCOP_Quartus.Sev_Seg_PIO -pg 1 -lvl 2 -y 410
-preplace inst ReCOP_Quartus.LED_PIO -pg 1 -lvl 2 -y 230
-preplace inst ReCOP_Quartus.Data_Mem -pg 1 -lvl 2 -y 150
-preplace inst ReCOP_Quartus -pg 1 -lvl 1 -y 40 -regy -20
-preplace inst ReCOP_Quartus.clk_0 -pg 1 -lvl 1 -y 70
-preplace inst ReCOP_Quartus.Button_PIO -pg 1 -lvl 2 -y 30
-preplace netloc EXPORT<net_container>ReCOP_Quartus</net_container>(SLAVE)clk_0.clk_in,(SLAVE)ReCOP_Quartus.clk) 1 0 1 NJ
-preplace netloc FAN_OUT<net_container>ReCOP_Quartus</net_container>(SLAVE)Switch_PIO.reset,(SLAVE)Sev_Seg_PIO.reset,(SLAVE)Button_PIO.reset,(SLAVE)Prog_Mem.reset1,(SLAVE)LED_PIO.reset,(MASTER)clk_0.clk_reset,(SLAVE)Data_Mem.reset1) 1 1 1 260
-preplace netloc EXPORT<net_container>ReCOP_Quartus</net_container>(SLAVE)ReCOP_Quartus.reset,(SLAVE)clk_0.clk_in_reset) 1 0 1 NJ
-preplace netloc FAN_OUT<net_container>ReCOP_Quartus</net_container>(SLAVE)LED_PIO.clk,(SLAVE)Button_PIO.clk,(SLAVE)Switch_PIO.clk,(SLAVE)Data_Mem.clk1,(SLAVE)Sev_Seg_PIO.clk,(MASTER)clk_0.clk,(SLAVE)Prog_Mem.clk1) 1 1 1 280
-levelinfo -pg 1 0 50 470
-levelinfo -hier ReCOP_Quartus 60 90 310 460
+preplace inst DE1_Diagram -pg 1 -lvl 1 -y 40 -regy -20
+preplace inst DE1_Diagram.Sev_Seg_PIO -pg 1 -lvl 2 -y 250
+preplace inst DE1_Diagram.Switch_PIO -pg 1 -lvl 2 -y 350
+preplace inst DE1_Diagram.LED_PIO -pg 1 -lvl 2 -y 150
+preplace inst DE1_Diagram.Button_PIO -pg 1 -lvl 2 -y 30
+preplace inst DE1_Diagram.clk_0 -pg 1 -lvl 1 -y 200
+preplace netloc EXPORT<net_container>DE1_Diagram</net_container>(SLAVE)DE1_Diagram.button_pio_irq,(SLAVE)Button_PIO.irq) 1 0 2 NJ 80 NJ
+preplace netloc EXPORT<net_container>DE1_Diagram</net_container>(SLAVE)clk_0.clk_in,(SLAVE)DE1_Diagram.clk) 1 0 1 NJ
+preplace netloc FAN_OUT<net_container>DE1_Diagram</net_container>(SLAVE)Switch_PIO.reset,(SLAVE)LED_PIO.reset,(SLAVE)Sev_Seg_PIO.reset,(SLAVE)Button_PIO.reset,(MASTER)clk_0.clk_reset) 1 1 1 430
+preplace netloc EXPORT<net_container>DE1_Diagram</net_container>(SLAVE)DE1_Diagram.sev_seg_pio_s1,(SLAVE)Switch_PIO.s1) 1 0 2 NJ 420 NJ
+preplace netloc EXPORT<net_container>DE1_Diagram</net_container>(SLAVE)DE1_Diagram.switch_pio_external_connection,(SLAVE)Switch_PIO.external_connection) 1 0 2 NJ 380 NJ
+preplace netloc EXPORT<net_container>DE1_Diagram</net_container>(SLAVE)Sev_Seg_PIO.external_connection,(SLAVE)DE1_Diagram.sev_seg_pio_external_connection) 1 0 2 NJ 280 NJ
+preplace netloc FAN_OUT<net_container>DE1_Diagram</net_container>(SLAVE)LED_PIO.clk,(SLAVE)Button_PIO.clk,(SLAVE)Switch_PIO.clk,(SLAVE)Sev_Seg_PIO.clk,(MASTER)clk_0.clk) 1 1 1 410
+preplace netloc EXPORT<net_container>DE1_Diagram</net_container>(SLAVE)clk_0.clk_in_reset,(SLAVE)DE1_Diagram.reset) 1 0 1 NJ
+preplace netloc EXPORT<net_container>DE1_Diagram</net_container>(SLAVE)LED_PIO.external_connection,(SLAVE)DE1_Diagram.led_pio_external_connection) 1 0 2 NJ 180 NJ
+levelinfo -pg 1 0 200 620
+levelinfo -hier DE1_Diagram 210 240 460 610
