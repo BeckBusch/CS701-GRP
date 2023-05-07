@@ -14,7 +14,7 @@
 
 -- PROGRAM		"Quartus Prime"
 -- VERSION		"Version 18.1.0 Build 625 09/12/2018 SJ Standard Edition"
--- CREATED		"Sun May 07 23:31:25 2023"
+-- CREATED		"Mon May 08 02:50:32 2023"
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all; 
@@ -42,6 +42,7 @@ ENTITY ReCOPCore IS
 		SIP_in :  IN  STD_LOGIC_VECTOR(15 DOWNTO 0);
 		clr_irq :  OUT  STD_LOGIC;
 		dpc :  OUT  STD_LOGIC;
+		we :  OUT  STD_LOGIC;
 		addr :  OUT  STD_LOGIC_VECTOR(16 DOWNTO 0);
 		ccd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
 		data :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0);
@@ -182,7 +183,6 @@ SIGNAL	sip_write :  STD_LOGIC;
 SIGNAL	sop_reset :  STD_LOGIC;
 SIGNAL	sop_write :  STD_LOGIC;
 SIGNAL	sys_clk :  STD_LOGIC;
-SIGNAL	we :  STD_LOGIC;
 SIGNAL	z_reset :  STD_LOGIC;
 SIGNAL	zout :  STD_LOGIC;
 
@@ -200,6 +200,7 @@ PORT MAP(CLK => CLK,
 		 Operand => operand,
 		 Rx => rx_field,
 		 Rz => rz_field,
+		 we => we,
 		 write_ir => ir_write,
 		 reset_ir => ir_reset,
 		 write_pc => pc_write,
