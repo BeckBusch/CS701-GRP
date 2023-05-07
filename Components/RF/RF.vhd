@@ -34,7 +34,7 @@ end RF;
 
 architecture behaviour of RF is
     -- components
-    component RF_REG is
+    component RF_REG_ALT is
         port (
             writ, clk, reset : in std_logic;
             sel_x, sel_z : in std_logic_vector(3 downto 0);
@@ -93,7 +93,7 @@ begin
         outp => out_sel_z
     );
 
-    RF_REG_1 : RF_REG port map(
+    RF_REG_1 : RF_REG_ALT port map(
         sel_x => out_sel_x,
         sel_z => out_sel_z,
         z => out_z,

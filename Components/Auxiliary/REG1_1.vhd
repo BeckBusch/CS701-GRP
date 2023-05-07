@@ -17,19 +17,22 @@ entity REG1_1 is
 end REG1_1;
 
 architecture behaviour of REG1_1 is
+    signal reg_in_wrap : std_logic_vector(0 downto 0);
+    signal reg_out_wrap : std_logic_vector(0 downto 0);
 begin
+    REG : entity work.REG1_GENERIC
+    generic map(
+        LEN => 1
+    )
+    port map(
+        reg_in => reg_in_wrap,
+        writ => writ,
+        reset => reset,
+        clk => clk,
 
-    process (clk) is
-    begin
+        reg_out => reg_out_wrap
+    );
 
-        if rising_edge(clk) then
-            if (writ = '1') then
-                reg_out <= reg_in;
-
-            elsif (reset = '1') then
-                reg_out <= '0';
-
-            end if;
-        end if;
-    end process;
+    reg_in_wrap <= "" & reg_in;
+    reg_out <= reg_out_wrap(0);
 end behaviour;
