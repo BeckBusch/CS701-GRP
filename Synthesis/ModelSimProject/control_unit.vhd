@@ -101,11 +101,13 @@ begin
 				reset_ir<='1';
 				reset_sip<='1';
 				reset_sop<='0';
+				reset_pc <= '1';
 				carry<='0';
             when T0 =>                   --fetch  instruction from program memory
 
 				next_state <= T1;
 				-- ir <- pm 
+				reset_pc <= '0';
 				write_ir <= '1';
 				-- pc <- pc + 1
 				pc_mux_sel <= pc_const;   
@@ -338,7 +340,7 @@ begin
 				end if;	
             when others =>
                 --  should be invalid instruction code
-        end case;
+        end case;end case;
     end process;
 
 end Behavioral;

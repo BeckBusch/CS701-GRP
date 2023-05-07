@@ -35,9 +35,7 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
-
-LIBRARY altera_mf;
-USE altera_mf.altera_mf_components.all;
+use ieee.numeric_std.all;
 
 ENTITY PM_RAM IS
 	PORT
@@ -53,37 +51,29 @@ END PM_RAM;
 
 ARCHITECTURE SYN OF pm_ram IS
 
-	SIGNAL sub_wire0	: STD_LOGIC_VECTOR (31 DOWNTO 0);
+	type ram_array is array (0 to 19) of std_logic_vector (31 downto 0);
+
+	signal ram_data : ram_array := (
+		x"40000001", x"40100002", x"40f00000", x"78210000", x"f8320003", x"82020000", x"82030001", x"5800000a", x"34000000", x"34000000", x"34000000", x"80400000", x"fa040000", x"5c400011", x"5cf00012", x"34000000", x"34000000", x"34000000", x"34000000", x"34000000"
+	);
+
+	signal sel_z : std_logic_vector(4 downto 0);
 
 BEGIN
-	q    <= sub_wire0(31 DOWNTO 0);
 
-	altsyncram_component : altsyncram
-	GENERIC MAP (
-		clock_enable_input_a => "BYPASS",
-		clock_enable_output_a => "BYPASS",
-		init_file => "./program_memory.hex",
-		intended_device_family => "Cyclone V",
-		lpm_hint => "ENABLE_RUNTIME_MOD=NO",
-		lpm_type => "altsyncram",
-		numwords_a => 2048,
-		operation_mode => "SINGLE_PORT",
-		outdata_aclr_a => "NONE",
-		outdata_reg_a => "CLOCK0",
-		power_up_uninitialized => "FALSE",
-		ram_block_type => "M10K",
-		read_during_write_mode_port_a => "NEW_DATA_NO_NBE_READ",
-		widthad_a => 11,
-		width_a => 32,
-		width_byteena_a => 1
-	)
-	PORT MAP (
-		address_a => address,
-		clock0 => clock,
-		data_a => data,
-		wren_a => wren,
-		q_a => sub_wire0
-	);
+	process (clock)
+	begin
+		if (falling_edge(clock)) then
+			if (wren = '1') then
+				ram_data(to_integer(unsigned(sel_z))) <= data;
+			end if;
+
+		end if;
+	end process;
+
+	-- no clue if these two are correct outputs
+	sel_Z <= address(4 downto 0);
+	q <= ram_data(to_integer(unsigned(sel_z)));
 
 
 

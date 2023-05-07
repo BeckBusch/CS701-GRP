@@ -40,10 +40,10 @@ def main():
     #output_file = input("output file name: ")
     
     input_file = "a.txt"
-    output_file = "a.hex"
+    output_file = "out.txt"
     
     iterator = 0
-    with open(input_file) as f, open(output_file, "wb+") as o:
+    with open(input_file) as f, open(output_file, "w+") as o:
         while True:
             iterator += 1
             
@@ -193,13 +193,15 @@ def main():
             
             string = am + op_str + rz_str + rx_str + operand
             num = int(string, base=2)
-            print(line)
-            print(string)
-            # print(num)
-            print(hex(num))
-            print(num.to_bytes(8, "big"))
-            o.write(struct.pack('>Q', num))
-            print()
+            #print(line)
+            #print(string)
+            #print(num)
+            #print(hex(num))
+            #print(num.to_bytes(4, "big"))
+            #o.write(struct.pack('>I', num))
+            #print()
+
+            o.write(f'x"{hex(num)[2:]}", ')
             
         # end of context manager
         
