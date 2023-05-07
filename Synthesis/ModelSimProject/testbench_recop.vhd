@@ -28,6 +28,7 @@ architecture Behavioral of testbench_recop is
             SIP_in :  IN  STD_LOGIC_VECTOR(15 DOWNTO 0);
             clr_irq :  OUT  STD_LOGIC;
             dpc :  OUT  STD_LOGIC;
+            we :  OUT  STD_LOGIC;
             addr :  OUT  STD_LOGIC_VECTOR(16 DOWNTO 0);
             ccd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
             data :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0);
@@ -36,6 +37,19 @@ architecture Behavioral of testbench_recop is
             SOP :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0)
 
         );
+    END component;
+
+    component RAM_Interface IS 
+	PORT
+	(
+		mem_clk :  IN  STD_LOGIC;
+		write_high :  IN  STD_LOGIC;
+		w :  IN  STD_LOGIC;
+		address :  IN  STD_LOGIC_VECTOR(16 DOWNTO 0);
+		data_in :  IN  STD_LOGIC_VECTOR(15 DOWNTO 0);
+		ir_out :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
+		m_out :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0)
+	);
     END component;
 
     signal CLK           :  STD_LOGIC := '1';
@@ -56,12 +70,15 @@ architecture Behavioral of testbench_recop is
     signal SIP_in        :  STD_LOGIC_VECTOR(15 DOWNTO 0) := (others => '0');
     signal clr_irq       :  STD_LOGIC := '0';
     signal dpc           :  STD_LOGIC := '0';
+    signal we            :  STD_LOGIC := '0';
     signal addr          :  STD_LOGIC_VECTOR(16 DOWNTO 0) := (others => '0');
     signal ccd           :  STD_LOGIC_VECTOR(3 DOWNTO 0) := (others => '0');
     signal data          :  STD_LOGIC_VECTOR(15 DOWNTO 0) := (others => '0');
     signal dpcr_out      :  STD_LOGIC_VECTOR(7 DOWNTO 0) := (others => '0');
     signal pcd           :  STD_LOGIC_VECTOR(3 DOWNTO 0) := (others => '0');
     signal SOP           :  STD_LOGIC_VECTOR(15 DOWNTO 0);
+
+    signal write_high    :  STD_LOGIC := '0';
     
     --- clock signals
     constant half_clk_period: time := 10 ns;
@@ -88,12 +105,23 @@ begin
         SIP_in => SIP_in,
         clr_irq => clr_irq,
         dpc => dpc,
+        we => we,
         addr => addr,
         ccd => ccd,
         data => data,
         dpcr_out => dpcr_out,
         pcd => pcd,
         SOP => SOP
+    );
+
+    RAM : RAM_Interface port map (
+        mem_clk => CLK,
+        write_high => write_high,
+        w => we,
+        address => addr,
+        data_in => data,
+        ir_out => ir_out,
+        m_out => m_data
     );
 
     CLK  <= not CLK after half_clk_period when finished /= '1' else '0';
