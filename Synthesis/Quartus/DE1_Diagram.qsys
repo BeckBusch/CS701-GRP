@@ -49,6 +49,14 @@
          type = "int";
       }
    }
+   element clk_1
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+   }
 }
 ]]></parameter>
  <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
@@ -75,7 +83,12 @@
    internal="Button_PIO.irq"
    type="interrupt"
    dir="end" />
- <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
+ <interface name="clk_1_clk" internal="clk_1.clk" type="clock" dir="start" />
+ <interface
+   name="clk_1_clk_reset"
+   internal="clk_1.clk_reset"
+   type="reset"
+   dir="start" />
  <interface
    name="led_pio_external_connection"
    internal="LED_PIO.external_connection"
@@ -86,6 +99,11 @@
    name="sev_seg_pio_external_connection"
    internal="Sev_Seg_PIO.external_connection"
    type="conduit"
+   dir="end" />
+ <interface
+   name="sev_seg_pio_s1"
+   internal="Switch_PIO.s1"
+   type="avalon"
    dir="end" />
  <interface
    name="switch_pio_external_connection"
@@ -155,13 +173,26 @@
  <module name="clk_0" kind="clock_source" version="18.1" enabled="1">
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="clockFrequencyKnown" value="true" />
-  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="inputClockFrequency" value="50000000" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
+ </module>
+ <module name="clk_1" kind="clock_source" version="18.1" enabled="1">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="50000000" />
   <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
  <connection kind="clock" version="18.1" start="clk_0.clk" end="LED_PIO.clk" />
  <connection kind="clock" version="18.1" start="clk_0.clk" end="Button_PIO.clk" />
  <connection kind="clock" version="18.1" start="clk_0.clk" end="Switch_PIO.clk" />
  <connection kind="clock" version="18.1" start="clk_0.clk" end="Sev_Seg_PIO.clk" />
+ <connection kind="clock" version="18.1" start="clk_0.clk" end="clk_1.clk_in" />
+ <connection kind="clock" version="18.1" start="clk_0.clk" end="clk_0.clk_in" />
+ <connection
+   kind="reset"
+   version="18.1"
+   start="clk_0.clk_reset"
+   end="clk_1.clk_in_reset" />
  <connection
    kind="reset"
    version="18.1"

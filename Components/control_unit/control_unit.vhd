@@ -28,7 +28,7 @@ entity Control_Unit is
 	-- Pc:
   		write_pc           : out std_logic;
 		pc_mux_sel 	       : out std_logic_vector(1  downto 0);
-        reset_pc	       : in std_logic;
+        reset_pc	       : out std_logic;
 	
 	-- RF Block:
   		write_rf            : out std_logic;
