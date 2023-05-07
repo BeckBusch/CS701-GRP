@@ -302,14 +302,14 @@ refer to the applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 944 248 1160 376)
-	(text "RAM1" (rect 90 0 132 16)(font "Arial" (font_size 10)))
-	(text "data_memory" (rect 8 112 76 124)(font "Arial" ))
+	(rect 944 392 1160 520)
+	(text "PM_RAM" (rect 80 0 146 16)(font "Arial" (font_size 10)))
+	(text "program_memory_32" (rect 8 112 113 124)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
-		(text "data[15..0]" (rect 0 0 60 14)(font "Arial" (font_size 8)))
-		(text "data[15..0]" (rect 4 18 64 32)(font "Arial" (font_size 8)))
+		(text "data[31..0]" (rect 0 0 60 14)(font "Arial" (font_size 8)))
+		(text "data[31..0]" (rect 4 18 64 32)(font "Arial" (font_size 8)))
 		(line (pt 0 32)(pt 88 32)(line_width 3))
 	)
 	(port
@@ -322,8 +322,8 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 0 64)
 		(input)
-		(text "address[11..0]" (rect 0 0 82 14)(font "Arial" (font_size 8)))
-		(text "address[11..0]" (rect 4 50 86 64)(font "Arial" (font_size 8)))
+		(text "address[10..0]" (rect 0 0 82 14)(font "Arial" (font_size 8)))
+		(text "address[10..0]" (rect 4 50 86 64)(font "Arial" (font_size 8)))
 		(line (pt 0 64)(pt 88 64)(line_width 3))
 	)
 	(port
@@ -336,13 +336,13 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 216 32)
 		(output)
-		(text "q[15..0]" (rect 0 0 42 14)(font "Arial" (font_size 8)))
-		(text "q[15..0]" (rect 177 18 219 32)(font "Arial" (font_size 8)))
+		(text "q[31..0]" (rect 0 0 42 14)(font "Arial" (font_size 8)))
+		(text "q[31..0]" (rect 177 18 219 32)(font "Arial" (font_size 8)))
 		(line (pt 216 32)(pt 160 32)(line_width 3))
 	)
 	(drawing
-		(text "16 bits" (rect 109 24 121 57)(font "Arial" )(vertical))
-		(text "4096 words" (rect 120 12 132 67)(font "Arial" )(vertical))
+		(text "32 bits" (rect 109 24 121 57)(font "Arial" )(vertical))
+		(text "2048 words" (rect 120 12 132 67)(font "Arial" )(vertical))
 		(text "Block type: M10K" (rect 48 114 135 126)(font "Arial" ))
 		(line (pt 104 24)(pt 136 24))
 		(line (pt 136 24)(pt 136 96))
@@ -395,14 +395,14 @@ refer to the applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 944 392 1160 520)
-	(text "PM_RAM" (rect 80 0 146 16)(font "Arial" (font_size 10)))
-	(text "program_memory_32" (rect 8 112 113 124)(font "Arial" ))
+	(rect 944 248 1160 376)
+	(text "DM_RAM" (rect 80 0 146 16)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 112 25 124)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
-		(text "data[31..0]" (rect 0 0 60 14)(font "Arial" (font_size 8)))
-		(text "data[31..0]" (rect 4 18 64 32)(font "Arial" (font_size 8)))
+		(text "data[15..0]" (rect 0 0 60 14)(font "Arial" (font_size 8)))
+		(text "data[15..0]" (rect 4 18 64 32)(font "Arial" (font_size 8)))
 		(line (pt 0 32)(pt 88 32)(line_width 3))
 	)
 	(port
@@ -415,8 +415,8 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 0 64)
 		(input)
-		(text "address[10..0]" (rect 0 0 82 14)(font "Arial" (font_size 8)))
-		(text "address[10..0]" (rect 4 50 86 64)(font "Arial" (font_size 8)))
+		(text "address[11..0]" (rect 0 0 82 14)(font "Arial" (font_size 8)))
+		(text "address[11..0]" (rect 4 50 86 64)(font "Arial" (font_size 8)))
 		(line (pt 0 64)(pt 88 64)(line_width 3))
 	)
 	(port
@@ -429,13 +429,13 @@ refer to the applicable agreement for further details.
 	(port
 		(pt 216 32)
 		(output)
-		(text "q[31..0]" (rect 0 0 42 14)(font "Arial" (font_size 8)))
-		(text "q[31..0]" (rect 177 18 219 32)(font "Arial" (font_size 8)))
+		(text "q[15..0]" (rect 0 0 42 14)(font "Arial" (font_size 8)))
+		(text "q[15..0]" (rect 177 18 219 32)(font "Arial" (font_size 8)))
 		(line (pt 216 32)(pt 160 32)(line_width 3))
 	)
 	(drawing
-		(text "32 bits" (rect 109 24 121 57)(font "Arial" )(vertical))
-		(text "2048 words" (rect 120 12 132 67)(font "Arial" )(vertical))
+		(text "16 bits" (rect 109 24 121 57)(font "Arial" )(vertical))
+		(text "4096 words" (rect 120 12 132 67)(font "Arial" )(vertical))
 		(text "Block type: M10K" (rect 48 114 135 126)(font "Arial" ))
 		(line (pt 104 24)(pt 136 24))
 		(line (pt 136 24)(pt 136 96))
