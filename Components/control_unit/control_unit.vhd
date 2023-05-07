@@ -21,7 +21,7 @@ entity Control_Unit is
        	Rx       	    	: in std_logic_vector(3 downto 0);
         Operand             : in std_logic_vector(15 downto 0);
         write_ir            : out std_logic;
-		ir_reset 	    	: in std_logic;
+		reset_ir 	    	: out std_logic;
    
 
         
@@ -29,7 +29,6 @@ entity Control_Unit is
   		write_pc           : out std_logic;
 		pc_mux_sel 	       : out std_logic_vector(1  downto 0);
         reset_pc	       : in std_logic;
-
 	
 	-- RF Block:
   		write_rf            : out std_logic;
@@ -49,16 +48,16 @@ entity Control_Unit is
 		alu_mux_A		: out std_logic_vector(1 downto 0);
 		alu_mux_B		: out std_logic;
 		alu_op			: out std_logic_vector(1 downto 0);
-    	carry              : in std_logic;
+    	carry              : out std_logic;
 		 z           :       in std_logic;
 		clr_z           : out std_logic;
 
 	--SIP
 	   write_sip : out std_logic;
-
+      reset_sip  : out std_logic;
 	-- Ssop
 	  write_sop : out std_logic;
-
+      reset_sop : out std_logic;
 	  --dpcr
 	  write_dpcr : out std_logic;
 	  reset_dpcr : out std_logic
@@ -82,7 +81,7 @@ begin
     end process;
 
     -- Operation Decoder
-    process (State, Debug_Mode, Opcode, Addressing_Mode) -- Include other necessary input signals
+    process (State, Opcode, Addressing_Mode) -- Include other necessary input signals
     begin
         -- Implement combinational logic for generating control signals based on the input signals and the current state
         -- Generate Next_State signal based on the current state, Debug_Mode, and DP_Memory_Signal
@@ -99,6 +98,10 @@ begin
 				write_sop<='0';
                 write_dpcr<='0';
 				reset_dpcr<='1';
+				reset_ir<='1';
+				reset_sip<='1';
+				reset_sop<='0';
+				carry<='0';
             when T0 =>                   --fetch  instruction from program memory
 
 				next_state <= T1;
