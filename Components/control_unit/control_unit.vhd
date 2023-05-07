@@ -144,14 +144,17 @@ begin
 						when ldr =>
 							rf_mux_sel <= rf_dm;
 							write_rf <= '1';
+
 						when str =>              
 							mem_data_mux_sel  <= mem_data_rx;
 							m_address_mux_sel<=m_address_rx;
 							mem_sel <= mem_dm;
-						when strpc =>          --check func(not sure)
+
+						when strpc =>                           --check func(not sure)
 							mem_data_mux_sel  <= mem_data_dprr;
 							 m_address_mux_sel<= m_address_ir;
 							mem_sel <= mem_dm;
+
 						when others =>
 							-- should be invalid instruction code
 					end case;
@@ -212,8 +215,8 @@ begin
 						    rf_mux_sel<=rf_sip;
 							rf_mux_sel_z<='1';
 
-						when ssop =>                                  --add func 
-							rf_mux_sel <= rf_rx;
+						when ssop =>                                  --check func (unsure)  
+							rf_mux_sel_x <= '1';
 							write_sop <= '1';
 
 						when others =>

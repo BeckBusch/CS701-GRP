@@ -3,10 +3,10 @@ use ieee.std_logic_1164.all;
 package mux_values is
 
 -- program counter input selection pc_mux_sel
-	constant pc_ir: std_logic_vector(1 downto 0) := "00";
-	constant pc_dm: std_logic_vector(1 downto 0) := "01";
-	constant pc_const: std_logic_vector(1 downto 0) := "10";
-	constant pc_rx: std_logic_vector(1 downto 0) := "11";
+	constant pc_ir: std_logic_vector(1 downto 0) := "10";
+	constant pc_dm: std_logic_vector(1 downto 0) := "00";
+	constant pc_const: std_logic_vector(1 downto 0) := "11";
+	constant pc_rx: std_logic_vector(1 downto 0) := "01";
 	
 -- register file input selection rf_mux_sel
 	constant rf_ir: std_logic_vector(2 downto 0) := "000";
@@ -19,15 +19,15 @@ package mux_values is
 	constant rf_mem_hep: std_logic_vector(2 downto 0) := "111";
 	
 -- data memory address input select  m_address_mux_sel
-	constant m_address_ir: std_logic_vector(1 downto 0) := "00";
+	constant m_address_ir: std_logic_vector(1 downto 0) := "11";
 	constant m_address_rx: std_logic_vector(1 downto 0) := "01";
 	constant m_address_rz: std_logic_vector(1 downto 0) := "10";
-	constant m_address_pc: std_logic_vector(1 downto 0) := "11";
+	constant m_address_pc: std_logic_vector(1 downto 0) := "00";
 
 -- data memory input selection mem_data_mux_sel
 	constant mem_data_ir: std_logic_vector(1 downto 0) := "00";
-	constant mem_data_dprr: std_logic_vector(1 downto 0) := "01";
-	constant mem_data_rx: std_logic_vector(1 downto 0) := "10";
+	constant mem_data_rx: std_logic_vector(1 downto 0) := "01";
+	constant mem_data_dprr: std_logic_vector(1 downto 0) := "10";
 	
 -- ALU a input selection alu_mux_a
 	constant alu_rx_a: std_logic_vector(1 downto 0) := "00";
@@ -48,7 +48,6 @@ package mux_values is
 -- ALU operation selection alu_op
 	constant alu_add: std_logic_vector(1 downto 0) := "00";
 	constant alu_sub: std_logic_vector(1 downto 0) := "01";
-	constant alu_andd: std_logic_vector(1 downto 0)  := "10";
-	constant alu_orr: std_logic_vector(1 downto 0) := "11";
-	
+	constant alu_orr: std_logic_vector(1 downto 0) := "10";
+	constant alu_andd: std_logic_vector(1 downto 0)  := "11";
 end mux_values;	
