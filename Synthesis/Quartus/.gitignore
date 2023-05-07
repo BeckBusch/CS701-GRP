@@ -30,7 +30,6 @@
 *_generation_script*
 *_inst.vhd
 *.bak
-*.cmp
 *.done
 *.eqn
 *.hex

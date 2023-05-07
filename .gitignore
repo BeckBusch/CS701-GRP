@@ -17,7 +17,6 @@
 *.dbs
 *.psm
 *.bak
-*.cmp
 *.jpg
 *.html
 *.bsf
@@ -67,7 +66,6 @@ work-obj93.cf
 *_generation_script*
 *_inst.vhd
 *.bak
-*.cmp
 *.done
 *.eqn
 *.hex
