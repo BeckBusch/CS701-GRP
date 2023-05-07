@@ -12,7 +12,7 @@ entity Control_Unit is
         Debug_Mode          : in  STD_LOGIC;
 		nios_control        : in  STD_LOGIC;
 		init_up		    	: out std_logic; -- uP initialisation
-        we                  : out std_logic;
+        we                  : out std_logic;        -- write ram
 	-- IR
         Opcode              : in  STD_LOGIC_VECTOR (5 downto 0); 
         Addressing_Mode     : in  STD_LOGIC_VECTOR (1 downto 0); 
@@ -35,9 +35,9 @@ entity Control_Unit is
 		rf_mux_sel 		: out std_logic_vector(2 downto 0);
         rf_mux_sel_x 		: out std_logic;
         rf_mux_sel_z 		: out std_logic;
-        reset_rf : in std_logic;
-        rf_value_sel_x : in std_logic_vector(3 downto 0);
-        rf_value_sel_z : in std_logic_vector(3 downto 0);
+        reset_rf : out std_logic;
+        rf_value_sel_x : out std_logic_vector(3 downto 0);
+        rf_value_sel_z : out std_logic_vector(3 downto 0);
 
 	-- memory address and data interface
         mem_sel         : out std_logic;
@@ -55,7 +55,11 @@ entity Control_Unit is
 	   write_sip : out std_logic;
 
 	-- Ssop
-	  write_sop : out std_logic
+	  write_sop : out std_logic;
+
+	  --dpcr
+	  write_dpcr : out std_logic;
+	  reset_dpcr : out std_logic
     );
 end Control_Unit;
 
@@ -139,7 +143,7 @@ begin
 							-- should be invalid instruction code
 					end case;
 
-				elsif Addressing_mode = direct then
+				elsif Addressing_mode = direct then                       --direct Am
 					case opcode is
 						when ldr =>                        --wrong
 							rf_mux_sel <= rf_dm;
@@ -150,11 +154,13 @@ begin
 							mem_data_mux_sel  <= mem_data_rx;
 							m_address_mux_sel<=m_address_ir;
 							mem_sel <= mem_dm;
+                            we<='1';
 
 						when strpc =>                           --check func(not sure)
 							mem_data_mux_sel  <= mem_data_pc;
 							 m_address_mux_sel<= m_address_ir;
 							mem_sel <= mem_dm;
+                            we<='1';
 
 						when others =>
 							-- should be invalid instruction code
@@ -207,12 +213,13 @@ begin
 							pc_mux_sel <= pc_rx;
 							write_pc <= '1';
 
-						when datacall =>                             --add func 
-							mem_data_mux_sel <= mem_data_rx;
-							mem_data_mux_sel <= mem_data_rx;
-							pc_mux_sel <= pc_ir;
-							write_pc <= '1';
-
+						when datacall =>                             --check func  (not sure)
+							alu_op <= andd;
+							alu_mux_a <= alu_rx_a;
+							alu_mux_b <= alu_rx_b;		
+							rf_mux_sel_z <= '1';               --selecting to hardcode reg
+							rf_value_sel_z <= x"7";
+                            write_dpcr<='1';
 						when lsip =>                   --check func  load sip on rz                       
 						    rf_mux_sel<=rf_sip;
 							rf_mux_sel_z<='0';
