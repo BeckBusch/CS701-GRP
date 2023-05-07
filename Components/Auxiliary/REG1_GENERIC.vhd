@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 entity REG1_GENERIC is
     generic (
-        LEN : natural
+        LEN : natural := 16
     );
     port (
         signal reg_in : in std_logic_vector(LEN - 1 downto 0);
