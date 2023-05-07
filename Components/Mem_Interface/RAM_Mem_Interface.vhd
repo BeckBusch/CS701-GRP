@@ -21,7 +21,7 @@ entity RAM_Mem_Inter is
         w_dm : out std_logic;
         addr_dm : out std_logic_vector(11 downto 0);
 
-        data_pm : out std_logic_vector(15 downto 0);
+        data_pm : out std_logic_vector(31 downto 0);
         w_pm : out std_logic;
         addr_pm : out std_logic_vector(10 downto 0);
 
@@ -58,6 +58,8 @@ architecture behaviour of RAM_Mem_Inter is
             a, b : in std_logic;
             outp : out std_logic);
     end component;
+	 
+	 signal internal_pm_addr : std_logic_vector(11 downto 0);
 
 begin
 
@@ -72,7 +74,7 @@ begin
         sel => address(16),
         a => x"000",
         b => address(11 downto 0),
-        outp => addr_pm
+        outp => internal_pm_addr
     );
 
     ENABLE_DATA_WRITE : MUX2_1 port map(
@@ -93,6 +95,7 @@ begin
     data_dm <= data_in;
     data_pm <= dout_pm(31 downto 16) & data_in when write_high = '1' else
                data_in & dout_pm(15 downto 0);
+	 addr_pm <= internal_pm_addr(10 downto 0);
 
     m_out <= dout_dm;
     ir_out <= dout_pm;

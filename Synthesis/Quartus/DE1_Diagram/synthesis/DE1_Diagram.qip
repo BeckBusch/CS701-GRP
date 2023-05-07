@@ -2,7 +2,7 @@ set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_TOOL
 set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_TOOL_VERSION "18.1"
 set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "DE1_Diagram" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../DE1_Diagram.sopcinfo"]
-set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name SLD_INFO "QSYS_NAME DE1_Diagram HAS_SOPCINFO 1 GENERATION_ID 1683441610"
+set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name SLD_INFO "QSYS_NAME DE1_Diagram HAS_SOPCINFO 1 GENERATION_ID 1683443275"
 set_global_assignment -library "DE1_Diagram" -name MISC_FILE [file join $::quartus(qip_path) "../DE1_Diagram.cmp"]
 set_global_assignment -library "DE1_Diagram" -name SLD_FILE [file join $::quartus(qip_path) "DE1_Diagram.regmap"]
 set_global_assignment -library "DE1_Diagram" -name SLD_FILE [file join $::quartus(qip_path) "DE1_Diagram.debuginfo"]
@@ -16,10 +16,13 @@ set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMP
 set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_REPORT_HIERARCHY "On"
 set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_INTERNAL "Off"
 set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_VERSION "MS4w"
-set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY4MzQ0MTYxMA==::QXV0byBHRU5FUkFUSU9OX0lE"
+set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_PARAMETER "QVVUT19HRU5FUkFUSU9OX0lE::MTY4MzQ0MzI3NQ==::QXV0byBHRU5FUkFUSU9OX0lE"
 set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfRkFNSUxZ::Q3ljbG9uZSBW::QXV0byBERVZJQ0VfRkFNSUxZ"
 set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0U=::NUNTRU1BNUYzMUM2::QXV0byBERVZJQ0U="
 set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_PARAMETER "QVVUT19ERVZJQ0VfU1BFRURHUkFERQ==::Ng==::QXV0byBERVZJQ0VfU1BFRURHUkFERQ=="
+set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_PARAMETER "QVVUT19DTEtfQ0xPQ0tfUkFURQ==::LTE=::QXV0byBDTE9DS19SQVRF"
+set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_PARAMETER "QVVUT19DTEtfQ0xPQ0tfRE9NQUlO::LTE=::QXV0byBDTE9DS19ET01BSU4="
+set_global_assignment -entity "DE1_Diagram" -library "DE1_Diagram" -name IP_COMPONENT_PARAMETER "QVVUT19DTEtfUkVTRVRfRE9NQUlO::LTE=::QXV0byBSRVNFVF9ET01BSU4="
 set_global_assignment -entity "altera_reset_controller" -library "DE1_Diagram" -name IP_COMPONENT_NAME "YWx0ZXJhX3Jlc2V0X2NvbnRyb2xsZXI="
 set_global_assignment -entity "altera_reset_controller" -library "DE1_Diagram" -name IP_COMPONENT_DISPLAY_NAME "TWVybGluIFJlc2V0IENvbnRyb2xsZXI="
 set_global_assignment -entity "altera_reset_controller" -library "DE1_Diagram" -name IP_COMPONENT_REPORT_HIERARCHY "Off"

@@ -190,7 +190,7 @@ begin
 							--ld_n <= '1';
 
 						when andd =>                             --check func 
-							alu_op <= andd;
+							alu_op <= alu_andd;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_alu;
@@ -199,7 +199,7 @@ begin
 							--ld_z <= '1';
 						
 						when orr =>                                 --check func 
-							alu_op <= orr;
+							alu_op <= alu_orr;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_alu;
@@ -223,7 +223,7 @@ begin
 							write_pc <= '1';
 
 						when datacall =>                             --check func  (not sure)
-							alu_op <= andd;
+							alu_op <= alu_andd;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;		
 							rf_mux_sel_z <= '1';               --selecting to hardcode reg
@@ -266,7 +266,7 @@ begin
 							--ld_v <= '1';
 							--ld_n <= '1';
 						when subv =>                  --check func
-							alu_op <= subv;
+							alu_op <= alu_sub;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
@@ -276,7 +276,7 @@ begin
 							--ld_v <= '1';
 							--ld_n <= '1';
 						when andd =>                    --check func
-							alu_op <= andd;
+							alu_op <= alu_andd;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
@@ -284,7 +284,7 @@ begin
 							--ld_z <= '1';
 						
 						when orr =>                       --check func
-							alu_op <= orr;
+							alu_op <= alu_orr;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
@@ -306,13 +306,13 @@ begin
 							write_pc <= '1';
 
 						when present =>                             --check func  
-							alu_op <= orr;
+							alu_op <= alu_orr;
 							alu_mux_a <= alu_rx_a;
 							alu_mux_b <= alu_rz;		
                             
 
 						when datacall =>                             --check func  
-							alu_op <= andd;
+							alu_op <= alu_andd;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;		
                             write_dpcr<='1';
