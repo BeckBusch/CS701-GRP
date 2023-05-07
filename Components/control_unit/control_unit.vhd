@@ -128,6 +128,11 @@ begin
 						-- ar <- ir[15..0]
 						--m_address_mux_sel<= m_address_ir;
 						--mem_sel <= '1';
+						
+					when indirect =>
+						case opcode is
+							when lsip =>
+								write_sip <= '1';
 					when others =>			 -- inherent and inderct
 						-- do nothing
 				end case;
@@ -231,8 +236,8 @@ begin
                             write_dpcr<='1';
 
 						when lsip =>                   --check func  load sip on rz                       
-						    rf_mux_sel<=rf_sip;
-							rf_mux_sel_z<='0';
+						   rf_mux_sel<= rf_sip;
+							rf_mux_sel_z <='0';
 
 						when ssop =>                 --check func  whaterver is on rx will be loaded to sop
 							  

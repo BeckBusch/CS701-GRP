@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEMA5F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY "ReCOP-Quartus"
+set_global_assignment -name TOP_LEVEL_ENTITY ReCOPQuartus
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 18.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:26:42  MAY 01, 2023"
 set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Standard Edition"
@@ -51,6 +51,9 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name QSYS_FILE DE1_Diagram.qsys
+set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/REG1_32.vhd
+set_global_assignment -name BDF_FILE ReCOPQuartus.bdf
 set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/MUX_P.vhd
 set_global_assignment -name VHDL_FILE ../../Components/RF/RF_REG_ALT.vhd
 set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/REG1_GENERIC.vhd
@@ -61,7 +64,6 @@ set_global_assignment -name VHDL_FILE ../../Components/control_unit/control_unit
 set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/MUX2_12.vhd
 set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/MUX2_1.vhd
 set_global_assignment -name VHDL_FILE ../../Components/Mem_Interface/RAM_Mem_Interface.vhd
-set_global_assignment -name BDF_FILE "ReCOP-Quartus.bdf"
 set_global_assignment -name BDF_FILE RAM_Interface.bdf
 set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/REG1_8.vhd
 set_global_assignment -name VHDL_FILE ../../Components/Auxiliary/REG1_1.vhd
