@@ -133,6 +133,8 @@ begin
 						case opcode is
 							when lsip =>
 								write_sip <= '1';
+							when others =>
+						end case;
 					when others =>			 -- inherent and inderct
 						-- do nothing
 				end case;
@@ -145,9 +147,7 @@ begin
 					case opcode is
 						
 						when clfz =>   --add func          --check func 
-							if z = '1' then
-								clr_z <= '0';
-							end if;
+							clr_z <= '1';
 						when noop =>
 							-- do nothing
 						when others =>
