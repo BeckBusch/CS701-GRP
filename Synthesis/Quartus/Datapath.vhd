@@ -14,7 +14,7 @@
 
 -- PROGRAM		"Quartus Prime"
 -- VERSION		"Version 18.1.0 Build 625 09/12/2018 SJ Standard Edition"
--- CREATED		"Sun May 07 20:46:45 2023"
+-- CREATED		"Mon May 08 01:37:19 2023"
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all; 
@@ -160,6 +160,7 @@ COMPONENT data_mem_inter
 	PORT(data_a_mux : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
 		 dprr : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
 		 ir_hold : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+		 pc_hold : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 		 rx : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 		 data : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
@@ -310,6 +311,7 @@ b2v_mem_data : data_mem_inter
 PORT MAP(data_a_mux => mem_data_mux,
 		 dprr => dprr,
 		 ir_hold => operand_ALTERA_SYNTHESIZED,
+		 pc_hold => pc_reg,
 		 rx => rx_data,
 		 data => data);
 
