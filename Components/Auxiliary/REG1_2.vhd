@@ -18,18 +18,16 @@ end REG1_2;
 
 architecture behaviour of REG1_2 is
 begin
+    REG : entity work.REG1_GENERIC
+    generic map(
+        LEN => 2
+    )
+    port map(
+        reg_in => reg_in,
+        writ => writ,
+        reset => reset,
+        clk => clk,
 
-    process (clk) is
-    begin
-
-        if rising_edge(clk) then
-            if (writ = '1') then
-                reg_out <= reg_in;
-
-            elsif (reset = '1') then
-                reg_out <= "00";
-
-            end if;
-        end if;
-    end process;
+        reg_out => reg_out
+    );
 end behaviour;
