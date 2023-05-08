@@ -433,11 +433,6 @@ refer to the applicable agreement for further details.
 	)
 )
 (connector
-	(text "sys_clk" (rect 928 176 963 193)(font "Intel Clear" ))
-	(pt 920 192)
-	(pt 992 192)
-)
-(connector
 	(text "sys_reset" (rect 928 216 972 233)(font "Intel Clear" ))
 	(pt 920 232)
 	(pt 976 232)
@@ -480,11 +475,6 @@ refer to the applicable agreement for further details.
 	(text "we" (rect 24 520 38 537)(font "Intel Clear" ))
 	(pt 80 536)
 	(pt 16 536)
-)
-(connector
-	(text "sys_clock" (rect 472 456 518 473)(font "Intel Clear" ))
-	(pt 512 472)
-	(pt 464 472)
 )
 (connector
 	(text "m_out[15..0]" (rect 304 504 364 521)(font "Intel Clear" ))
@@ -541,5 +531,15 @@ refer to the applicable agreement for further details.
 	(text "we" (rect 744 456 758 473)(font "Intel Clear" ))
 	(pt 736 472)
 	(pt 776 472)
+)
+(connector
+	(text "sys_clk" (rect 464 456 499 473)(font "Intel Clear" ))
+	(pt 512 472)
+	(pt 464 472)
+)
+(connector
+	(text "sys_clk" (rect 928 176 963 193)(font "Intel Clear" ))
+	(pt 920 192)
+	(pt 1008 192)
 )
 (text "TOP LEVEL ENTITY" (rect 24 32 138 51)(font "Intel Clear" (font_size 8)))

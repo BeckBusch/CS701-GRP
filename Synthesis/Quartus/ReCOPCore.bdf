@@ -276,6 +276,22 @@ refer to the applicable agreement for further details.
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
 )
 (pin
+	(input)
+	(rect 840 240 1008 256)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "CLK1" (rect 5 0 31 17)(font "Intel Clear" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
+)
+(pin
 	(output)
 	(rect 1304 344 1480 360)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
@@ -1066,11 +1082,6 @@ refer to the applicable agreement for further details.
 	)
 )
 (connector
-	(text "sys_clk" (rect 960 256 995 273)(font "Intel Clear" ))
-	(pt 1032 272)
-	(pt 952 272)
-)
-(connector
 	(text "carry" (rect 992 480 1015 497)(font "Intel Clear" ))
 	(pt 1032 496)
 	(pt 984 496)
@@ -1415,4 +1426,16 @@ refer to the applicable agreement for further details.
 	(text "pc_reset" (rect 649 352 689 369)(font "Intel Clear" ))
 	(pt 648 368)
 	(pt 696 368)
+)
+(connector
+	(pt 1024 272)
+	(pt 1024 248)
+)
+(connector
+	(pt 1032 272)
+	(pt 1024 272)
+)
+(connector
+	(pt 1024 248)
+	(pt 1008 248)
 )
