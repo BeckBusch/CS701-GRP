@@ -59,23 +59,24 @@ architecture behaviour of RAM_Mem_Inter is
             outp : out std_logic);
     end component;
 	 
-	 signal internal_pm_addr : std_logic_vector(11 downto 0);
+	 -- signal internal_pm_addr : std_logic_vector(11 downto 0);
 
 begin
 
-    ADDRESS_DATA_MUX : MUX2_12 port map(
-        sel => address(16),
-        a => address(11 downto 0),
-        b => x"000",
-        outp => addr_dm
-    );
+    -- ADDRESS_DATA_MUX : MUX2_12 port map(
+    --     sel => address(16),
+    --     a => address(11 downto 0),
+    --     b => x"000",
+    --     outp => addr_dm
+    -- );
 
-    ADDRESS_PM_MUX : MUX2_12 port map(
-        sel => address(16),
-        a => x"000",
-        b => address(11 downto 0),
-        outp => internal_pm_addr
-    );
+
+    -- ADDRESS_PM_MUX : MUX2_12 port map(
+    --     sel => address(16),
+    --     a => x"000",
+    --     b => address(11 downto 0),
+    --     outp => internal_pm_addr
+    -- );
 
     ENABLE_DATA_WRITE : MUX2_1 port map(
         sel => address(16),
@@ -95,7 +96,9 @@ begin
     data_dm <= data_in;
     data_pm <= dout_pm(31 downto 16) & data_in when write_high = '1' else
                data_in & dout_pm(15 downto 0);
-	 addr_pm <= internal_pm_addr(10 downto 0);
+	 addr_pm <= address(10 downto 0);
+
+     addr_dm <= address(11 downto 0);
 
     m_out <= dout_dm;
     ir_out <= dout_pm;

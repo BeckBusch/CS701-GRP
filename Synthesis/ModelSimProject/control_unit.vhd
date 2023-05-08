@@ -12,7 +12,7 @@ entity Control_Unit is
 		-- Debug_Mode          : in  STD_LOGIC;
 		--nios_control        : in  STD_LOGIC;
 		--init_up		    	: out std_logic;         -- uP initialisation
-		we : out std_logic; -- write ram
+		we : out std_logic := '0'; -- write ram
 
 		-- IR
 		Opcode : in std_logic_vector (5 downto 0);
@@ -102,13 +102,20 @@ begin
 				reset_pc <= '1';
 				carry <= '0';
 			when T0 => --fetch  instruction from program memory
+				reset_pc <= '0';
+				reset_ir <= '0';
+				write_pc <= '1';
+				write_ir <= '1';
 
 				next_state <= T1;
+				m_address_mux_sel <= m_address_pc;
+				mem_sel <= mem_pm;
 				-- ir <- pm 
-				reset_pc <= '0';
+				--reset_pc <= '0';
 				write_ir <= '1';
 				-- pc <- pc + 1
 				pc_mux_sel <= pc_const;
+				
 				write_pc <= '1';
 
 			when T1 => -- T1: decoding instruction
@@ -220,6 +227,7 @@ begin
 					mem_data_mux_sel <= mem_data_rx;
 					m_address_mux_sel <= m_address_rz;
 					mem_sel <= mem_dm;
+					we <= '1';
 
 				when jmp => --check func  juming pc to rx
 					pc_mux_sel <= pc_rx;
@@ -303,6 +311,7 @@ begin
 					mem_data_mux_sel <= mem_data_ir;
 					m_address_mux_sel <= m_address_rz;
 					mem_sel <= mem_dm;
+					we <= '1';
 
 				when jmp => --check func
 					pc_mux_sel <= pc_ir;
