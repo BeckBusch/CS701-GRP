@@ -230,7 +230,7 @@ PORT MAP(CLK => CLK,
 
 
 b2v_inst1 : datapath
-PORT MAP(sys_clk => sys_clk,
+PORT MAP(sys_clk => CLK,
 		 rf_write => rf_write,
 		 ir_write => ir_write,
 		 alu_b_mux => alu_mux_b,

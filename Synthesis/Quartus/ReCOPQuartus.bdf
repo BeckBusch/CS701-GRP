@@ -250,7 +250,7 @@ refer to the applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 512 440 736 760)
+	(rect 512 416 736 736)
 	(text "ReCOPCore" (rect 5 0 73 19)(font "Intel Clear" (font_size 8)))
 	(text "inst" (rect 8 299 24 316)(font "Intel Clear" ))
 	(port
@@ -483,63 +483,73 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(pt 424 520)
-	(pt 424 488)
-	(bus)
-)
-(connector
-	(pt 424 488)
-	(pt 512 488)
-	(bus)
-)
-(connector
-	(text "sys_reset" (rect 472 488 516 505)(font "Intel Clear" ))
-	(pt 512 504)
-	(pt 464 504)
-)
-(connector
-	(text "ir_out[31..0]" (rect 304 520 360 537)(font "Intel Clear" ))
-	(pt 512 536)
-	(pt 296 536)
-	(bus)
-)
-(connector
-	(text "sip[15..0]" (rect 392 696 434 713)(font "Intel Clear" ))
-	(pt 512 712)
-	(pt 384 712)
-	(bus)
-)
-(connector
-	(text "sop[15..0]" (rect 744 584 790 601)(font "Intel Clear" ))
-	(pt 736 600)
-	(pt 800 600)
-	(bus)
-)
-(connector
-	(text "mem_data[15..0]" (rect 744 568 825 585)(font "Intel Clear" ))
-	(pt 736 584)
-	(pt 808 584)
-	(bus)
-)
-(connector
-	(text "mem_addr[16..0]" (rect 744 504 825 521)(font "Intel Clear" ))
-	(pt 736 520)
-	(pt 832 520)
-	(bus)
-)
-(connector
-	(text "we" (rect 744 456 758 473)(font "Intel Clear" ))
-	(pt 736 472)
-	(pt 776 472)
-)
-(connector
-	(text "sys_clk" (rect 464 456 499 473)(font "Intel Clear" ))
-	(pt 512 472)
-	(pt 464 472)
-)
-(connector
 	(text "sys_clk" (rect 928 176 963 193)(font "Intel Clear" ))
 	(pt 920 192)
 	(pt 1008 192)
+)
+(connector
+	(pt 296 536)
+	(pt 304 536)
+	(bus)
+)
+(connector
+	(pt 424 520)
+	(pt 424 464)
+	(bus)
+)
+(connector
+	(pt 424 464)
+	(pt 512 464)
+	(bus)
+)
+(connector
+	(text "sys_reset" (rect 472 464 516 481)(font "Intel Clear" ))
+	(pt 512 480)
+	(pt 464 480)
+)
+(connector
+	(pt 304 536)
+	(pt 304 512)
+	(bus)
+)
+(connector
+	(text "ir_out[31..0]" (rect 304 496 360 513)(font "Intel Clear" ))
+	(pt 304 512)
+	(pt 512 512)
+	(bus)
+)
+(connector
+	(text "sip[15..0]" (rect 392 672 434 689)(font "Intel Clear" ))
+	(pt 512 688)
+	(pt 384 688)
+	(bus)
+)
+(connector
+	(text "sop[15..0]" (rect 744 560 790 577)(font "Intel Clear" ))
+	(pt 736 576)
+	(pt 800 576)
+	(bus)
+)
+(connector
+	(text "mem_data[15..0]" (rect 744 544 825 561)(font "Intel Clear" ))
+	(pt 736 560)
+	(pt 808 560)
+	(bus)
+)
+(connector
+	(text "mem_addr[16..0]" (rect 744 480 825 497)(font "Intel Clear" ))
+	(pt 736 496)
+	(pt 832 496)
+	(bus)
+)
+(connector
+	(text "we" (rect 744 432 758 449)(font "Intel Clear" ))
+	(pt 736 448)
+	(pt 776 448)
+)
+(connector
+	(text "sys_clk" (rect 464 432 499 449)(font "Intel Clear" ))
+	(pt 512 448)
+	(pt 464 448)
 )
 (text "TOP LEVEL ENTITY" (rect 24 32 138 51)(font "Intel Clear" (font_size 8)))
