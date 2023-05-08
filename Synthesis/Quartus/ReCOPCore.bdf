@@ -21,7 +21,7 @@ refer to the applicable agreement for further details.
 (header "graphic" (version "1.4"))
 (pin
 	(input)
-	(rect 176 280 344 296)
+	(rect 72 280 240 296)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "CLK" (rect 5 0 26 12)(font "Arial" ))
 	(pt 168 8)
@@ -264,22 +264,6 @@ refer to the applicable agreement for further details.
 	(rect 864 872 1032 888)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
 	(text "SIP_in[15..0]" (rect 5 0 68 12)(font "Arial" ))
-	(pt 168 8)
-	(drawing
-		(line (pt 84 12)(pt 109 12))
-		(line (pt 84 4)(pt 109 4))
-		(line (pt 113 8)(pt 168 8))
-		(line (pt 84 12)(pt 84 4))
-		(line (pt 109 4)(pt 113 8))
-		(line (pt 109 12)(pt 113 8))
-	)
-	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
-)
-(pin
-	(input)
-	(rect 840 240 1008 256)
-	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "CLK1" (rect 5 0 31 17)(font "Intel Clear" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -1436,6 +1420,19 @@ refer to the applicable agreement for further details.
 	(pt 1024 272)
 )
 (connector
-	(pt 1024 248)
-	(pt 1008 248)
+	(pt 304 288)
+	(pt 304 248)
 )
+(connector
+	(pt 344 288)
+	(pt 304 288)
+)
+(connector
+	(pt 304 288)
+	(pt 240 288)
+)
+(connector
+	(pt 304 248)
+	(pt 1024 248)
+)
+(junction (pt 304 288))
