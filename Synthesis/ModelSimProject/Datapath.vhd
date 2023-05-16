@@ -276,7 +276,8 @@ PORT MAP(reg_in => dpc_in,
 		 clk => clk,
 		 reg_out => dpc);
 
- b2v_dpcr_reg : dpcr   PORT map(
+ dpcr_reg : dpcr
+ PORT map(
         rx => rx_data,
         rz => rz_data,
         ir_hold => operand_ALTERA_SYNTHESIZED,
@@ -284,8 +285,7 @@ PORT MAP(reg_in => dpc_in,
         writ => dpcr_write,
         reset => dpcr_reset,
         clk => clk,
-        reg_out => dpcr_out
-    );
+        reg_out => dpcr_out);
 
 b2v_DPRR_reg : reg1_2
 PORT MAP(writ => dprr_write,

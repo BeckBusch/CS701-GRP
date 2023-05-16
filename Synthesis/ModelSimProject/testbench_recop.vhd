@@ -32,7 +32,7 @@ architecture Behavioral of testbench_recop is
             addr :  OUT  STD_LOGIC_VECTOR(16 DOWNTO 0);
             ccd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
             data :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0);
-            dpcr_out :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
+            dpcr_out :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
             pcd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
             SOP :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0)
 
@@ -74,7 +74,7 @@ architecture Behavioral of testbench_recop is
     signal addr          :  STD_LOGIC_VECTOR(16 DOWNTO 0) := (others => '0');
     signal ccd           :  STD_LOGIC_VECTOR(3 DOWNTO 0) := (others => '0');
     signal data          :  STD_LOGIC_VECTOR(15 DOWNTO 0) := (others => '0');
-    signal dpcr_out      :  STD_LOGIC_VECTOR(7 DOWNTO 0) := (others => '0');
+    signal dpcr_out      :  STD_LOGIC_VECTOR(31 DOWNTO 0) := (others => '0');
     signal pcd           :  STD_LOGIC_VECTOR(3 DOWNTO 0) := (others => '0');
     signal SOP           :  STD_LOGIC_VECTOR(15 DOWNTO 0);
 
