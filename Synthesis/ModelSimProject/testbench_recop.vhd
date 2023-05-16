@@ -79,6 +79,8 @@ architecture Behavioral of testbench_recop is
     signal SOP           :  STD_LOGIC_VECTOR(15 DOWNTO 0);
 
     signal write_high    :  STD_LOGIC := '0';
+
+    signal mem_clk : std_logic;
     
     --- clock signals
     constant half_clk_period: time := 10 ns;
@@ -114,8 +116,10 @@ begin
         SOP => SOP
     );
 
+    mem_clk <= not CLK;
+
     RAM : RAM_Interface port map (
-        mem_clk => CLK,
+        mem_clk => mem_clk,
         write_high => write_high,
         w => we,
         address => addr,

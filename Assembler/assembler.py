@@ -184,14 +184,14 @@ def main():
             else:
                 fields[3] = 0
                 
-            am = address_modes[am]
+            am_str = address_modes[am]
             op_str = opcodes[fields[0]]
             rz_str = format(fields[1], "04b")
             rx_str = format(fields[2], "04b")
-            operand = format(fields[3], "016b")
+            operand_str = format(fields[3], "016b")
         
             
-            string = am + op_str + rz_str + rx_str + operand
+            string = am_str + op_str + rz_str + rx_str + operand_str
             num = int(string, base=2)
             #print(line)
             #print(string)
@@ -201,6 +201,7 @@ def main():
             #o.write(struct.pack('>I', num))
             #print()
 
+            print(am_str, op_str, rz_str, rx_str, operand_str)
             o.write(f'x"{hex(num)[2:]}", ')
             
         # end of context manager

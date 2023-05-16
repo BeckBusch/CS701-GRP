@@ -58,7 +58,8 @@ entity Control_Unit is
 		reset_sop : out std_logic;
 		--dpcr
 		write_dpcr : out std_logic;
-		reset_dpcr : out std_logic
+		reset_dpcr : out std_logic;
+		dpcr_mux_sel : out std_logic
 	);
 end Control_Unit;
 
@@ -104,8 +105,10 @@ begin
 			when T0 => --fetch  instruction from program memory
 				reset_pc <= '0';
 				reset_ir <= '0';
+				reset_dpcr <= '0';
 				write_pc <= '1';
 				write_ir <= '1';
+				write_dpcr <= '0';
 
 				next_state <= T1;
 				m_address_mux_sel <= m_address_pc;
@@ -234,9 +237,7 @@ begin
 					write_pc <= '1';
 
 				when datacall => --check func  (not sure)
-					alu_op <= alu_andd;
-					alu_mux_a <= alu_rx_a;
-					alu_mux_b <= alu_rz;
+					dpcr_mux_sel <= dpcr_r7;
 					rf_mux_sel_z <= '1'; --selecting to hardcode reg
 					rf_value_sel_z <= x"7";
 					write_dpcr <= '1';
@@ -322,9 +323,7 @@ begin
 					alu_mux_a <= alu_rx_a;
 					alu_mux_b <= alu_rz;
 				when datacall => --check func  
-					alu_op <= alu_andd;
-					alu_mux_a <= alu_ir;
-					alu_mux_b <= alu_rx_b;
+					dpcr_mux_sel <= dpcr_ir;
 					write_dpcr <= '1';
 
 				when sz => --check func

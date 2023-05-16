@@ -50,4 +50,8 @@ package mux_values is
 	constant alu_sub: std_logic_vector(1 downto 0) := "01";
 	constant alu_orr: std_logic_vector(1 downto 0) := "10";
 	constant alu_andd: std_logic_vector(1 downto 0)  := "11";
+
+-- DPCR r7 or operand mux select
+	constant dpcr_r7: std_logic := '0';
+	constant dpcr_ir: std_logic := '1';
 end mux_values;	
