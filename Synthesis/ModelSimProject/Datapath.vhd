@@ -33,6 +33,7 @@ ENTITY Datapath IS
 		alu_b_mux :  IN  STD_LOGIC;
 		dpcr_write :  IN  STD_LOGIC;
 		dpcr_reset :  IN  STD_LOGIC;
+		dpcr_sel :  IN  STD_LOGIC;
 		clr_irq_write :  IN  STD_LOGIC;
 		clr_irq_reset :  IN  STD_LOGIC;
 		dpc_in :  IN  STD_LOGIC;
@@ -72,7 +73,7 @@ ENTITY Datapath IS
 		am :  OUT  STD_LOGIC_VECTOR(1 DOWNTO 0);
 		ccd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
 		data :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0);
-		dpcr_out :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
+		dpcr_out :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
 		opcode :  OUT  STD_LOGIC_VECTOR(5 DOWNTO 0);
 		operand :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0);
 		pcd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -213,6 +214,19 @@ COMPONENT reg1_16
 	);
 END COMPONENT;
 
+COMPONENT dpcr IS
+    PORT(
+        rx : IN STD_LOGIC_VECTOR(15 downto 0);
+        rz : IN STD_LOGIC_VECTOR(15 downto 0);
+        ir_hold : IN STD_LOGIC_VECTOR(15 downto 0);
+        dpcr_sel : IN STD_LOGIC;
+        writ : IN STD_LOGIC;
+        reset : IN STD_LOGIC;
+        clk : IN STD_LOGIC;
+        reg_out : OUT STD_LOGIC_VECTOR(31 downto 0)
+    );
+END COMPONENT;
+
 SIGNAL	aluout :  STD_LOGIC_VECTOR(15 DOWNTO 0);
 SIGNAL	clk :  STD_LOGIC;
 SIGNAL	data_in :  STD_LOGIC_VECTOR(15 DOWNTO 0);
@@ -262,14 +276,16 @@ PORT MAP(reg_in => dpc_in,
 		 clk => clk,
 		 reg_out => dpc);
 
-
-b2v_dpcr_reg : reg1_8
-PORT MAP(writ => dpcr_write,
-		 reset => dpcr_reset,
-		 clk => clk,
-		 reg_in => aluout(7 DOWNTO 0),
-		 reg_out => dpcr_out);
-
+ b2v_dpcr_reg : dpcr   PORT map(
+        rx => rx_data,
+        rz => rz_data,
+        ir_hold => operand_ALTERA_SYNTHESIZED,
+        dpcr_sel => dpcr_sel,
+        writ => dpcr_write,
+        reset => dpcr_reset,
+        clk => clk,
+        reg_out => dpcr_out
+    );
 
 b2v_DPRR_reg : reg1_2
 PORT MAP(writ => dprr_write,

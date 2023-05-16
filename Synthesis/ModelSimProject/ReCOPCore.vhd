@@ -46,7 +46,7 @@ ENTITY ReCOPCore IS
 		addr :  OUT  STD_LOGIC_VECTOR(16 DOWNTO 0);
 		ccd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
 		data :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0);
-		dpcr_out :  OUT  STD_LOGIC_VECTOR(7 DOWNTO 0);
+		dpcr_out :  OUT  STD_LOGIC_VECTOR(31 DOWNTO 0);
 		pcd :  OUT  STD_LOGIC_VECTOR(3 DOWNTO 0);
 		SOP :  OUT  STD_LOGIC_VECTOR(15 DOWNTO 0)
 	);
@@ -82,6 +82,7 @@ COMPONENT control_unit
 		 reset_sop : OUT STD_LOGIC;
 		 write_dpcr : OUT STD_LOGIC;
 		 reset_dpcr : OUT STD_LOGIC;
+		 dpcr_mux_sel : OUT STD_LOGIC;
 		 alu_mux_A : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
 		 alu_op : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
 		 m_address_mux_sel : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
@@ -115,6 +116,7 @@ COMPONENT datapath
 		 dpcr_write : IN STD_LOGIC;
 		 dpc_write : IN STD_LOGIC;
 		 dpcr_reset : IN STD_LOGIC;
+		 dpcr_sel : IN STD_LOGIC;
 		 dpc_reset : IN STD_LOGIC;
 		 z_write : IN STD_LOGIC;
 		 SOP_write : IN STD_LOGIC;
@@ -142,7 +144,7 @@ COMPONENT datapath
 		 am : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
 		 ccd : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
 		 data : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-		 dpcr_out : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+		 dpcr_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 		 opcode : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
 		 operand : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
 		 pcd : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -161,6 +163,7 @@ SIGNAL	cu_x :  STD_LOGIC_VECTOR(3 DOWNTO 0);
 SIGNAL	cu_z :  STD_LOGIC_VECTOR(3 DOWNTO 0);
 SIGNAL	dpcr_reset :  STD_LOGIC;
 SIGNAL	dpcr_write :  STD_LOGIC;
+SIGNAL  dpcr_sel :  STD_LOGIC;
 SIGNAL	ir_reset :  STD_LOGIC;
 SIGNAL	ir_write :  STD_LOGIC;
 SIGNAL	mem_addr_mux :  STD_LOGIC_VECTOR(1 DOWNTO 0);
@@ -219,6 +222,7 @@ PORT MAP(CLK => CLK,
 		 reset_sop => sop_reset,
 		 write_dpcr => dpcr_write,
 		 reset_dpcr => dpcr_reset,
+		 dpcr_mux_sel => dpcr_sel,
 		 alu_mux_A => alu_a_mux,
 		 alu_op => alu_op,
 		 m_address_mux_sel => mem_addr_mux,
@@ -251,6 +255,7 @@ PORT MAP(sys_clk => CLK,
 		 dpcr_write => dpcr_write,
 		 dpc_write => dpc_write,
 		 dpcr_reset => dpcr_reset,
+		 dpcr_sel => dpcr_sel,
 		 dpc_reset => dpc_reset,
 		 z_write => z_write,
 		 SOP_write => sop_write,
