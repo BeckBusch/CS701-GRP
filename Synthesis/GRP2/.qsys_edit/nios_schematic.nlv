@@ -1,0 +1,41 @@
+# # File gsaved with Nlview version 6.3.8  2013-12-19 bk=1.2992 VDI=34 GEI=35
+# 
+preplace inst nios.send_addr -pg 1 -lvl 2 -y 520
+preplace inst nios.hex_0 -pg 1 -lvl 3 -y 50
+preplace inst nios.onchip_memory2_0 -pg 1 -lvl 2 -y 440
+preplace inst nios.ledr -pg 1 -lvl 3 -y 860
+preplace inst nios.hex_1 -pg 1 -lvl 3 -y 150
+preplace inst nios -pg 1 -lvl 1 -y 40 -regy -20
+preplace inst nios.hex_2 -pg 1 -lvl 3 -y 250
+preplace inst nios.hex_3 -pg 1 -lvl 3 -y 400
+preplace inst nios.nios2_gen2_0.cpu -pg 1
+preplace inst nios.hex_4 -pg 1 -lvl 3 -y 1060
+preplace inst nios.hex_5 -pg 1 -lvl 3 -y 660
+preplace inst nios.clk_0 -pg 1 -lvl 2 -y 820
+preplace inst nios.key -pg 1 -lvl 3 -y 760
+preplace inst nios.sw -pg 1 -lvl 3 -y 960
+preplace inst nios.nios2_gen2_0.reset_bridge -pg 1
+preplace inst nios.send_data -pg 1 -lvl 2 -y 680
+preplace inst nios.recv_addr -pg 1 -lvl 2 -y 60
+preplace inst nios.nios2_gen2_0.clock_bridge -pg 1
+preplace inst nios.nios2_gen2_0 -pg 1 -lvl 1 -y 70
+preplace inst nios.recv_data -pg 1 -lvl 2 -y 320
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)nios.recv_data_external_connection,(SLAVE)recv_data.external_connection) 1 0 2 NJ 270 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)recv_addr.external_connection,(SLAVE)nios.recv_addr_external_connection) 1 0 2 NJ 250 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)hex_0.external_connection,(SLAVE)nios.hex_0_external_connection) 1 0 3 NJ 290 NJ 170 NJ
+preplace netloc FAN_OUT<net_container>nios</net_container>(SLAVE)key.clk,(SLAVE)nios2_gen2_0.clk,(SLAVE)send_addr.clk,(SLAVE)hex_5.clk,(MASTER)clk_0.clk,(SLAVE)send_data.clk,(SLAVE)hex_4.clk,(SLAVE)recv_data.clk,(SLAVE)hex_1.clk,(SLAVE)hex_0.clk,(SLAVE)ledr.clk,(SLAVE)hex_2.clk,(SLAVE)hex_3.clk,(SLAVE)onchip_memory2_0.clk1,(SLAVE)recv_addr.clk,(SLAVE)sw.clk) 1 0 3 220 30 700 630 980
+preplace netloc INTERCONNECT<net_container>nios</net_container>(MASTER)nios2_gen2_0.instruction_master,(SLAVE)hex_1.s1,(MASTER)nios2_gen2_0.data_master,(SLAVE)hex_5.s1,(SLAVE)onchip_memory2_0.s1,(SLAVE)hex_0.s1,(SLAVE)hex_3.s1,(SLAVE)send_addr.s1,(SLAVE)ledr.s1,(SLAVE)hex_2.s1,(SLAVE)recv_data.s1,(SLAVE)recv_addr.s1,(SLAVE)nios2_gen2_0.debug_mem_slave,(SLAVE)hex_4.s1,(SLAVE)sw.s1,(SLAVE)send_data.s1,(SLAVE)key.s1) 1 0 3 220 210 600 650 1040
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)nios.sw_external_connection,(SLAVE)sw.external_connection) 1 0 3 NJ 990 NJ 990 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)nios.clk,(SLAVE)clk_0.clk_in) 1 0 2 NJ 830 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)nios.key_external_connection,(SLAVE)key.external_connection) 1 0 3 NJ 790 NJ 790 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)hex_5.external_connection,(SLAVE)nios.hex_5_external_connection) 1 0 3 NJ 670 NJ 670 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)hex_3.external_connection,(SLAVE)nios.hex_3_external_connection) 1 0 3 NJ 430 NJ 430 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)nios.hex_2_external_connection,(SLAVE)hex_2.external_connection) 1 0 3 NJ 330 NJ 280 NJ
+preplace netloc INTERCONNECT<net_container>nios</net_container>(SLAVE)nios2_gen2_0.reset,(SLAVE)ledr.reset,(SLAVE)recv_addr.reset,(SLAVE)hex_4.reset,(SLAVE)hex_3.reset,(SLAVE)onchip_memory2_0.reset1,(SLAVE)hex_1.reset,(SLAVE)clk_0.clk_in_reset,(SLAVE)hex_0.reset,(MASTER)clk_0.clk_reset,(MASTER)nios2_gen2_0.debug_reset_request,(SLAVE)key.reset,(SLAVE)hex_2.reset,(SLAVE)sw.reset,(SLAVE)recv_data.reset,(SLAVE)hex_5.reset,(SLAVE)send_data.reset,(SLAVE)send_addr.reset) 1 0 3 240 230 720 890 1020
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)ledr.external_connection,(SLAVE)nios.ledr_external_connection) 1 0 3 NJ 910 NJ 910 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)hex_4.external_connection,(SLAVE)nios.hex_4_external_connection) 1 0 3 NJ 1090 NJ 1090 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)nios.hex_1_external_connection,(SLAVE)hex_1.external_connection) 1 0 3 NJ 310 NJ 190 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)nios.send_data_external_connection,(SLAVE)send_data.external_connection) 1 0 2 NJ 710 NJ
+preplace netloc EXPORT<net_container>nios</net_container>(SLAVE)send_addr.external_connection,(SLAVE)nios.send_addr_external_connection) 1 0 2 NJ 550 NJ
+levelinfo -pg 1 0 190 1250
+levelinfo -hier nios 200 360 790 1090 1240
