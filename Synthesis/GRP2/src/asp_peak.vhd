@@ -4,6 +4,8 @@ use ieee.std_logic_1164.all;
 
 library work;
 use work.TdmaMinTypes.all;
+use work.port_locations.all;
+
 
 entity asp_peak is
 	port (
@@ -72,7 +74,7 @@ begin
 		if rising_edge(clock) then
 
 
-		if recv.data(31 downto 28) = "1000" and recv.data(16) = '0' and enable_0 = '1' then
+		if recv.data(31 downto 28) = DATA_HEADER and recv.data(16) = '0' and enable_0 = '1' then
 			case func_0 is
 					when "00" =>
 						send.addr <=  "0000" & destination ;

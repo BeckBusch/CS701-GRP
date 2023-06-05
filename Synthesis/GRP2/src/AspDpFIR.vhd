@@ -5,6 +5,8 @@ use ieee.std_logic_1164.all;
 
 library work;
 use work.TdmaMinTypes.all;
+use work.port_locations.all;
+
 
 
 
@@ -18,8 +20,6 @@ entity AspDpFIR is
 end entity;
 
 architecture behaviour of AspDpFIR is
-	constant confg_header : std_logic_vector(3 downto 0) := "1111";
-	constant data_header  : std_logic_vector(3 downto 0) := "1000";
 
 	signal addr_0   : std_logic_vector(3 downto 0) := "0001";
 	signal addr_1   : std_logic_vector(3 downto 0) := "0001";
@@ -40,7 +40,7 @@ begin
 	begin
 		if rising_edge(clock) then
 			-- checks what type of data it is then does stuff from
-			if recv.data(31 downto 28) = confg_header then
+			if recv.data(31 downto 28) = FIR_HEADER then
 				-- forwarding location
 				if recv.data(16) = '0' then
 					addr_0   <= recv.data(23 downto 20);
@@ -60,7 +60,7 @@ begin
                 send.data <= x"DEADBEEF";
 
 			-- check if data
-			elsif recv.data(31 downto 28) = data_header then
+			elsif recv.data(31 downto 28) = DATA_HEADER then
 
 				-- ch 0
 				if recv.data(16) = '0' then

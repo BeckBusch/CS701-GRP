@@ -214,6 +214,10 @@
    type="VHDL"
    library="send_addr" />
  <file
+   path="simulation/submodules/nios_reset_recop.vhd"
+   type="VHDL"
+   library="reset_recop" />
+ <file
    path="simulation/submodules/nios_recv_data.vhd"
    type="VHDL"
    library="recv_data" />

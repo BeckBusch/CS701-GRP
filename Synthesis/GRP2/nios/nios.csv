@@ -1,12 +1,12 @@
-# system info nios on 2023.05.19.18:19:19
+# system info nios on 2023.06.05.22:54:23
 system_info:
 name,value
 DEVICE,5CSEMA5F31C6
 DEVICE_FAMILY,Cyclone V
-GENERATION_ID,1684477132
+GENERATION_ID,1685962433
 #
 #
-# Files generated for nios on 2023.05.19.18:19:19
+# Files generated for nios on 2023.06.05.22:54:23
 files:
 filepath,kind,attributes,module,is_top
 simulation/nios.vhd,VHDL,,nios,true
@@ -20,6 +20,7 @@ simulation/submodules/nios_onchip_memory2_0.hex,HEX,,nios_onchip_memory2_0,false
 simulation/submodules/nios_onchip_memory2_0.vhd,VHDL,,nios_onchip_memory2_0,false
 simulation/submodules/nios_recv_addr.vhd,VHDL,,nios_recv_addr,false
 simulation/submodules/nios_recv_data.vhd,VHDL,,nios_recv_data,false
+simulation/submodules/nios_reset_recop.vhd,VHDL,,nios_reset_recop,false
 simulation/submodules/nios_send_addr.vhd,VHDL,,nios_send_addr,false
 simulation/submodules/nios_send_data.vhd,VHDL,,nios_send_data,false
 simulation/submodules/nios_sw.vhd,VHDL,,nios_sw,false
@@ -91,6 +92,7 @@ nios.nios2_gen2_0.cpu,nios_nios2_gen2_0_cpu
 nios.onchip_memory2_0,nios_onchip_memory2_0
 nios.recv_addr,nios_recv_addr
 nios.recv_data,nios_recv_data
+nios.reset_recop,nios_reset_recop
 nios.send_addr,nios_send_addr
 nios.send_data,nios_send_data
 nios.sw,nios_sw
@@ -112,6 +114,7 @@ nios.mm_interconnect_0.hex_5_s1_translator,altera_merlin_slave_translator
 nios.mm_interconnect_0.hex_4_s1_translator,altera_merlin_slave_translator
 nios.mm_interconnect_0.hex_3_s1_translator,altera_merlin_slave_translator
 nios.mm_interconnect_0.hex_2_s1_translator,altera_merlin_slave_translator
+nios.mm_interconnect_0.reset_recop_s1_translator,altera_merlin_slave_translator
 nios.mm_interconnect_0.nios2_gen2_0_data_master_agent,altera_merlin_master_agent
 nios.mm_interconnect_0.nios2_gen2_0_instruction_master_agent,altera_merlin_master_agent
 nios.mm_interconnect_0.nios2_gen2_0_debug_mem_slave_agent,altera_merlin_slave_agent
@@ -129,6 +132,7 @@ nios.mm_interconnect_0.hex_5_s1_agent,altera_merlin_slave_agent
 nios.mm_interconnect_0.hex_4_s1_agent,altera_merlin_slave_agent
 nios.mm_interconnect_0.hex_3_s1_agent,altera_merlin_slave_agent
 nios.mm_interconnect_0.hex_2_s1_agent,altera_merlin_slave_agent
+nios.mm_interconnect_0.reset_recop_s1_agent,altera_merlin_slave_agent
 nios.mm_interconnect_0.nios2_gen2_0_debug_mem_slave_agent_rsp_fifo,altera_avalon_sc_fifo
 nios.mm_interconnect_0.onchip_memory2_0_s1_agent_rsp_fifo,altera_avalon_sc_fifo
 nios.mm_interconnect_0.recv_data_s1_agent_rsp_fifo,altera_avalon_sc_fifo
@@ -144,6 +148,7 @@ nios.mm_interconnect_0.hex_5_s1_agent_rsp_fifo,altera_avalon_sc_fifo
 nios.mm_interconnect_0.hex_4_s1_agent_rsp_fifo,altera_avalon_sc_fifo
 nios.mm_interconnect_0.hex_3_s1_agent_rsp_fifo,altera_avalon_sc_fifo
 nios.mm_interconnect_0.hex_2_s1_agent_rsp_fifo,altera_avalon_sc_fifo
+nios.mm_interconnect_0.reset_recop_s1_agent_rsp_fifo,altera_avalon_sc_fifo
 nios.mm_interconnect_0.router,nios_mm_interconnect_0_router
 nios.mm_interconnect_0.router_001,nios_mm_interconnect_0_router
 nios.mm_interconnect_0.router_002,nios_mm_interconnect_0_router_002
@@ -161,6 +166,7 @@ nios.mm_interconnect_0.router_013,nios_mm_interconnect_0_router_002
 nios.mm_interconnect_0.router_014,nios_mm_interconnect_0_router_002
 nios.mm_interconnect_0.router_015,nios_mm_interconnect_0_router_002
 nios.mm_interconnect_0.router_016,nios_mm_interconnect_0_router_002
+nios.mm_interconnect_0.router_017,nios_mm_interconnect_0_router_002
 nios.mm_interconnect_0.nios2_gen2_0_data_master_limiter,altera_merlin_traffic_limiter
 nios.mm_interconnect_0.nios2_gen2_0_instruction_master_limiter,altera_merlin_traffic_limiter
 nios.mm_interconnect_0.cmd_demux,nios_mm_interconnect_0_cmd_demux
@@ -180,6 +186,7 @@ nios.mm_interconnect_0.cmd_mux_011,nios_mm_interconnect_0_cmd_mux
 nios.mm_interconnect_0.cmd_mux_012,nios_mm_interconnect_0_cmd_mux
 nios.mm_interconnect_0.cmd_mux_013,nios_mm_interconnect_0_cmd_mux
 nios.mm_interconnect_0.cmd_mux_014,nios_mm_interconnect_0_cmd_mux
+nios.mm_interconnect_0.cmd_mux_015,nios_mm_interconnect_0_cmd_mux
 nios.mm_interconnect_0.rsp_demux,nios_mm_interconnect_0_rsp_demux
 nios.mm_interconnect_0.rsp_demux_001,nios_mm_interconnect_0_rsp_demux
 nios.mm_interconnect_0.rsp_demux_002,nios_mm_interconnect_0_rsp_demux
@@ -195,6 +202,7 @@ nios.mm_interconnect_0.rsp_demux_011,nios_mm_interconnect_0_rsp_demux
 nios.mm_interconnect_0.rsp_demux_012,nios_mm_interconnect_0_rsp_demux
 nios.mm_interconnect_0.rsp_demux_013,nios_mm_interconnect_0_rsp_demux
 nios.mm_interconnect_0.rsp_demux_014,nios_mm_interconnect_0_rsp_demux
+nios.mm_interconnect_0.rsp_demux_015,nios_mm_interconnect_0_rsp_demux
 nios.mm_interconnect_0.rsp_mux,nios_mm_interconnect_0_rsp_mux
 nios.mm_interconnect_0.rsp_mux_001,nios_mm_interconnect_0_rsp_mux
 nios.mm_interconnect_0.avalon_st_adapter,nios_mm_interconnect_0_avalon_st_adapter
@@ -227,6 +235,8 @@ nios.mm_interconnect_0.avalon_st_adapter_013,nios_mm_interconnect_0_avalon_st_ad
 nios.mm_interconnect_0.avalon_st_adapter_013.error_adapter_0,nios_mm_interconnect_0_avalon_st_adapter_error_adapter_0
 nios.mm_interconnect_0.avalon_st_adapter_014,nios_mm_interconnect_0_avalon_st_adapter
 nios.mm_interconnect_0.avalon_st_adapter_014.error_adapter_0,nios_mm_interconnect_0_avalon_st_adapter_error_adapter_0
+nios.mm_interconnect_0.avalon_st_adapter_015,nios_mm_interconnect_0_avalon_st_adapter
+nios.mm_interconnect_0.avalon_st_adapter_015.error_adapter_0,nios_mm_interconnect_0_avalon_st_adapter_error_adapter_0
 nios.irq_mapper,nios_irq_mapper
 nios.rst_controller,altera_reset_controller
 nios.rst_controller_001,altera_reset_controller

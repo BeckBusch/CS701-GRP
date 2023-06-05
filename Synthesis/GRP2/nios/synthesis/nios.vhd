@@ -8,20 +8,21 @@ use IEEE.numeric_std.all;
 
 entity nios is
 	port (
-		clk_clk                              : in  std_logic                     := '0';             --                           clk.clk
-		hex_0_external_connection_export     : out std_logic_vector(6 downto 0);                     --     hex_0_external_connection.export
-		hex_1_external_connection_export     : out std_logic_vector(6 downto 0);                     --     hex_1_external_connection.export
-		hex_2_external_connection_export     : out std_logic_vector(6 downto 0);                     --     hex_2_external_connection.export
-		hex_3_external_connection_export     : out std_logic_vector(6 downto 0);                     --     hex_3_external_connection.export
-		hex_4_external_connection_export     : out std_logic_vector(6 downto 0);                     --     hex_4_external_connection.export
-		hex_5_external_connection_export     : out std_logic_vector(6 downto 0);                     --     hex_5_external_connection.export
-		key_external_connection_export       : in  std_logic_vector(3 downto 0)  := (others => '0'); --       key_external_connection.export
-		ledr_external_connection_export      : out std_logic_vector(9 downto 0);                     --      ledr_external_connection.export
-		recv_addr_external_connection_export : in  std_logic_vector(7 downto 0)  := (others => '0'); -- recv_addr_external_connection.export
-		recv_data_external_connection_export : in  std_logic_vector(31 downto 0) := (others => '0'); -- recv_data_external_connection.export
-		send_addr_external_connection_export : out std_logic_vector(7 downto 0);                     -- send_addr_external_connection.export
-		send_data_external_connection_export : out std_logic_vector(31 downto 0);                    -- send_data_external_connection.export
-		sw_external_connection_export        : in  std_logic_vector(9 downto 0)  := (others => '0')  --        sw_external_connection.export
+		clk_clk                                : in  std_logic                     := '0';             --                             clk.clk
+		hex_0_external_connection_export       : out std_logic_vector(6 downto 0);                     --       hex_0_external_connection.export
+		hex_1_external_connection_export       : out std_logic_vector(6 downto 0);                     --       hex_1_external_connection.export
+		hex_2_external_connection_export       : out std_logic_vector(6 downto 0);                     --       hex_2_external_connection.export
+		hex_3_external_connection_export       : out std_logic_vector(6 downto 0);                     --       hex_3_external_connection.export
+		hex_4_external_connection_export       : out std_logic_vector(6 downto 0);                     --       hex_4_external_connection.export
+		hex_5_external_connection_export       : out std_logic_vector(6 downto 0);                     --       hex_5_external_connection.export
+		key_external_connection_export         : in  std_logic_vector(3 downto 0)  := (others => '0'); --         key_external_connection.export
+		ledr_external_connection_export        : out std_logic_vector(9 downto 0);                     --        ledr_external_connection.export
+		recv_addr_external_connection_export   : in  std_logic_vector(7 downto 0)  := (others => '0'); --   recv_addr_external_connection.export
+		recv_data_external_connection_export   : in  std_logic_vector(31 downto 0) := (others => '0'); --   recv_data_external_connection.export
+		reset_recop_external_connection_export : out std_logic;                                        -- reset_recop_external_connection.export
+		send_addr_external_connection_export   : out std_logic_vector(7 downto 0);                     --   send_addr_external_connection.export
+		send_data_external_connection_export   : out std_logic_vector(31 downto 0);                    --   send_data_external_connection.export
+		sw_external_connection_export          : in  std_logic_vector(9 downto 0)  := (others => '0')  --          sw_external_connection.export
 	);
 end entity nios;
 
@@ -130,6 +131,19 @@ architecture rtl of nios is
 			in_port  : in  std_logic_vector(31 downto 0) := (others => 'X')  -- export
 		);
 	end component nios_recv_data;
+
+	component nios_reset_recop is
+		port (
+			clk        : in  std_logic                     := 'X';             -- clk
+			reset_n    : in  std_logic                     := 'X';             -- reset_n
+			address    : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			write_n    : in  std_logic                     := 'X';             -- write_n
+			writedata  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			chipselect : in  std_logic                     := 'X';             -- chipselect
+			readdata   : out std_logic_vector(31 downto 0);                    -- readdata
+			out_port   : out std_logic                                         -- export
+		);
+	end component nios_reset_recop;
 
 	component nios_send_addr is
 		port (
@@ -242,6 +256,11 @@ architecture rtl of nios is
 			recv_addr_s1_readdata                               : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			recv_data_s1_address                                : out std_logic_vector(1 downto 0);                     -- address
 			recv_data_s1_readdata                               : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			reset_recop_s1_address                              : out std_logic_vector(1 downto 0);                     -- address
+			reset_recop_s1_write                                : out std_logic;                                        -- write
+			reset_recop_s1_readdata                             : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			reset_recop_s1_writedata                            : out std_logic_vector(31 downto 0);                    -- writedata
+			reset_recop_s1_chipselect                           : out std_logic;                                        -- chipselect
 			send_addr_s1_address                                : out std_logic_vector(1 downto 0);                     -- address
 			send_addr_s1_write                                  : out std_logic;                                        -- write
 			send_addr_s1_readdata                               : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
@@ -480,6 +499,11 @@ architecture rtl of nios is
 	signal mm_interconnect_0_hex_2_s1_address                         : std_logic_vector(1 downto 0);  -- mm_interconnect_0:hex_2_s1_address -> hex_2:address
 	signal mm_interconnect_0_hex_2_s1_write                           : std_logic;                     -- mm_interconnect_0:hex_2_s1_write -> mm_interconnect_0_hex_2_s1_write:in
 	signal mm_interconnect_0_hex_2_s1_writedata                       : std_logic_vector(31 downto 0); -- mm_interconnect_0:hex_2_s1_writedata -> hex_2:writedata
+	signal mm_interconnect_0_reset_recop_s1_chipselect                : std_logic;                     -- mm_interconnect_0:reset_recop_s1_chipselect -> reset_recop:chipselect
+	signal mm_interconnect_0_reset_recop_s1_readdata                  : std_logic_vector(31 downto 0); -- reset_recop:readdata -> mm_interconnect_0:reset_recop_s1_readdata
+	signal mm_interconnect_0_reset_recop_s1_address                   : std_logic_vector(1 downto 0);  -- mm_interconnect_0:reset_recop_s1_address -> reset_recop:address
+	signal mm_interconnect_0_reset_recop_s1_write                     : std_logic;                     -- mm_interconnect_0:reset_recop_s1_write -> mm_interconnect_0_reset_recop_s1_write:in
+	signal mm_interconnect_0_reset_recop_s1_writedata                 : std_logic_vector(31 downto 0); -- mm_interconnect_0:reset_recop_s1_writedata -> reset_recop:writedata
 	signal nios2_gen2_0_irq_irq                                       : std_logic_vector(31 downto 0); -- irq_mapper:sender_irq -> nios2_gen2_0:irq
 	signal rst_controller_reset_out_reset                             : std_logic;                     -- rst_controller:reset_out -> [mm_interconnect_0:onchip_memory2_0_reset1_reset_bridge_in_reset_reset, onchip_memory2_0:reset, rst_controller_reset_out_reset:in, rst_translator:in_reset]
 	signal rst_controller_reset_out_reset_req                         : std_logic;                     -- rst_controller:reset_req -> [onchip_memory2_0:reset_req, rst_translator:reset_req_in]
@@ -494,7 +518,8 @@ architecture rtl of nios is
 	signal mm_interconnect_0_hex_4_s1_write_ports_inv                 : std_logic;                     -- mm_interconnect_0_hex_4_s1_write:inv -> hex_4:write_n
 	signal mm_interconnect_0_hex_3_s1_write_ports_inv                 : std_logic;                     -- mm_interconnect_0_hex_3_s1_write:inv -> hex_3:write_n
 	signal mm_interconnect_0_hex_2_s1_write_ports_inv                 : std_logic;                     -- mm_interconnect_0_hex_2_s1_write:inv -> hex_2:write_n
-	signal rst_controller_reset_out_reset_ports_inv                   : std_logic;                     -- rst_controller_reset_out_reset:inv -> [hex_0:reset_n, hex_1:reset_n, hex_2:reset_n, hex_3:reset_n, hex_4:reset_n, hex_5:reset_n, key:reset_n, ledr:reset_n, recv_addr:reset_n, recv_data:reset_n, send_addr:reset_n, send_data:reset_n, sw:reset_n]
+	signal mm_interconnect_0_reset_recop_s1_write_ports_inv           : std_logic;                     -- mm_interconnect_0_reset_recop_s1_write:inv -> reset_recop:write_n
+	signal rst_controller_reset_out_reset_ports_inv                   : std_logic;                     -- rst_controller_reset_out_reset:inv -> [hex_0:reset_n, hex_1:reset_n, hex_2:reset_n, hex_3:reset_n, hex_4:reset_n, hex_5:reset_n, key:reset_n, ledr:reset_n, recv_addr:reset_n, recv_data:reset_n, reset_recop:reset_n, send_addr:reset_n, send_data:reset_n, sw:reset_n]
 	signal rst_controller_001_reset_out_reset_ports_inv               : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> nios2_gen2_0:reset_n
 
 begin
@@ -657,6 +682,18 @@ begin
 			in_port  => recv_data_external_connection_export      -- external_connection.export
 		);
 
+	reset_recop : component nios_reset_recop
+		port map (
+			clk        => clk_clk,                                          --                 clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,         --               reset.reset_n
+			address    => mm_interconnect_0_reset_recop_s1_address,         --                  s1.address
+			write_n    => mm_interconnect_0_reset_recop_s1_write_ports_inv, --                    .write_n
+			writedata  => mm_interconnect_0_reset_recop_s1_writedata,       --                    .writedata
+			chipselect => mm_interconnect_0_reset_recop_s1_chipselect,      --                    .chipselect
+			readdata   => mm_interconnect_0_reset_recop_s1_readdata,        --                    .readdata
+			out_port   => reset_recop_external_connection_export            -- external_connection.export
+		);
+
 	send_addr : component nios_send_addr
 		port map (
 			clk        => clk_clk,                                        --                 clk.clk
@@ -765,6 +802,11 @@ begin
 			recv_addr_s1_readdata                               => mm_interconnect_0_recv_addr_s1_readdata,                    --                                              .readdata
 			recv_data_s1_address                                => mm_interconnect_0_recv_data_s1_address,                     --                                  recv_data_s1.address
 			recv_data_s1_readdata                               => mm_interconnect_0_recv_data_s1_readdata,                    --                                              .readdata
+			reset_recop_s1_address                              => mm_interconnect_0_reset_recop_s1_address,                   --                                reset_recop_s1.address
+			reset_recop_s1_write                                => mm_interconnect_0_reset_recop_s1_write,                     --                                              .write
+			reset_recop_s1_readdata                             => mm_interconnect_0_reset_recop_s1_readdata,                  --                                              .readdata
+			reset_recop_s1_writedata                            => mm_interconnect_0_reset_recop_s1_writedata,                 --                                              .writedata
+			reset_recop_s1_chipselect                           => mm_interconnect_0_reset_recop_s1_chipselect,                --                                              .chipselect
 			send_addr_s1_address                                => mm_interconnect_0_send_addr_s1_address,                     --                                  send_addr_s1.address
 			send_addr_s1_write                                  => mm_interconnect_0_send_addr_s1_write,                       --                                              .write
 			send_addr_s1_readdata                               => mm_interconnect_0_send_addr_s1_readdata,                    --                                              .readdata
@@ -933,6 +975,8 @@ begin
 	mm_interconnect_0_hex_3_s1_write_ports_inv <= not mm_interconnect_0_hex_3_s1_write;
 
 	mm_interconnect_0_hex_2_s1_write_ports_inv <= not mm_interconnect_0_hex_2_s1_write;
+
+	mm_interconnect_0_reset_recop_s1_write_ports_inv <= not mm_interconnect_0_reset_recop_s1_write;
 
 	rst_controller_reset_out_reset_ports_inv <= not rst_controller_reset_out_reset;
 

@@ -832,7 +832,7 @@
 										<fullscreen-action>false</fullscreen-action>
 										<node nodeId="1372710005721" orientation="HORIZONTAL" divider="0.22181146025878004">
 											<node nodeId="1375985011088" orientation="VERTICAL" divider="0.504054054054054">
-												<leaf id="1" nodeId="1375985003630">
+												<leaf id="0" nodeId="1375985003630">
 													<placeholders>
 														<placeholder>dock.single.Clock\ Domains\ \-\ Beta</placeholder>
 														<placeholder>dock.single.IP\ Catalog</placeholder>
@@ -858,7 +858,7 @@
 														</entry>
 													</placeholder-map>
 												</leaf>
-												<leaf id="0" nodeId="1375985011087">
+												<leaf id="1" nodeId="1375985011087">
 													<placeholders>
 														<placeholder>dock.single.Hierarchy</placeholder>
 													</placeholders>
@@ -883,10 +883,10 @@
 												</leaf>
 											</node>
 											<node nodeId="1372710005725" orientation="VERTICAL" divider="0.75">
-												<node nodeId="1372710005727" orientation="HORIZONTAL" divider="0.549294669675279">
+												<node nodeId="1372710005727" orientation="HORIZONTAL" divider="0.711255418866446">
 													<node nodeId="1372710005733" orientation="VERTICAL" divider="0.75">
 														<node nodeId="1684465640059" orientation="VERTICAL" divider="0.25">
-															<leaf id="2" nodeId="1372710005735">
+															<leaf id="3" nodeId="1372710005735">
 																<placeholders>
 																	<placeholder>dock.single.Connections</placeholder>
 																	<placeholder>dock.single.Assignments</placeholder>
@@ -923,7 +923,7 @@
 																	</entry>
 																</placeholder-map>
 															</leaf>
-															<leaf id="3" nodeId="1684465640057">
+															<leaf id="4" nodeId="1684465640057">
 																<placeholders>
 																	<placeholder>dock.single.System\ Contents</placeholder>
 																</placeholders>
@@ -936,7 +936,7 @@
 														</leaf>
 													</node>
 													<node nodeId="1389812802503" orientation="VERTICAL" divider="0.6704331450094162">
-														<leaf id="4" nodeId="1389812800464">
+														<leaf id="2" nodeId="1389812800464">
 															<placeholders>
 																<placeholder>dock.single.Details</placeholder>
 																<placeholder>dock.single.Parameters</placeholder>
@@ -1007,6 +1007,16 @@
 							</adjacent>
 							<children ignore="false">
 								<child>
+									<layout factory="predefined" placeholder="dock.single.IP\ Catalog">
+										<replacement id="dockablesingle IP Catalog"/>
+										<delegate id="delegate_ccontrol backup factory id">
+											<id>IP Catalog</id>
+											<area/>
+										</delegate>
+									</layout>
+									<children ignore="false"/>
+								</child>
+								<child>
 									<layout factory="delegate_StackDockStationFactory">
 										<selected>0</selected>
 										<placeholders>
@@ -1066,10 +1076,10 @@
 									</children>
 								</child>
 								<child>
-									<layout factory="predefined" placeholder="dock.single.IP\ Catalog">
-										<replacement id="dockablesingle IP Catalog"/>
+									<layout factory="predefined" placeholder="dock.single.Parameters">
+										<replacement id="dockablesingle Parameters"/>
 										<delegate id="delegate_ccontrol backup factory id">
-											<id>IP Catalog</id>
+											<id>Parameters</id>
 											<area/>
 										</delegate>
 									</layout>
@@ -1169,16 +1179,6 @@
 										<replacement id="dockablesingle System Contents"/>
 										<delegate id="delegate_ccontrol backup factory id">
 											<id>System Contents</id>
-											<area/>
-										</delegate>
-									</layout>
-									<children ignore="false"/>
-								</child>
-								<child>
-									<layout factory="predefined" placeholder="dock.single.Parameters">
-										<replacement id="dockablesingle Parameters"/>
-										<delegate id="delegate_ccontrol backup factory id">
-											<id>Parameters</id>
 											<area/>
 										</delegate>
 									</layout>

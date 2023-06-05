@@ -4,6 +4,8 @@ use ieee.std_logic_1164.all;
 
 library work;
 use work.TdmaMinTypes.all;
+use work.port_locations.all;
+
 
 entity Average_ASP is
     port (
@@ -28,7 +30,7 @@ begin
         if (rising_edge(clk)) then
 
             case recv.data(31 downto 28) is -- switch signal header
-                when "1110" => -- asp config
+                when AVG_HEADER => -- asp config
                     case recv.data(19 downto 16) is -- switch mode
                         when "0000" =>
                             state := 8;
@@ -43,7 +45,7 @@ begin
 
                     addr_0 := recv.data(23 downto 20); -- destination config
 
-                when "1000" | "1001" => -- audio processing
+                when DATA_HEADER  => -- audio processing
                     sum := 0;
 
                     case state is
