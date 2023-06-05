@@ -370,6 +370,41 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[3]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[4]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[5]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[6]
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name BDF_FILE bdf/ReCOPCore.bdf
+set_global_assignment -name BDF_FILE bdf/RAM_Interface.bdf
+set_global_assignment -name BDF_FILE bdf/Datapath.bdf
+set_global_assignment -name VHDL_FILE src/components/RF_REG_ALT.vhd
+set_global_assignment -name VHDL_FILE src/components/RF_REG.vhd
+set_global_assignment -name VHDL_FILE src/components/RF.vhd
+set_global_assignment -name VHDL_FILE src/components/REG1_GENERIC.vhd
+set_global_assignment -name VHDL_FILE src/components/REG1_32.vhd
+set_global_assignment -name VHDL_FILE src/components/REG1_16.vhd
+set_global_assignment -name VHDL_FILE src/components/REG1_8.vhd
+set_global_assignment -name VHDL_FILE src/components/REG1_2.vhd
+set_global_assignment -name VHDL_FILE src/components/REG1_1.vhd
+set_global_assignment -name VHDL_FILE src/components/RAM_Mem_Interface.vhd
+set_global_assignment -name VHDL_FILE src/components/PC_2.vhd
+set_global_assignment -name VHDL_FILE src/components/PC.vhd
+set_global_assignment -name VHDL_FILE src/components/opcodes.vhd
+set_global_assignment -name VHDL_FILE src/components/MUXGEN_16.vhd
+set_global_assignment -name VHDL_FILE src/components/MUX8_16.vhd
+set_global_assignment -name VHDL_FILE src/components/MUX4_16.vhd
+set_global_assignment -name VHDL_FILE src/components/MUX2_16.vhd
+set_global_assignment -name VHDL_FILE src/components/MUX2_12.vhd
+set_global_assignment -name VHDL_FILE src/components/MUX2_4.vhd
+set_global_assignment -name VHDL_FILE src/components/MUX2_1.vhd
+set_global_assignment -name VHDL_FILE src/components/mux_values_.vhd
+set_global_assignment -name VHDL_FILE src/components/MUX_P.vhd
+set_global_assignment -name VHDL_FILE src/components/MAX.vhd
+set_global_assignment -name VHDL_FILE src/components/Instruction_reg.vhd
+set_global_assignment -name VHDL_FILE src/components/Data_Mem_Inter.vhd
+set_global_assignment -name VHDL_FILE src/components/control_unit.vhd
+set_global_assignment -name VHDL_FILE src/components/CONCAT_BLOCK.vhd
+set_global_assignment -name VHDL_FILE src/components/ALU_COMPONENT.vhd
+set_global_assignment -name VHDL_FILE src/components/ALU.vhd
+set_global_assignment -name VHDL_FILE src/components/Addr_Mem_Inter.vhd
+set_global_assignment -name BDF_FILE bdf/toptoplevel.bdf
 set_global_assignment -name VHDL_FILE src/Average_ASP.vhd
 set_global_assignment -name VHDL_FILE src/AspDpFIR.vhd
 set_global_assignment -name VHDL_FILE src/asp_peak.vhd
@@ -398,5 +433,3 @@ set_global_assignment -name VHDL_FILE src/AspAdc.vhd
 set_global_assignment -name VHDL_FILE src/AspDac.vhd
 set_global_assignment -name VHDL_FILE src/AspExample.vhd
 set_global_assignment -name VHDL_FILE src/TopLevel.vhd
-set_global_assignment -name BDF_FILE toptoplevel.bdf
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
