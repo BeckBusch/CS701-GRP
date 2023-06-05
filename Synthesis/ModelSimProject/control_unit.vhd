@@ -162,6 +162,7 @@ begin
 				end if ;
 
 			when T1 => --fetch  instruction from program memory
+				next_state <= T2;
 
 				if (switch_dpc=0) then 
 					reset_pc <= '0';
@@ -172,7 +173,7 @@ begin
 					write_pc <= '1';
 					write_ir <= '1';
 					write_dpcr <= '0';
-					next_state <= T1;
+					
 					m_address_mux_sel <= m_address_pc;
 					mem_sel <= mem_pm;
 					-- ir <- pm 
