@@ -8,7 +8,7 @@ DATA_RADIX = HEX; % Enter BIN, DEC, HEX, OCT, or UNS; unless %
 -- Specify values for addresses, which can be single address or range
 CONTENT
 BEGIN
-[0..FFF]: 3FFF; % Range--Every address from 0 to F = 3FFF %
+[0..FFF]: 0000; % Range--Every address from 0 to F = 3FFF %
 % 6 : F;  Single address--Address 6 = F %
 % 8 : F E 5;  Range starting from specific address %
 -- % Addr[8] = F, Addr[9] = E, Addr[A] = 5 %
