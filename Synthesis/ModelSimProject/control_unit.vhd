@@ -364,9 +364,10 @@ begin
 							write_pc <= '1';
 
 						when present => --check func  -- TODO: present broken
-							alu_op <= alu_orr;
-							alu_mux_a <= alu_rx_a;
-							alu_mux_b <= alu_rz;
+							--alu_op <= alu_orr;
+							--alu_mux_a <= alu_rx_a;
+							--alu_mux_b <= alu_rz;
+
 						when datacall => --check func  
 							dpcr_mux_sel <= dpcr_ir;
 							write_dpcr <= '1';
