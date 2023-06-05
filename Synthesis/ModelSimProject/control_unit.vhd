@@ -402,10 +402,10 @@ begin
 				we <= '0';
 				carry <= '0';
  
-				if (Addressing_mode = immediate & opcode = present & z='1') then
+				if (Addressing_mode = immediate and opcode = present and z='1') then
 					pc_mux_sel<=pc_ir;
-					write_pc<=1;
-				elsif (Addressing_mode = immediate & opcode = present & z='0') then
+					write_pc<='1';
+				elsif (Addressing_mode = immediate and opcode = present and z='0') then
 					null;
 				end if;
 			when others =>
