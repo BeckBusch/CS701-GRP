@@ -66,7 +66,8 @@ entity Control_Unit is
 		dpc_flag : in std_logic;
 		irq_flag : in std_logic;
 		reset_dpc : out std_logic;
-		reset_irq : out std_logic
+		reset_irq : out std_logic;
+		reset_dprr : out std_logic
 
 	);
 end Control_Unit;
@@ -144,6 +145,7 @@ begin
 				write_sop <= '0';
 				write_dpcr <= '0';
 				reset_dpcr <= '1';
+				reset_dprr<='0';
 				reset_ir <= '1';
 				reset_sip <= '1';
 				reset_sop <= '0';
@@ -160,7 +162,7 @@ begin
 			when N1 =>
 				rf_mux_sel <= rf_mem_hep;      -- this is actually selecting dprr
 				rf_mux_sel_x<='1';--selecting to hardcode reg
-				rf_value_sel_x <= "0101";             --hard code write to 10 on z mux
+				rf_value_sel_x <= "0101";           --hard code write to 10 on z mux
 				write_rf <= '1';
 				next_state <= N2;
 
