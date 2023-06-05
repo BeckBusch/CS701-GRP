@@ -51,11 +51,24 @@ END PM_RAM;
 
 ARCHITECTURE SYN OF pm_ram IS
 
-	type ram_array is array (0 to 10) of std_logic_vector (31 downto 0);
+	type ram_array is array (0 to 63) of std_logic_vector (31 downto 0);
 
 	signal ram_data : ram_array := (
-		x"4000000a", x"40100000", x"40200001", x"40300000", x"5c00000b", x"44000001", x"78310000", x"78320000", x"cc120000", x"cc230000", x"58000004"
-	);
+		--x"4000000a", x"40100000", x"40200001", x"40300000", 
+		--x"5c00000b", x"44000001", x"78310000", x"78320000", 
+		--x"cc120000", x"cc230000", x"58000004"
+	
+		x"40000001", x"40100002", x"40f00003", -- ldr
+		x"78210000", x"f8320003", -- add
+		x"82020000", x"82030001",  -- str
+		x"34000000", x"34000000", x"34000000",x"34000000", -- noop
+		x"80400000", -- ldr
+		x"fa040000", -- ssop
+		x"58000000", --jmp
+		--x"5c400011", x"5cf00012", -- present
+		--x"34000000", x"34000000", x"34000000", x"34000000", -- noop
+		others => x"00000000"
+		);
 
 	signal sel_z : std_logic_vector(4 downto 0);
 

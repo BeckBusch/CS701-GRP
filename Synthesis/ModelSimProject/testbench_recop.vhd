@@ -138,7 +138,7 @@ begin
         wait for 20 ns;
         Reset <= '0';
         
-        wait for 400 ns;
+        wait for 1000 ns;
 
         -- End simulation
         finished <= '1';
