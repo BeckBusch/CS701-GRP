@@ -7,7 +7,7 @@ use work.TdmaMinTypes.all;
 
 entity TopLevel is
 	generic (
-		ports : positive := 4
+		ports : positive := 8
 	);
 	port (
 		CLOCK_50      : in    std_logic;
@@ -26,7 +26,12 @@ entity TopLevel is
 		send_nios_addr: in    tdma_min_addr;
 		send_nios_data: in    tdma_min_data;
 		recv_nios_addr: out   tdma_min_addr;
-		recv_nios_data: out   tdma_min_data
+		recv_nios_data: out   tdma_min_data;
+		
+		send_recop_addr: in    tdma_min_addr;
+		send_recop_data: in    tdma_min_data;
+		recv_recop_addr: out   tdma_min_addr;
+		recv_recop_data: out   tdma_min_data
 
 	);
 end entity;
@@ -55,6 +60,12 @@ begin
 	
 	recv_nios_addr <= recv_port(2).addr;
 	recv_nios_data <= recv_port(2).data;
+	
+	send_port(7).addr <= send_recop_addr;
+	send_port(7).data <= send_recop_data;
+	
+	recv_recop_addr <= recv_port(7).addr;
+	recv_recop_data <= recv_port(7).data;
 
 	adc_dac : entity work.Audio
 	generic map (
@@ -117,6 +128,27 @@ begin
 		clock => clock,
 		send =>send_port(3),
 		recv => recv_port(3)
+	);
+	
+	asp_fir : entity work.AspDpFIR
+	port map (
+		clock => clock,
+		send  =>send_port(4),
+		recv  => recv_port(4)
+	);
+	
+	asp_peak : entity work.asp_peak
+	port map (
+		clock => clock,
+		send =>send_port(5),
+		recv => recv_port(5)
+	);
+	
+	asp_average : entity work.Average_ASP
+	port map (
+		clk => clock,
+		send =>send_port(6),
+		recv => recv_port(6)
 	);
 
 end architecture;

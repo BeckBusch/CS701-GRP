@@ -370,6 +370,9 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[3]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[4]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[5]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to HEX5[6]
+set_global_assignment -name VHDL_FILE src/Average_ASP.vhd
+set_global_assignment -name VHDL_FILE src/AspDpFIR.vhd
+set_global_assignment -name VHDL_FILE src/asp_peak.vhd
 set_global_assignment -name QIP_FILE nios/synthesis/nios.qip
 set_global_assignment -name VHDL_FILE src/AspDp.vhd
 set_global_assignment -name BSF_FILE nios/nios.bsf

@@ -5,7 +5,7 @@ use ieee.std_logic_1164.all;
 library work;
 use work.TdmaMinTypes.all;
 
-entity AspExample is
+entity asp_peak is
 	port (
 		clock : in  std_logic;
 		send  : out tdma_min_port;
@@ -13,7 +13,7 @@ entity AspExample is
 	);
 end entity;
 
-architecture rtl of AspExample is
+architecture rtl of asp_peak is
 	signal s_peak   : std_logic_vector(15 downto 0)   := (others => '0');
 	signal s_previous : std_logic_vector(15 downto 0) := (others => '0');
 	signal inverted    :  std_logic_vector(15 downto 0) := (others => '0');
