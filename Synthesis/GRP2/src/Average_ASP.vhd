@@ -44,6 +44,9 @@ begin
                     end case;
 
                     addr_0 := recv.data(23 downto 20); -- destination config
+						  
+						  send.addr <= RECOP_PORT;
+						  send.data <= x"00" & AVG_PORT;
 
                 when DATA_HEADER  => -- audio processing
                     sum := 0;

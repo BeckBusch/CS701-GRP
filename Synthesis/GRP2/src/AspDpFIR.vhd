@@ -56,8 +56,8 @@ begin
                     fir_val <= recv.data(15 downto 0);
                 end if;
 
-                send.addr <= "0000" & recv.data(27 downto 24);
-                send.data <= x"DEADBEEF";
+                send.addr <= RECOP_PORT;
+                send.data <= x"00" & FIR_PORT;
 
 			-- check if data
 			elsif recv.data(31 downto 28) = DATA_HEADER then

@@ -10,9 +10,11 @@
 		.ledr_external_connection_export        (<connected-to-ledr_external_connection_export>),        //        ledr_external_connection.export
 		.recv_addr_external_connection_export   (<connected-to-recv_addr_external_connection_export>),   //   recv_addr_external_connection.export
 		.recv_data_external_connection_export   (<connected-to-recv_data_external_connection_export>),   //   recv_data_external_connection.export
+		.reset_recop_external_connection_export (<connected-to-reset_recop_external_connection_export>), // reset_recop_external_connection.export
 		.send_addr_external_connection_export   (<connected-to-send_addr_external_connection_export>),   //   send_addr_external_connection.export
 		.send_data_external_connection_export   (<connected-to-send_data_external_connection_export>),   //   send_data_external_connection.export
 		.sw_external_connection_export          (<connected-to-sw_external_connection_export>),          //          sw_external_connection.export
-		.reset_recop_external_connection_export (<connected-to-reset_recop_external_connection_export>)  // reset_recop_external_connection.export
+		.pcd_external_connection_export         (<connected-to-pcd_external_connection_export>),         //         pcd_external_connection.export
+		.ccd_external_connection_export         (<connected-to-ccd_external_connection_export>)          //         ccd_external_connection.export
 	);
 

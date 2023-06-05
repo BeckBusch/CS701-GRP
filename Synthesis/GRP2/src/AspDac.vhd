@@ -41,6 +41,9 @@ begin
 					rate_1   <= recv.data(19 downto 18);
 					enable_1 <= recv.data(17);
 				end if;
+				
+				send.addr <= RECOP_PORT;
+				send.data <= x"00" & ADC_PORT;
 			end if;
 
 		end if;

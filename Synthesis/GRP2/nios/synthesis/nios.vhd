@@ -8,6 +8,7 @@ use IEEE.numeric_std.all;
 
 entity nios is
 	port (
+		ccd_external_connection_export         : in  std_logic_vector(3 downto 0)  := (others => '0'); --         ccd_external_connection.export
 		clk_clk                                : in  std_logic                     := '0';             --                             clk.clk
 		hex_0_external_connection_export       : out std_logic_vector(6 downto 0);                     --       hex_0_external_connection.export
 		hex_1_external_connection_export       : out std_logic_vector(6 downto 0);                     --       hex_1_external_connection.export
@@ -17,6 +18,7 @@ entity nios is
 		hex_5_external_connection_export       : out std_logic_vector(6 downto 0);                     --       hex_5_external_connection.export
 		key_external_connection_export         : in  std_logic_vector(3 downto 0)  := (others => '0'); --         key_external_connection.export
 		ledr_external_connection_export        : out std_logic_vector(9 downto 0);                     --        ledr_external_connection.export
+		pcd_external_connection_export         : in  std_logic_vector(3 downto 0)  := (others => '0'); --         pcd_external_connection.export
 		recv_addr_external_connection_export   : in  std_logic_vector(7 downto 0)  := (others => '0'); --   recv_addr_external_connection.export
 		recv_data_external_connection_export   : in  std_logic_vector(31 downto 0) := (others => '0'); --   recv_data_external_connection.export
 		reset_recop_external_connection_export : out std_logic;                                        -- reset_recop_external_connection.export
@@ -27,6 +29,16 @@ entity nios is
 end entity nios;
 
 architecture rtl of nios is
+	component nios_ccd is
+		port (
+			clk      : in  std_logic                     := 'X';             -- clk
+			reset_n  : in  std_logic                     := 'X';             -- reset_n
+			address  : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			readdata : out std_logic_vector(31 downto 0);                    -- readdata
+			in_port  : in  std_logic_vector(3 downto 0)  := (others => 'X')  -- export
+		);
+	end component nios_ccd;
+
 	component nios_hex_0 is
 		port (
 			clk        : in  std_logic                     := 'X';             -- clk
@@ -39,16 +51,6 @@ architecture rtl of nios is
 			out_port   : out std_logic_vector(6 downto 0)                      -- export
 		);
 	end component nios_hex_0;
-
-	component nios_key is
-		port (
-			clk      : in  std_logic                     := 'X';             -- clk
-			reset_n  : in  std_logic                     := 'X';             -- reset_n
-			address  : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
-			readdata : out std_logic_vector(31 downto 0);                    -- readdata
-			in_port  : in  std_logic_vector(3 downto 0)  := (others => 'X')  -- export
-		);
-	end component nios_key;
 
 	component nios_ledr is
 		port (
@@ -200,6 +202,8 @@ architecture rtl of nios is
 			nios2_gen2_0_instruction_master_read                : in  std_logic                     := 'X';             -- read
 			nios2_gen2_0_instruction_master_readdata            : out std_logic_vector(31 downto 0);                    -- readdata
 			nios2_gen2_0_instruction_master_readdatavalid       : out std_logic;                                        -- readdatavalid
+			ccd_s1_address                                      : out std_logic_vector(1 downto 0);                     -- address
+			ccd_s1_readdata                                     : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			hex_0_s1_address                                    : out std_logic_vector(1 downto 0);                     -- address
 			hex_0_s1_write                                      : out std_logic;                                        -- write
 			hex_0_s1_readdata                                   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
@@ -252,6 +256,8 @@ architecture rtl of nios is
 			onchip_memory2_0_s1_byteenable                      : out std_logic_vector(3 downto 0);                     -- byteenable
 			onchip_memory2_0_s1_chipselect                      : out std_logic;                                        -- chipselect
 			onchip_memory2_0_s1_clken                           : out std_logic;                                        -- clken
+			pcd_s1_address                                      : out std_logic_vector(1 downto 0);                     -- address
+			pcd_s1_readdata                                     : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			recv_addr_s1_address                                : out std_logic_vector(1 downto 0);                     -- address
 			recv_addr_s1_readdata                               : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			recv_data_s1_address                                : out std_logic_vector(1 downto 0);                     -- address
@@ -504,6 +510,10 @@ architecture rtl of nios is
 	signal mm_interconnect_0_reset_recop_s1_address                   : std_logic_vector(1 downto 0);  -- mm_interconnect_0:reset_recop_s1_address -> reset_recop:address
 	signal mm_interconnect_0_reset_recop_s1_write                     : std_logic;                     -- mm_interconnect_0:reset_recop_s1_write -> mm_interconnect_0_reset_recop_s1_write:in
 	signal mm_interconnect_0_reset_recop_s1_writedata                 : std_logic_vector(31 downto 0); -- mm_interconnect_0:reset_recop_s1_writedata -> reset_recop:writedata
+	signal mm_interconnect_0_ccd_s1_readdata                          : std_logic_vector(31 downto 0); -- ccd:readdata -> mm_interconnect_0:ccd_s1_readdata
+	signal mm_interconnect_0_ccd_s1_address                           : std_logic_vector(1 downto 0);  -- mm_interconnect_0:ccd_s1_address -> ccd:address
+	signal mm_interconnect_0_pcd_s1_readdata                          : std_logic_vector(31 downto 0); -- pcd:readdata -> mm_interconnect_0:pcd_s1_readdata
+	signal mm_interconnect_0_pcd_s1_address                           : std_logic_vector(1 downto 0);  -- mm_interconnect_0:pcd_s1_address -> pcd:address
 	signal nios2_gen2_0_irq_irq                                       : std_logic_vector(31 downto 0); -- irq_mapper:sender_irq -> nios2_gen2_0:irq
 	signal rst_controller_reset_out_reset                             : std_logic;                     -- rst_controller:reset_out -> [mm_interconnect_0:onchip_memory2_0_reset1_reset_bridge_in_reset_reset, onchip_memory2_0:reset, rst_controller_reset_out_reset:in, rst_translator:in_reset]
 	signal rst_controller_reset_out_reset_req                         : std_logic;                     -- rst_controller:reset_req -> [onchip_memory2_0:reset_req, rst_translator:reset_req_in]
@@ -519,10 +529,19 @@ architecture rtl of nios is
 	signal mm_interconnect_0_hex_3_s1_write_ports_inv                 : std_logic;                     -- mm_interconnect_0_hex_3_s1_write:inv -> hex_3:write_n
 	signal mm_interconnect_0_hex_2_s1_write_ports_inv                 : std_logic;                     -- mm_interconnect_0_hex_2_s1_write:inv -> hex_2:write_n
 	signal mm_interconnect_0_reset_recop_s1_write_ports_inv           : std_logic;                     -- mm_interconnect_0_reset_recop_s1_write:inv -> reset_recop:write_n
-	signal rst_controller_reset_out_reset_ports_inv                   : std_logic;                     -- rst_controller_reset_out_reset:inv -> [hex_0:reset_n, hex_1:reset_n, hex_2:reset_n, hex_3:reset_n, hex_4:reset_n, hex_5:reset_n, key:reset_n, ledr:reset_n, recv_addr:reset_n, recv_data:reset_n, reset_recop:reset_n, send_addr:reset_n, send_data:reset_n, sw:reset_n]
+	signal rst_controller_reset_out_reset_ports_inv                   : std_logic;                     -- rst_controller_reset_out_reset:inv -> [ccd:reset_n, hex_0:reset_n, hex_1:reset_n, hex_2:reset_n, hex_3:reset_n, hex_4:reset_n, hex_5:reset_n, key:reset_n, ledr:reset_n, pcd:reset_n, recv_addr:reset_n, recv_data:reset_n, reset_recop:reset_n, send_addr:reset_n, send_data:reset_n, sw:reset_n]
 	signal rst_controller_001_reset_out_reset_ports_inv               : std_logic;                     -- rst_controller_001_reset_out_reset:inv -> nios2_gen2_0:reset_n
 
 begin
+
+	ccd : component nios_ccd
+		port map (
+			clk      => clk_clk,                                  --                 clk.clk
+			reset_n  => rst_controller_reset_out_reset_ports_inv, --               reset.reset_n
+			address  => mm_interconnect_0_ccd_s1_address,         --                  s1.address
+			readdata => mm_interconnect_0_ccd_s1_readdata,        --                    .readdata
+			in_port  => ccd_external_connection_export            -- external_connection.export
+		);
 
 	hex_0 : component nios_hex_0
 		port map (
@@ -596,7 +615,7 @@ begin
 			out_port   => hex_5_external_connection_export            -- external_connection.export
 		);
 
-	key : component nios_key
+	key : component nios_ccd
 		port map (
 			clk      => clk_clk,                                  --                 clk.clk
 			reset_n  => rst_controller_reset_out_reset_ports_inv, --               reset.reset_n
@@ -662,6 +681,15 @@ begin
 			reset      => rst_controller_reset_out_reset,                   -- reset1.reset
 			reset_req  => rst_controller_reset_out_reset_req,               --       .reset_req
 			freeze     => '0'                                               -- (terminated)
+		);
+
+	pcd : component nios_ccd
+		port map (
+			clk      => clk_clk,                                  --                 clk.clk
+			reset_n  => rst_controller_reset_out_reset_ports_inv, --               reset.reset_n
+			address  => mm_interconnect_0_pcd_s1_address,         --                  s1.address
+			readdata => mm_interconnect_0_pcd_s1_readdata,        --                    .readdata
+			in_port  => pcd_external_connection_export            -- external_connection.export
 		);
 
 	recv_addr : component nios_recv_addr
@@ -746,6 +774,8 @@ begin
 			nios2_gen2_0_instruction_master_read                => nios2_gen2_0_instruction_master_read,                       --                                              .read
 			nios2_gen2_0_instruction_master_readdata            => nios2_gen2_0_instruction_master_readdata,                   --                                              .readdata
 			nios2_gen2_0_instruction_master_readdatavalid       => nios2_gen2_0_instruction_master_readdatavalid,              --                                              .readdatavalid
+			ccd_s1_address                                      => mm_interconnect_0_ccd_s1_address,                           --                                        ccd_s1.address
+			ccd_s1_readdata                                     => mm_interconnect_0_ccd_s1_readdata,                          --                                              .readdata
 			hex_0_s1_address                                    => mm_interconnect_0_hex_0_s1_address,                         --                                      hex_0_s1.address
 			hex_0_s1_write                                      => mm_interconnect_0_hex_0_s1_write,                           --                                              .write
 			hex_0_s1_readdata                                   => mm_interconnect_0_hex_0_s1_readdata,                        --                                              .readdata
@@ -798,6 +828,8 @@ begin
 			onchip_memory2_0_s1_byteenable                      => mm_interconnect_0_onchip_memory2_0_s1_byteenable,           --                                              .byteenable
 			onchip_memory2_0_s1_chipselect                      => mm_interconnect_0_onchip_memory2_0_s1_chipselect,           --                                              .chipselect
 			onchip_memory2_0_s1_clken                           => mm_interconnect_0_onchip_memory2_0_s1_clken,                --                                              .clken
+			pcd_s1_address                                      => mm_interconnect_0_pcd_s1_address,                           --                                        pcd_s1.address
+			pcd_s1_readdata                                     => mm_interconnect_0_pcd_s1_readdata,                          --                                              .readdata
 			recv_addr_s1_address                                => mm_interconnect_0_recv_addr_s1_address,                     --                                  recv_addr_s1.address
 			recv_addr_s1_readdata                               => mm_interconnect_0_recv_addr_s1_readdata,                    --                                              .readdata
 			recv_data_s1_address                                => mm_interconnect_0_recv_data_s1_address,                     --                                  recv_data_s1.address

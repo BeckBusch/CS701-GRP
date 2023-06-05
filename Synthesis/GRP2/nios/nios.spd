@@ -238,11 +238,11 @@
    type="VERILOG"
    library="nios2_gen2_0" />
  <file path="simulation/submodules/nios_ledr.vhd" type="VHDL" library="ledr" />
- <file path="simulation/submodules/nios_key.vhd" type="VHDL" library="key" />
  <file
    path="simulation/submodules/nios_hex_0.vhd"
    type="VHDL"
    library="hex_0" />
+ <file path="simulation/submodules/nios_ccd.vhd" type="VHDL" library="ccd" />
  <file path="simulation/nios.vhd" type="VHDL" />
  <file path="simulation/nios_rst_controller.vhd" type="VHDL" />
  <file path="simulation/nios_rst_controller_001.vhd" type="VHDL" />

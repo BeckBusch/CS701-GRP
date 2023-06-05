@@ -59,6 +59,9 @@ begin
                                         destination<=recv.data(27 downto 24);
 					func_0   <= recv.data(19 downto 18);
 					un_used_val<= recv.data(15 downto 0);
+					
+					send.addr <= RECOP_PORT;
+					send.data <= x"00" & PEAK_PORT;
 
 			end if;
 		end if;
@@ -67,14 +70,15 @@ begin
 	process(clock)	
 	begin
 
-		x_cur <= signed(recv.data(15 downto 0));
-    		a <= signed(un_used_val(15 downto 8));
-    		b<= signed(un_used_val(7 downto 0));
 
 		if rising_edge(clock) then
 
 
 		if recv.data(31 downto 28) = DATA_HEADER and recv.data(16) = '0' and enable_0 = '1' then
+				x_cur <= signed(recv.data(15 downto 0));
+    		a <= signed(un_used_val(15 downto 8));
+    		b<= signed(un_used_val(7 downto 0));
+
 			case func_0 is
 					when "00" =>
 						send.addr <=  "0000" & destination ;
@@ -108,7 +112,12 @@ begin
 						send.data <= x"00000000";
 			end case;
 	
-                 elsif recv.data(31 downto 28) = "1000" and recv.data(16) = '1' and enable_1 = '1' then
+                 elsif recv.data(31 downto 28) = DATA_HEADER and recv.data(16) = '1' and enable_1 = '1' then
+					  
+				x_cur <= signed(recv.data(15 downto 0));
+    		a <= signed(un_used_val(15 downto 8));
+    		b<= signed(un_used_val(7 downto 0));
+			
 				case func_0 is
 					when "00" =>       --direct pass
 						send.addr <=  "0000" & destination;

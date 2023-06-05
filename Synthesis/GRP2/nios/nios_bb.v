@@ -11,10 +11,12 @@ module nios (
 	ledr_external_connection_export,
 	recv_addr_external_connection_export,
 	recv_data_external_connection_export,
+	reset_recop_external_connection_export,
 	send_addr_external_connection_export,
 	send_data_external_connection_export,
 	sw_external_connection_export,
-	reset_recop_external_connection_export);	
+	pcd_external_connection_export,
+	ccd_external_connection_export);	
 
 	input		clk_clk;
 	output	[6:0]	hex_0_external_connection_export;
@@ -27,8 +29,10 @@ module nios (
 	output	[9:0]	ledr_external_connection_export;
 	input	[7:0]	recv_addr_external_connection_export;
 	input	[31:0]	recv_data_external_connection_export;
+	output		reset_recop_external_connection_export;
 	output	[7:0]	send_addr_external_connection_export;
 	output	[31:0]	send_data_external_connection_export;
 	input	[9:0]	sw_external_connection_export;
-	output		reset_recop_external_connection_export;
+	input	[3:0]	pcd_external_connection_export;
+	input	[3:0]	ccd_external_connection_export;
 endmodule
