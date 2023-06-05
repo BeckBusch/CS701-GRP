@@ -99,8 +99,8 @@ begin
 						send.data <= x"8000" & inverted;
 
 					when "01" =>  --iir
-						ax := shift_right(a * x_cur, 8);
-						by := shift_right(b * y_prev, 8);
+						ax :=  x_cur * shift_right(a , 8);
+						by := y_prev * shift_right(b  , 8);
 
 						calc := ax + by;
 
@@ -126,7 +126,7 @@ begin
 						send.addr <=  "0000" & destination;
 						send.data <= x"8000" & std_logic_vector(x_cur);
 
-					-- Enable DAC channel 1
+					-- 
 					when "10" =>         --peak detect of signal
 						if unsigned(s_previous) > unsigned(s_peak) and unsigned(s_previous) > unsigned(x_cur) then
 							s_peak <= s_previous;
@@ -136,7 +136,7 @@ begin
 						send.addr <=  "0000" & addr_1;
 						send.data <= x"8000" & s_peak;
 
-					-- Enable ADC channel 0
+				
 					when "11" =>             --inversion of siganl 
 						if unsigned(x_cur) > unsigned(s_peak) then
 							s_peak <= std_logic_vector(x_cur);
