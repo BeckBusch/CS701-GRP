@@ -150,7 +150,7 @@ begin
 				reset_pc <= '1';
 				carry <= '0';
 			when T0 => -- T1: 
-
+			write_sop <= '0';
 				if (dpc_flag = '1' and irq_flag = '1') then
 					next_state <= N1;
 				else
@@ -158,12 +158,15 @@ begin
 				end if;
 
 			when N1 =>
-				rf_mux_sel <= rf_mem_hep;
+				rf_mux_sel <= rf_mem_hep;      -- this is actually selecting dprr
+				rf_mux_sel_x<='1';--selecting to hardcode reg
+				rf_value_sel_x <= "0101";           --hard code write to 10 on z mux
 				write_rf <= '1';
 				next_state <= N2;
 
 			when N2 =>
-				reset_dpc <= '1';
+				rf_mux_sel <= rf_rx;
+				write_sop <= '1';
 				reset_irq <= '1';
 				next_state <= T0;
 
@@ -278,7 +281,7 @@ begin
 							write_sip <= '1';
 
 						when ssop => --check func  whaterver is on rx will be loaded to sop
-							rf_mux_sel <= rf_ir;
+							rf_mux_sel <= rf_rx;
 							write_sop <= '1';
 
 						when others =>
