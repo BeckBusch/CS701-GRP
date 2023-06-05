@@ -59,21 +59,21 @@ entity Control_Unit is
 
 		--dpcr
 		write_dpcr : out std_logic;
-		reset_dpcr 	: out std_logic;
+		reset_dpcr : out std_logic;
 		dpcr_mux_sel : out std_logic;
 
 		--dpc and irq
-		dpc_flag    : in std_logic;
-		irq_flag 	: in std_logic;
-		reset_dpc 	: out std_logic;
-		reset_irq    : out std_logic
+		dpc_flag : in std_logic;
+		irq_flag : in std_logic;
+		reset_dpc : out std_logic;
+		reset_irq : out std_logic
 
 	);
 end Control_Unit;
 
 architecture Behavioral of Control_Unit is
 	-- states for the Pulse Distributor state machine
-	type State_Type is (Ini, Test, Test2, E0, E1, E1bis, E2, T0, T1, T2, T3);
+	type State_Type is (Ini, Test, Test2, E0, E1, E1bis, E2, T0, T1, T2, T3, N1, N2);
 	signal State, Next_State : State_Type;
 	type Opcode_Type is (ldr_v, str_v, andd_v, orr_v, add_v, subv_v, subi_v, jmp_v, present_v, datacall_v, sz_v, clfz_v, lsip_v, ssop_v, noop_v, max_v, strpc_v);
 	signal Opcode_View : Opcode_Type;
@@ -90,7 +90,6 @@ begin
 
 	-- Operation Decoder
 	process (State, Opcode, Addressing_Mode) -- Include other necessary input signals
-	variable switch_dpc : integer := 0;
 	begin
 
 		case Opcode is
@@ -134,7 +133,7 @@ begin
 		-- Generate Next_State signal based on the current state, Debug_Mode, and DP_Memory_Signal
 
 		case State is
-            
+
 			when Ini =>
 				next_state <= T0;
 				-- Add state logic
@@ -150,50 +149,51 @@ begin
 				reset_sop <= '0';
 				reset_pc <= '1';
 				carry <= '0';
-
-				
 			when T0 => -- T1: 
-				next_state <= T1;
-					
-				if (dpc_flag = '1' and irq_flag ='1') then 
-					switch_dpc:=1;	
-				else 
-					switch_dpc:=0;
-				end if ;
+			write_sop <= '0';
+				if (dpc_flag = '1' and irq_flag = '1') then
+					next_state <= N1;
+				else
+					next_state <= T1;
+				end if;
+
+			when N1 =>
+				rf_mux_sel <= rf_mem_hep;      -- this is actually selecting dprr
+				rf_mux_sel_x<='1';--selecting to hardcode reg
+				rf_value_sel_x <= "0101";             --hard code write to 10 on z mux
+				write_rf <= '1';
+				next_state <= N2;
+
+			when N2 =>
+				rf_mux_sel <= rf_rx;
+				write_sop <= '1';
+				reset_irq <= '1';
+				next_state <= T0;
 
 			when T1 => --fetch  instruction from program memory
 				next_state <= T2;
+				reset_pc <= '0';
+				reset_ir <= '0';
+				reset_dpcr <= '0';
+				reset_dpc <= '0';
+				reset_irq <= '0';
+				write_pc <= '1';
+				write_ir <= '1';
+				write_dpcr <= '0';
 
-				if (switch_dpc=0) then 
-					reset_pc <= '0';
-					reset_ir <= '0';
-					reset_dpcr <= '0';
-					reset_dpc<='0';
-					reset_irq<='0';
-					write_pc <= '1';
-					write_ir <= '1';
-					write_dpcr <= '0';
-					
-					m_address_mux_sel <= m_address_pc;
-					mem_sel <= mem_pm;
-					-- ir <- pm 
-					write_ir <= '1';
-					-- pc <- pc + 1
-					pc_mux_sel <= pc_const;
-					write_pc <= '1';
-
-				end if;
-
-
+				m_address_mux_sel <= m_address_pc;
+				mem_sel <= mem_pm;
+				-- ir <- pm 
+				write_ir <= '1';
+				-- pc <- pc + 1
+				pc_mux_sel <= pc_const;
+				write_pc <= '1';
 			when T2 => -- decoding instruction and execute
 				next_state <= T3;
 				write_pc <= '0';
 				write_ir <= '0';
 
-				if switch_dpc = 1 then 
-						rf_mux_sel<= rf_mem_hep;
-						write_rf<='1';
-				elsif Addressing_mode = inherent then -- inherent AM
+				if Addressing_mode = inherent then -- inherent AM
 					case opcode is
 
 						when clfz => --add func          --check func 
@@ -240,8 +240,6 @@ begin
 							rf_mux_sel <= rf_alu;
 							rf_mux_sel_z <= '0';
 							write_rf <= '1';
-	
-
 						when andd => --check func 
 							alu_op <= alu_andd;
 							alu_mux_a <= alu_rx_a;
@@ -249,8 +247,6 @@ begin
 							rf_mux_sel <= rf_alu;
 							rf_mux_sel_z <= '0'; --selecting to rz
 							write_rf <= '1';
-
-
 						when orr => --check func 
 							alu_op <= alu_orr;
 							alu_mux_a <= alu_rx_a;
@@ -285,7 +281,7 @@ begin
 							write_sip <= '1';
 
 						when ssop => --check func  whaterver is on rx will be loaded to sop
-							rf_mux_sel<=rf_ir;
+							rf_mux_sel <= rf_rx;
 							write_sop <= '1';
 
 						when others =>
@@ -322,16 +318,12 @@ begin
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
 							write_rf <= '1';
-
-
 						when orr => --check func
 							alu_op <= alu_orr;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
 							write_rf <= '1';
-
-
 						when ldr => --check func
 							rf_mux_sel <= rf_ir;
 							rf_mux_sel_x <= '0';
@@ -358,8 +350,8 @@ begin
 
 						when max => --check func  
 							rf_mux_sel <= rf_rzmax;
-							write_rf <='1';
-							
+							write_rf <= '1';
+
 						when sz => --check func
 							if z = '1' then
 								pc_mux_sel <= pc_ir;
@@ -374,7 +366,7 @@ begin
 				end if;
 
 			when T3 =>
-			next_state <= T0;
+				next_state <= T0;
 				write_ir <= '0';
 				write_pc <= '0';
 				write_rf <= '0';
@@ -384,17 +376,13 @@ begin
 				we <= '0';
 				carry <= '0';
 
-                if (switch_dpc=1) then
-					reset_dpc<='1';
-					reset_irq<='1';
-		
-				elsif (Addressing_mode = immediate and opcode = present and z='1') then
-					pc_mux_sel<=pc_ir;
-					write_pc<='1';
+				if (Addressing_mode = immediate and opcode = present and z = '1') then
+					pc_mux_sel <= pc_ir;
+					write_pc <= '1';
 
-				elsif (Addressing_mode = immediate and opcode = present and z='0') then
+				elsif (Addressing_mode = immediate and opcode = present and z = '0') then
 					null;
-					
+
 				elsif (Addressing_mode = indirect and opcode = lsip) then
 					rf_mux_sel <= rf_sip;
 					rf_mux_sel_z <= '0';
