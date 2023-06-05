@@ -99,8 +99,8 @@ begin
 						send.data <= x"8000" & inverted;
 
 					when "01" =>  --iir
-						ax :=  x_cur * shift_right(a , 8);
-						by := y_prev * shift_right(b  , 8);
+						ax := shift_right(a * x_cur, 8);
+						by := shift_right(b * y_prev, 8);
 
 						calc := ax + by;
 
