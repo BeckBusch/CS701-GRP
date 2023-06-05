@@ -56,12 +56,17 @@ entity Control_Unit is
 		-- Ssop
 		write_sop : out std_logic;
 		reset_sop : out std_logic;
+
 		--dpcr
 		write_dpcr : out std_logic;
-		reset_dpcr : out std_logic;
-		dpcr_mux_sel : out std_logic
+		reset_dpcr 	: out std_logic;
+		dpcr_mux_sel : out std_logic;
 
-		-- max
+		--dpc and irq
+		dpc_flag    : in std_logic;
+		irq_flag 	: in std_logic;
+		reset_dpc 	: out std_logic;
+		reset_irq    : out std_logic
 
 	);
 end Control_Unit;
@@ -85,6 +90,7 @@ begin
 
 	-- Operation Decoder
 	process (State, Opcode, Addressing_Mode) -- Include other necessary input signals
+	variable switch_dpc : integer := 0;
 	begin
 
 		case Opcode is
@@ -128,7 +134,7 @@ begin
 		-- Generate Next_State signal based on the current state, Debug_Mode, and DP_Memory_Signal
 
 		case State is
-
+            
 			when Ini =>
 				next_state <= T0;
 				-- Add state logic
@@ -144,61 +150,49 @@ begin
 				reset_sop <= '0';
 				reset_pc <= '1';
 				carry <= '0';
-			when T0 => --fetch  instruction from program memory
-				reset_pc <= '0';
-				reset_ir <= '0';
-				reset_dpcr <= '0';
-				write_pc <= '1';
-				write_ir <= '1';
-				write_dpcr <= '0';
 
-				next_state <= T2;
-				m_address_mux_sel <= m_address_pc;
-				mem_sel <= mem_pm;
-				-- ir <- pm 
-				--reset_pc <= '0';
-				write_ir <= '1';
-				-- pc <- pc + 1
-				pc_mux_sel <= pc_const;
+				
+			when T0 => -- T1: 
+				next_state <= T1;
+					
+				if (dpc_flag = '1' and irq_flag ='1') then 
+					switch_dpc:=1;	
+				else 
+					switch_dpc:=0;
+				end if ;
 
-				write_pc <= '1';
+			when T1 => --fetch  instruction from program memory
 
-			when T1 => -- T1: decoding instruction
-				next_state <= T2;
+				if (switch_dpc=0) then 
+					reset_pc <= '0';
+					reset_ir <= '0';
+					reset_dpcr <= '0';
+					reset_dpc<='0';
+					reset_irq<='0';
+					write_pc <= '1';
+					write_ir <= '1';
+					write_dpcr <= '0';
+					next_state <= T1;
+					m_address_mux_sel <= m_address_pc;
+					mem_sel <= mem_pm;
+					-- ir <- pm 
+					write_ir <= '1';
+					-- pc <- pc + 1
+					pc_mux_sel <= pc_const;
+					write_pc <= '1';
 
-				write_pc <= '0';
-				write_ir <= '0';
-				-- detect addressing mode and prepare for execution
-				case Addressing_mode is
+				end if;
 
-					when immediate => -- register immediate
-						-- ar <- ir[15..0]
-						--m_address_mux_sel   <= m_address_ir;
-						--mem_sel <= mem_pm;
-						-- pc <- pc + 1
-						--pc_in_sel <= pc_const;   --sel inc
-						--write_pc <= '1'; 
 
-					when direct => -- direct addressing
-						-- ar <- ir[15..0]
-						--m_address_mux_sel<= m_address_ir;
-						--mem_sel <= '1';
-
-					when indirect =>
-						case opcode is
-							when lsip =>
-								write_sip <= '1';
-							when others =>
-						end case;
-					when others => -- inherent and inderct
-				end case; -- addressing mode end
-				-- do nothing
-			when T2 => --execute
+			when T2 => -- decoding instruction and execute
 				next_state <= T3;
 				write_pc <= '0';
 				write_ir <= '0';
 
-				if Addressing_mode = inherent then -- inherent AM
+				if switch_dpc = 1 then 
+						rf_mux_sel<= rf_mem_hep;
+						write_rf<='1';
+				elsif Addressing_mode = inherent then -- inherent AM
 					case opcode is
 
 						when clfz => --add func          --check func 
@@ -245,10 +239,7 @@ begin
 							rf_mux_sel <= rf_alu;
 							rf_mux_sel_z <= '0';
 							write_rf <= '1';
-							--ld_c <= '1';
-							--ld_z <= '1';
-							--ld_v <= '1';
-							--ld_n <= '1';
+	
 
 						when andd => --check func 
 							alu_op <= alu_andd;
@@ -257,7 +248,7 @@ begin
 							rf_mux_sel <= rf_alu;
 							rf_mux_sel_z <= '0'; --selecting to rz
 							write_rf <= '1';
-							--ld_z <= '1';
+
 
 						when orr => --check func 
 							alu_op <= alu_orr;
@@ -266,7 +257,6 @@ begin
 							rf_mux_sel <= rf_alu;
 							rf_mux_sel_z <= '0';
 							write_rf <= '1';
-							--ld_z <= '1';
 
 						when ldr => --check func not sure  
 							m_address_mux_sel <= m_address_rx;
@@ -290,12 +280,11 @@ begin
 							rf_value_sel_z <= x"7";
 							write_dpcr <= '1';
 
-						when lsip => --check func  load sip on rz                       
-							rf_mux_sel <= rf_sip;
-							rf_mux_sel_z <= '0';
+						when lsip =>
+							write_sip <= '1';
 
 						when ssop => --check func  whaterver is on rx will be loaded to sop
-
+							rf_mux_sel<=rf_ir;
 							write_sop <= '1';
 
 						when others =>
@@ -311,37 +300,28 @@ begin
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_ir;
 							write_rf <= '1';
-							--ld_c <= '1';
-							--ld_z <= '1';
-							--ld_v <= '1';
-							--ld_n <= '1';
+
 						when subi => --check func
 							alu_op <= alu_sub;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rz;
 							rf_mux_sel <= rf_ir;
 							write_rf <= '1';
-							--ld_c <= '1';
-							--ld_z <= '1';
-							--ld_v <= '1';
-							--ld_n <= '1';
+
 						when subv => --check func
 							alu_op <= alu_sub;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
 							write_rf <= '1';
-							--ld_c <= '1';
-							--ld_z <= '1';
-							--ld_v <= '1';
-							--ld_n <= '1';
+
 						when andd => --check func
 							alu_op <= alu_andd;
 							alu_mux_a <= alu_ir;
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
 							write_rf <= '1';
-							--ld_z <= '1';
+
 
 						when orr => --check func
 							alu_op <= alu_orr;
@@ -349,7 +329,7 @@ begin
 							alu_mux_b <= alu_rx_b;
 							rf_mux_sel <= rf_alu;
 							write_rf <= '1';
-							--ld_z <= '1';
+
 
 						when ldr => --check func
 							rf_mux_sel <= rf_ir;
@@ -391,6 +371,7 @@ begin
 							-- should be invalid instruction code
 					end case;
 				end if;
+
 			when T3 =>
 			next_state <= T0;
 				write_ir <= '0';
@@ -401,12 +382,21 @@ begin
 				write_dpcr <= '0';
 				we <= '0';
 				carry <= '0';
- 
-				if (Addressing_mode = immediate and opcode = present and z='1') then
+
+                if (switch_dpc=1) then
+					reset_dpc<='1';
+					reset_irq<='1';
+		
+				elsif (Addressing_mode = immediate and opcode = present and z='1') then
 					pc_mux_sel<=pc_ir;
 					write_pc<='1';
+
 				elsif (Addressing_mode = immediate and opcode = present and z='0') then
 					null;
+					
+				elsif (Addressing_mode = indirect and opcode = lsip) then
+					rf_mux_sel <= rf_sip;
+					rf_mux_sel_z <= '0';
 				end if;
 			when others =>
 				--  should be invalid instruction code
