@@ -3,7 +3,7 @@
 import struct
 
 # How to write instructions. Registers are not optional, even if they will not be used.
-# OPERATION, #, #, [#/$][b/d/h]#
+# OPERATION, #, #, [#/$][b/d/x]#
 
 address_modes = {
     "in": "00",
@@ -42,8 +42,8 @@ def main():
     input_file = "a.txt"
     output_file = "out.txt"
     
-    iterator = 0
     with open(input_file) as f, open(output_file, "w+") as o:
+        iterator = 0
         while True:
             iterator += 1
             
@@ -169,7 +169,7 @@ def main():
                 elif radix == 'x':
                     base = 16
                 else:
-                    raise ValueError("Operand has invalid or no radix. LINE {iterator}: {line}")
+                    raise ValueError(f"Operand has invalid or no radix. LINE {iterator}: {line}")
                 
                 fields[3] = fields[3][1:]
                 
@@ -202,7 +202,7 @@ def main():
             #print()
 
             print(am_str, op_str, rz_str, rx_str, operand_str)
-            o.write(f'x"{hex(num)[2:]}", ')
+            o.write(f'{iterator - 1}: {hex(num)[2:]}\n')
             
         # end of context manager
         
