@@ -4,6 +4,7 @@ use ieee.std_logic_1164.all;
 
 library work;
 use work.TdmaMinTypes.all;
+use work.port_locations.all;
 
 entity AspAdc is
 	port (

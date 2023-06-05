@@ -9,8 +9,7 @@ use work.port_locations.all;
 entity tdma_recop is
     port (
         addr : in tdma_min_addr;
-        dprr_write : out std_logic;
-		  
+        dprr_write : out std_logic
     );
 end entity;
 
