@@ -397,7 +397,7 @@ refer to the applicable agreement for further details.
 (symbol
 	(rect 944 392 1160 520)
 	(text "PM_RAM" (rect 80 0 146 16)(font "Arial" (font_size 10)))
-	(text "inst2" (rect 8 112 30 129)(font "Intel Clear" ))
+	(text "inst1" (rect 8 112 30 129)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
