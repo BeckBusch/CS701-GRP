@@ -60,6 +60,9 @@ entity Control_Unit is
 		write_dpcr : out std_logic;
 		reset_dpcr : out std_logic;
 		dpcr_mux_sel : out std_logic
+
+		-- max
+
 	);
 end Control_Unit;
 
@@ -364,14 +367,18 @@ begin
 							write_pc <= '1';
 
 						when present => --check func  -- TODO: present broken
-							--alu_op <= alu_orr;
-							--alu_mux_a <= alu_rx_a;
-							--alu_mux_b <= alu_rz;
+							alu_op <= alu_orr;
+							alu_mux_a <= alu_rx_a;
+							alu_mux_b <= alu_rz;
 
 						when datacall => --check func  
 							dpcr_mux_sel <= dpcr_ir;
 							write_dpcr <= '1';
 
+						when max => --check func  
+							rf_mux_sel <= rf_rzmax;
+							write_rf <='1';
+							
 						when sz => --check func
 							if z = '1' then
 								pc_mux_sel <= pc_ir;
@@ -393,8 +400,14 @@ begin
 				write_sop <= '0';
 				write_dpcr <= '0';
 				we <= '0';
-
 				carry <= '0';
+ 
+				if (Addressing_mode = immediate and opcode = present and z='1') then
+					pc_mux_sel<=pc_ir;
+					write_pc<='1';
+				elsif (Addressing_mode = immediate and opcode = present and z='0') then
+					null;
+				end if;
 			when others =>
 				--  should be invalid instruction code
 		end case;
