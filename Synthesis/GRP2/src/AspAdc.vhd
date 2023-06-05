@@ -32,6 +32,9 @@ begin
 	get <= not empty;
 
 	process(clock)
+		variable new_data : boolean;
+		variable tick_0 : unsigned(7 downto 0) := x"00";
+		variable tick_1 : unsigned(7 downto 0) := x"00";
 	begin
 		if rising_edge(clock) then
 
@@ -47,20 +50,9 @@ begin
 				end if;
 				
 				send.addr <= RECOP_PORT;
-				send.data <= x"00" & DAC_PORT;
-			end if;
-
-		end if;
-	end process;
-
-	process(clock)
-		variable new_data : boolean;
-		variable tick_0 : unsigned(7 downto 0) := x"00";
-		variable tick_1 : unsigned(7 downto 0) := x"00";
-	begin
-		if rising_edge(clock) then
-
-			if new_data and data(16) = '0' and enable_0 = '1' then
+				send.data <= x"000000" & DAC_PORT;
+				
+			elsif new_data and data(16) = '0' and enable_0 = '1' then
 				if tick_0 /= 0 then
 					tick_0 := tick_0 - 1;
 					send.addr <= (others => '0');

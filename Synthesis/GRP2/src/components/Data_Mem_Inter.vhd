@@ -8,7 +8,7 @@ entity Data_Mem_Inter is
 
         ir_hold : in std_logic_vector(15 downto 0);
         rx : in std_logic_vector(15 downto 0);
-        dprr : in std_logic_vector(1 downto 0);
+        dprr : in std_logic_vector(15 downto 0);
         pc_hold : in std_logic_vector(15 downto 0);
 
         data : out std_logic_vector(15 downto 0));
@@ -27,13 +27,11 @@ architecture Behaviour of Data_Mem_Inter is
     signal dprr_mux_in    : std_logic_vector(15 downto 0);
 begin
 
-    dprr_mux_in <= "00000000000000" & dprr;
-
     MUX4_16_1 : MUX4_16 port map(
         sel => data_a_mux,
         a => ir_hold,
         b => rx,
-        c => dprr_mux_in,
+        c => dprr,
         d => pc_hold,
         outp => data_a_mux_out
     );

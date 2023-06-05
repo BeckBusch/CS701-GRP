@@ -28,10 +28,10 @@ architecture rtl of AspDac is
 
 begin
 
-	send.addr <= (others => '0');
-	send.data <= (others => '0');
 
 	process(clock)
+		variable tick_0 : unsigned(7 downto 0) := x"00";
+		variable tick_1 : unsigned(7 downto 0) := x"00";
 	begin
 		if rising_edge(clock) then
 
@@ -45,19 +45,10 @@ begin
 				end if;
 				
 				send.addr <= RECOP_PORT;
-				send.data <= x"00" & ADC_PORT;
-			end if;
+				send.data <= x"000000" & ADC_PORT;
+			
 
-		end if;
-	end process;
-
-	process(clock)
-		variable tick_0 : unsigned(7 downto 0) := x"00";
-		variable tick_1 : unsigned(7 downto 0) := x"00";
-	begin
-		if rising_edge(clock) then
-
-			if recv.data(31 downto 28) = "1000" and recv.data(16) = '0' and enable_0 = '1' then
+			elsif recv.data(31 downto 28) = "1000" and recv.data(16) = '0' and enable_0 = '1' then
 				if tick_0 /= 0 then
 					tick_0 := tick_0 - 1;
 					put <= '0';
@@ -72,6 +63,9 @@ begin
 					put <= '1';
 					data <= recv.data(16 downto 0);
 				end if;
+				
+				send.addr <= (others => '0');
+				send.data <= (others => '0');
 			elsif recv.data(31 downto 28) = "1000" and recv.data(16) = '1' and enable_1 = '1' then
 				if tick_1 /= 0 then
 					tick_1 := tick_1 - 1;
@@ -87,9 +81,15 @@ begin
 					put <= '1';
 					data <= recv.data(16 downto 0);
 				end if;
+				
+				send.addr <= (others => '0');
+				send.data <= (others => '0');
 			else
 				put <= '0';
 				data <= (others => '0');
+				
+				send.addr <= (others => '0');
+				send.data <= (others => '0');
 			end if;
 
 		end if;

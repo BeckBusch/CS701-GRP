@@ -23,8 +23,6 @@ architecture behaviour of AspDpFIR is
 
 	signal addr_0   : std_logic_vector(3 downto 0) := "0001";
 	signal addr_1   : std_logic_vector(3 downto 0) := "0001";
-	signal other_0  : std_logic_vector(1 downto 0) := "00";
-	signal other_1  : std_logic_vector(1 downto 0) := "00";
 	signal enable_0 : std_logic := '1';
 	signal enable_1 : std_logic := '1';
 
@@ -44,11 +42,9 @@ begin
 				-- forwarding location
 				if recv.data(16) = '0' then
 					addr_0   <= recv.data(23 downto 20);
-					other_0  <= recv.data(19 downto 18);
 					enable_0 <= recv.data(17);
 				else
 					addr_1   <= recv.data(23 downto 20);
-					other_1  <= recv.data(19 downto 18);
 					enable_1 <= recv.data(17);
 				end if;
 
@@ -57,7 +53,7 @@ begin
                 end if;
 
                 send.addr <= RECOP_PORT;
-                send.data <= x"00" & FIR_PORT;
+                send.data <= x"000000" & FIR_PORT;
 
 			-- check if data
 			elsif recv.data(31 downto 28) = DATA_HEADER then

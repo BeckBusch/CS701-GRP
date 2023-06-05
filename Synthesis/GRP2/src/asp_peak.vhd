@@ -39,6 +39,9 @@ begin
 	
 
 	process(clock)
+		variable ax : signed(23 downto 0);
+		variable by : signed(23 downto 0);
+		variable calc  : signed(23 downto 0);
 	begin
 		if rising_edge(clock) then
 
@@ -47,7 +50,7 @@ begin
 				-- currently it passes to dac channel 0 or 1 for testing but than can changed to passing to moving average asp or fir asp or recop
 				-- it will read destination and make it its addr_0 or addr_1
 
-							-- forwarding location
+				-- forwarding location
 				if recv.data(16) = '0' then
 					addr_0   <= recv.data(23 downto 20);
 					enable_0 <= recv.data(17);
@@ -56,67 +59,67 @@ begin
 					enable_1 <= recv.data(17);
 				end if;
                                         
-                                        destination<=recv.data(27 downto 24);
-					func_0   <= recv.data(19 downto 18);
-					un_used_val<= recv.data(15 downto 0);
-					
-					send.addr <= RECOP_PORT;
-					send.data <= x"00" & PEAK_PORT;
+				destination<=recv.data(27 downto 24);
+				func_0   <= recv.data(19 downto 18);
+				un_used_val<= recv.data(15 downto 0);
+				
+				send.addr <= RECOP_PORT;
+				send.data <= x"000000" & PEAK_PORT;
 
-			end if;
-		end if;
-	end process;
+	
 
-	process(clock)	
-	begin
-
-
-		if rising_edge(clock) then
-
-
-		if recv.data(31 downto 28) = DATA_HEADER and recv.data(16) = '0' and enable_0 = '1' then
+			elsif recv.data(31 downto 28) = DATA_HEADER and recv.data(16) = '0' and enable_0 = '1' then
 				x_cur <= signed(recv.data(15 downto 0));
-    		a <= signed(un_used_val(15 downto 8));
-    		b<= signed(un_used_val(7 downto 0));
+				a <= signed(un_used_val(15 downto 8));
+				b<= signed(un_used_val(7 downto 0));
 
-			case func_0 is
+				case func_0 is
 					when "00" =>
 						send.addr <=  "0000" & destination ;
 						send.data <= x"8000" & std_logic_vector(x_cur);
 
 
 					when "10" =>    --peak detection
-						 if unsigned(s_previous) > unsigned(s_peak) and unsigned(s_previous) > unsigned(x_cur) then
-                					s_peak <= s_previous;
-            					end if;
-            					s_previous <= std_logic_vector(x_cur);
+						if unsigned(s_previous) > unsigned(s_peak) and unsigned(s_previous) > unsigned(x_cur) then
+							s_peak <= s_previous;
+						end if;
+
+						s_previous <= std_logic_vector(x_cur);
 						send.addr <=  "0000" & addr_0;
 						send.data <= x"8000" & s_peak;
 
 					
 					when "11" =>   --inversion
 						if unsigned(x_cur) > unsigned(s_peak) then
-                					s_peak <= std_logic_vector(x_cur);
-            					end if;
-            					inverted <= std_logic_vector(unsigned(s_peak) - unsigned(x_cur));
+							s_peak <= std_logic_vector(x_cur);
+						end if;
+
+						inverted <= std_logic_vector(unsigned(s_peak) - unsigned(x_cur));
 						send.addr <=  "0000" & addr_0;
 						send.data <= x"8000" & inverted;
 
-				       when "01" =>  --iir
-						y_cur <= to_signed(integer((real(to_integer(a)) / 256.0) * real(to_integer(x_cur)) + (real(to_integer(b)) / 256.0) * real(to_integer(y_prev))), y_cur'length);
-                				y_prev <= y_cur;
+					when "01" =>  --iir
+						ax := shift_right(a * x_cur, 8);
+						by := shift_right(b * y_prev, 8);
+
+						calc := ax + by;
+
+						y_cur <= to_signed(to_integer(calc), y_cur'length);
+						y_prev <= y_cur;
+
 						send.addr <=  "0000" & addr_0;
 						send.data <= x"8000" & std_logic_vector(y_cur);
-				       when others =>
+
+					when others =>
 						send.addr <= x"01";
 						send.data <= x"00000000";
-			end case;
-	
-                 elsif recv.data(31 downto 28) = DATA_HEADER and recv.data(16) = '1' and enable_1 = '1' then
+				end case;
+		
+            elsif recv.data(31 downto 28) = DATA_HEADER and recv.data(16) = '1' and enable_1 = '1' then
 					  
 				x_cur <= signed(recv.data(15 downto 0));
-    		a <= signed(un_used_val(15 downto 8));
-    		b<= signed(un_used_val(7 downto 0));
+				a <= signed(un_used_val(15 downto 8));
+				b<= signed(un_used_val(7 downto 0));
 			
 				case func_0 is
 					when "00" =>       --direct pass
@@ -125,36 +128,43 @@ begin
 
 					-- Enable DAC channel 1
 					when "10" =>         --peak detect of signal
-						 if unsigned(s_previous) > unsigned(s_peak) and unsigned(s_previous) > unsigned(x_cur) then
-                					s_peak <= s_previous;
-            					end if;
-            					s_previous <= std_logic_vector(x_cur);
-						send.addr <=  "0000" & addr_0;
+						if unsigned(s_previous) > unsigned(s_peak) and unsigned(s_previous) > unsigned(x_cur) then
+							s_peak <= s_previous;
+						end if;
+						s_previous <= std_logic_vector(x_cur);
+
+						send.addr <=  "0000" & addr_1;
 						send.data <= x"8000" & s_peak;
 
 					-- Enable ADC channel 0
 					when "11" =>             --inversion of siganl 
 						if unsigned(x_cur) > unsigned(s_peak) then
-                					s_peak <= std_logic_vector(x_cur);
-            					end if;
-            					inverted <= std_logic_vector(unsigned(s_peak) - unsigned(x_cur));
-						send.addr <=  "0000" & addr_0;
+							s_peak <= std_logic_vector(x_cur);
+						end if;
+						inverted <= std_logic_vector(unsigned(s_peak) - unsigned(x_cur));
+
+						send.addr <=  "0000" & addr_1;
 						send.data <= x"8000" & inverted;
 
-				       when "01" =>                   --iir 
-						y_cur <= to_signed(integer((real(to_integer(a)) / 256.0) * real(to_integer(x_cur)) + (real(to_integer(b)) / 256.0) * real(to_integer(y_prev))), y_cur'length);
-                				y_prev <= y_cur;
-						send.addr <=  "0000" & addr_0;
+				    when "01" =>                   --iir 
+						ax := shift_right(a * x_cur, 8);
+						by := shift_right(b * y_prev, 8);
+
+						calc := ax + by;
+
+						y_cur <= to_signed(to_integer(calc), y_cur'length);
+
+						send.addr <=  "0000" & addr_1;
 						send.data <= x"8000" & std_logic_vector(y_cur);
 
-				       when others =>
+				    when others =>
 						send.addr <= x"01";
 						send.data <= x"00000000";
 				end case;
-                    else
-                        send.addr <= (others => '0');
-                        send.data <= (others => '0');
-                    end if;
+			else
+				send.addr <= (others => '0');
+				send.data <= (others => '0');
+			end if;
 
 		end if;
 	end process;
