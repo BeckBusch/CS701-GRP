@@ -22,8 +22,8 @@ entity RF is
         aluout : in std_logic_vector(15 downto 0);
         rz_max : in std_logic_vector(15 downto 0);
         sip_hold : in std_logic_vector(15 downto 0);
-        pc_hold : in std_logic_vector(15 downto 0);
-        mem_hp_low : in std_logic_vector(15 downto 0);
+        dprr_lo : in std_logic_vector(15 downto 0);
+        dprr_hi : in std_logic_vector(15 downto 0);
 
         rx : out std_logic_vector(15 downto 0);
         rz : out std_logic_vector(15 downto 0);
@@ -62,7 +62,6 @@ architecture behaviour of RF is
     signal internal_rx : std_logic_vector(15 downto 0);
     signal internal_ccd : std_logic_vector(15 downto 0);
     signal internal_pcd : std_logic_vector(15 downto 0);
-    signal crop_hp : std_logic_vector(15 downto 0);
 
 begin
     -- multiplexers
@@ -74,8 +73,8 @@ begin
         d => aluout,
         e => rz_max,
         f => sip_hold,
-        g => pc_hold,
-        h => crop_hp,
+        g => dprr_lo,
+        h => dprr_hi,
         outp => out_z
     );
 
@@ -107,7 +106,6 @@ begin
         out_flmr => flmr
     );
 
-    crop_hp <= "000000000" & mem_hp_low(6 downto 0);
     rx <= internal_rx;
     ccd <= internal_ccd(3 downto 0);
     pcd <= internal_pcd(3 downto 0);
