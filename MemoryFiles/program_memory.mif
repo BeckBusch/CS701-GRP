@@ -20,14 +20,14 @@ BEGIN
 9: 6800c004
 10: 4000f053
 11: 68000000
-12: 40009006
+12: 400090e6
 13: 6800f0f0
-14: 40009007
+14: 400090e7
 15: 6800f0f0
-16: 4000e001
+16: 4000e021
 17: 68000000
 18: 34000000
-19: 58000012
+19: 58000000
 [20..7FF]: 00000000; % Range--Every address from 0 to F = 3FFF %
 % 6 : F;  Single address--Address 6 = F %
 % 8 : F E 5;  Range starting from specific address %
