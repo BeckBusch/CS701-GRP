@@ -359,6 +359,8 @@ set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -entity "
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -entity "DE1-SoC" -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -entity "DE1-SoC" -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -entity "DE1-SoC" -section_id Top
+set_global_assignment -name FIT_ATTEMPTS_TO_SKIP 0.0
+set_global_assignment -name VHDL_FILE src/wrapper.vhd
 set_global_assignment -name VHDL_FILE src/tdma_addr_circuit.vhd
 set_global_assignment -name VHDL_FILE src/port_locations.vhd
 set_global_assignment -name VHDL_FILE src/tdma_recop.vhd
@@ -425,8 +427,12 @@ set_global_assignment -name VHDL_FILE src/AspDac.vhd
 set_global_assignment -name VHDL_FILE src/TopLevel.vhd
 set_global_assignment -name QIP_FILE DM_RAM.qip
 set_global_assignment -name QIP_FILE PM_RAM.qip
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name BDF_FILE bdf/wrapper_block.bdf
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name FIT_ATTEMPTS_TO_SKIP 0.0
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

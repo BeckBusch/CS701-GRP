@@ -8,27 +8,21 @@ DATA_RADIX = HEX; % Enter BIN, DEC, HEX, OCT, or UNS; unless %
 -- Specify values for addresses, which can be single address or range
 CONTENT
 BEGIN
-0: 4000a043
-1: 68000000
-2: 4000a042
-3: 68000000
-4: 4000b102
-5: 68000000
-6: 4000b103
-7: 68000000
-8: 4000f05a
-9: 6800c004
-10: 4000f053
-11: 68000000
-12: 40009006
-13: 6800f0f0
-14: 40009007
-15: 6800f0f0
-16: 4000e021
-17: 68000000
-18: 34000000
-19: 58000000
-[20..7FF]: 34000000; % Range--Every address from 0 to F = 3FFF %
+0: 4000a043;
+1: 68000000;
+2: 4000a042;
+3: 68000000;
+4: 4000b102;
+5: 68000000;
+6: 4000b103;
+7: 68000000;
+8: 4000f02a;
+9: 6800c004;
+10: 4000f023;
+11: 68000000;
+18: 34000000;
+19: 58000000;
+[20..7FF]: 00000000; % Range--Every address from 0 to F = 3FFF %
 % 6 : F;  Single address--Address 6 = F %
 % 8 : F E 5;  Range starting from specific address %
 -- % Addr[8] = F, Addr[9] = E, Addr[A] = 5 %

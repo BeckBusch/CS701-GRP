@@ -641,7 +641,7 @@ refer to the applicable agreement for further details.
 		(pt 176 32)
 		(output)
 		(text "dprr_write" (rect 0 0 47 12)(font "Arial" ))
-		(text "dprr_write" (rect 116 27 155 39)(font "Arial" ))
+		(text "dprr_write" (rect 116 27 163 39)(font "Arial" ))
 		(line (pt 176 32)(pt 160 32))
 	)
 	(drawing
@@ -1344,21 +1344,9 @@ refer to the applicable agreement for further details.
 	(bus)
 )
 (connector
-	(text "sip[9..0]" (rect 208 760 244 777)(font "Intel Clear" ))
-	(pt 440 776)
-	(pt 200 776)
-	(bus)
-)
-(connector
 	(text "sip[15..14]" (rect -567 376 -519 393)(font "Intel Clear" ))
 	(pt -568 392)
 	(pt -472 392)
-	(bus)
-)
-(connector
-	(text "sip[13..10]" (rect 248 440 296 457)(font "Intel Clear" ))
-	(pt 440 456)
-	(pt 240 456)
 	(bus)
 )
 (connector
@@ -1412,6 +1400,18 @@ refer to the applicable agreement for further details.
 (connector
 	(pt 80 144)
 	(pt 96 144)
+)
+(connector
+	(text "sip[9..0]" (rect 336 760 372 777)(font "Intel Clear" ))
+	(pt 328 776)
+	(pt 440 776)
+	(bus)
+)
+(connector
+	(text "sip[13..10]" (rect 304 440 352 457)(font "Intel Clear" ))
+	(pt 440 456)
+	(pt 296 456)
+	(bus)
 )
 (junction (pt 1120 -72))
 (junction (pt -288 -24))

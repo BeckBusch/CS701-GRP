@@ -103,14 +103,17 @@ int main(void){
 		recv_data.data = IORD_ALTERA_AVALON_PIO_DATA(RECV_DATA_BASE);
 
 		// do stuff
-		for (int i = 0; i < 4; i++){
-			hex[i] = single_digit((int) recv_data.byte[i]);
+		if (recv_data.data != 0){
+			for (int i = 0; i < 4; i++){
+				hex[i] = single_digit((int) recv_data.byte[i]);
+			}
 		}
+
 
 		hex[4] = single_digit((int) ccd);
 		hex[5] = single_digit((int) pcd);
 
-		ledr = recv_data.data;
+		// ledr = recv_data.data;
 
 		// outputs
 		IOWR_ALTERA_AVALON_PIO_DATA(HEX_0_BASE, hex[0]);
@@ -119,7 +122,7 @@ int main(void){
 		IOWR_ALTERA_AVALON_PIO_DATA(HEX_3_BASE, hex[3]);
 		IOWR_ALTERA_AVALON_PIO_DATA(HEX_4_BASE, hex[4]);
 		IOWR_ALTERA_AVALON_PIO_DATA(HEX_5_BASE, hex[5]);
-		IOWR_ALTERA_AVALON_PIO_DATA(LEDR_BASE, ledr);
+		// IOWR_ALTERA_AVALON_PIO_DATA(LEDR_BASE, ledr);
 		IOWR_ALTERA_AVALON_PIO_DATA(SEND_ADDR_BASE, send_addr);
 		IOWR_ALTERA_AVALON_PIO_DATA(SEND_DATA_BASE, send_data.data);
 	}

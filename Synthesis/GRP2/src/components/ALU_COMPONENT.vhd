@@ -17,9 +17,9 @@ architecture Behavioral of ALU_COMPONENT is
 begin
 
 			-- Addition
-	tmp <= 	std_logic_vector(unsigned(a) + unsigned(b) + unsigned(carry_in + "0000000000000000")) when op = "00" else
+	tmp <= 	std_logic_vector(signed(a) + signed(b) + signed(carry_in + "0000000000000000")) when op = "00" else
 			-- Subtraction
-			std_logic_vector(unsigned(a) - unsigned(b)) when op = "01" else
+			std_logic_vector(signed(a) - signed(b)) when op = "01" else
 			-- OR
 			a or b when op = "10" else
 			-- AND
